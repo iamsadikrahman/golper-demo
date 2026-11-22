@@ -13,16 +13,16 @@
   .topbar h1 { font-size:27px; font-weight:700; letter-spacing:.2px; }
   .topbar p { font-size:14.5px; opacity:.88; margin-top:2px; }
   .wrap { max-width:560px; margin:0 auto; padding:18px 16px 40px; }
-  .shelfTitle { font-size:18px; font-weight:600; margin:8px 2px 12px; color:#37474F; }
-  .bookCard { background:#fff; border-radius:22px; overflow:hidden; box-shadow:0 10px 28px rgba(60,50,20,.14); cursor:pointer; transition:transform .15s; }
+  .shelfTitle { font-size:18px; font-weight:600; margin:16px 2px 12px; color:#37474F; }
+  .bookCard { background:#fff; border-radius:22px; overflow:hidden; box-shadow:0 10px 28px rgba(60,50,20,.14); cursor:pointer; transition:transform .15s; margin-bottom:16px; }
   .bookCard:active { transform:scale(.985); }
   .bookCard img { width:100%; display:block; aspect-ratio:16/10; object-fit:cover; }
   .bookMeta { padding:14px 18px 16px; }
   .bookMeta h2 { font-size:21px; font-weight:700; color:#1B4332; }
   .bookMeta p { font-size:14px; color:#78909C; margin-top:2px; }
-  .chip { display:inline-block; background:#E8F5E9; color:#2E7D32; font-size:12.5px; font-weight:600; padding:3px 10px; border-radius:20px; margin-top:8px; }
-  .soon { margin-top:16px; background:#FFF8E1; border:1.5px dashed #FFD54F; color:#8D6E00; border-radius:16px; padding:13px 16px; font-size:14px; text-align:center; }
-  /* reader */
+  .chip { display:inline-block; background:#E8F5E9; color:#2E7D32; font-size:12.5px; font-weight:600; padding:3px 10px; border-radius:20px; margin-top:8px; margin-right:6px; }
+  .chip.alt { background:#FFF3E0; color:#E65100; }
+  .soon { margin-top:6px; background:#FFF8E1; border:1.5px dashed #FFD54F; color:#8D6E00; border-radius:16px; padding:13px 16px; font-size:14px; text-align:center; }
   #reader { display:none; }
   .rTop { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
   .backBtn { background:#fff; border:none; box-shadow:0 3px 10px rgba(0,0,0,.1); border-radius:14px; padding:9px 14px; font-family:inherit; font-size:15px; font-weight:600; color:#14532D; cursor:pointer; }
@@ -30,10 +30,11 @@
   .pageCard { background:#fff; border-radius:24px; overflow:hidden; box-shadow:0 12px 30px rgba(60,50,20,.15); }
   .imgWrap { overflow:hidden; aspect-ratio:16/10.6; background:#F1E9D8; }
   .imgWrap img { width:100%; height:100%; display:block; object-fit:cover; animation:kb 16s ease-in-out infinite alternate; }
+  .imgWrap video { width:100%; height:100%; display:block; object-fit:cover; }
   @keyframes kb { from { transform:scale(1.03) translate(0.6%,0.4%);} to { transform:scale(1.16) translate(-1.6%,1.6%);} }
+  .pageText { padding:18px 20px 8px; font-size:19px; line-height:1.75; color:#37474F; min-height:118px; }
   .pageText .w { border-radius:6px; padding:0 2px; transition:background .18s, color .18s; }
   .pageText .w.hl { background:#FFD54F; color:#4E342E; font-weight:700; box-shadow:0 1px 4px rgba(255,180,0,.45); }
-  .pageText { padding:18px 20px 8px; font-size:19px; line-height:1.75; color:#37474F; min-height:118px; }
   .dots { display:flex; justify-content:center; gap:7px; padding:10px 0 16px; }
   .dot { width:9px; height:9px; border-radius:50%; background:#D7CCC8; transition:all .2s; }
   .dot.on { background:#2E7D32; width:24px; border-radius:6px; }
@@ -56,37 +57,24 @@
 <body>
 <div class="topbar">
   <h1>গল্পের আসর</h1>
-  <p>ছবিতে দেখো, বাংলায় শোনো · ছোটদের ইসলামী গল্পের অডিও বই</p>
+  <p>ছবিতে দেখো, বাংলায় শোনো · গল্প আর পড়া, একই আসরে</p>
 </div>
 <div class="wrap">
-  <div id="shelf">
-    <div class="shelfTitle">বইয়ের তাক</div>
-    <div class="bookCard" onclick="openBook()">
-      <img src="assets/img2/cover.webp" alt="নূহ (আ.) এর বড় নৌকা">
-      <div class="bookMeta">
-        <h2>নূহ (আ.) এর বড় নৌকা</h2>
-        <p>বড় বন্যা আর একটা বিশাল নৌকার গল্প · ৮ পৃষ্ঠা · অডিও সহ</p>
-        <span class="chip">নবীদের গল্প</span>
-        <span class="chip" style="background:#FFF3E0;color:#E65100;">বয়স ৪ থেকে ৮</span>
-      </div>
-    </div>
-    <div class="soon">ডেমো সংস্করণে আপাতত এই একটাই বই আছে। পুরো সংস্করণে তাকে আরো অনেক বই আসবে ইনশাআল্লাহ।</div>
-    <div class="foot">গল্পের আসর · ডেমো</div>
-  </div>
+  <div id="shelf"></div>
 
   <div id="reader">
     <div class="rTop">
       <button class="backBtn" onclick="closeBook()">‹ তাকে ফিরুন</button>
-      <div class="rTitle">নূহ (আ.) এর বড় নৌকা</div>
+      <div class="rTitle" id="rTitle"></div>
     </div>
     <div class="pageCard" id="pageCard">
-      <div class="imgWrap"><img id="pageImg" src="" alt=""><video id="pageVid" muted loop playsinline style="display:none;width:100%;height:100%;object-fit:cover"></video></div>
+      <div class="imgWrap"><img id="pageImg" src="" alt=""><video id="pageVid" muted loop playsinline style="display:none"></video></div>
       <div class="pageText" id="pageText"></div>
       <div class="dots" id="dots"></div>
     </div>
     <div class="controls">
       <button class="navBtn" id="prevBtn" onclick="goPage(cur-1)">‹</button>
-      <button class="playBtn" id="playBtn" onclick="togglePlay()">▶ &nbsp;গল্পটা শোনো</button>
+      <button class="playBtn" id="playBtn" onclick="togglePlay()">▶ &nbsp;শোনো</button>
       <button class="navBtn" id="nextBtn" onclick="goPage(cur+1)">›</button>
     </div>
     <div class="autoRow">
@@ -98,22 +86,57 @@
 </div>
 <audio id="player" preload="auto"></audio>
 <script>
-  const pages = [
-    { img:'assets/img2/p1.webp', audio:'assets/audio/p1.mp3', text:'অনেক অনেক বছর আগে, এক দেশে নূহ (আ.) নামে একজন ভালো মানুষ থাকতেন। তিনি সবাইকে আল্লাহর কথা বলতেন, ভালো পথে চলতে বলতেন। কিন্তু বেশিরভাগ মানুষ তাঁর কথা শুনতো না, হাসাহাসি করতো।' },
-    { img:'assets/img2/p2.webp', audio:'assets/audio/p2.mp3', text:'একদিন আল্লাহ নূহ (আ.) কে বললেন, একটা অনেক বড় নৌকা বানাও। শীঘ্রই আকাশ থেকে অনেক বৃষ্টি নামবে, চারদিকে পানি আর পানি হয়ে যাবে।' },
-    { img:'assets/img2/p3.webp', audio:'assets/audio/p3.mp3', text:'নূহ (আ.) কাঠ জোগাড় করে দিনরাত নৌকা বানাতে লাগলেন। লোকেরা হেসে বললো, ডাঙায় আবার নৌকা কেন? নূহ (আ.) শান্ত গলায় বললেন, এটা আল্লাহর হুকুম, নৌকা তৈরি হবেই।' },
-    { img:'assets/img2/p4.webp', audio:'assets/audio/p4.mp3', text:'নৌকা তৈরি হলে আল্লাহ বললেন, প্রতিটা প্রাণী থেকে এক জোড়া করে নৌকায় তোলো। হাতি, সিংহ, ছাগল আর পাখিরা জোড়ায় জোড়ায় নৌকায় উঠলো। নূহ (আ.) এর পরিবারও নৌকায় উঠলো।' },
-    { img:'assets/img2/p5.webp', audio:'assets/audio/p5.mp3', text:'তারপর শুরু হলো মুষলধারে বৃষ্টি। বৃষ্টি পড়লো দিনের পর দিন। পানি বাড়তে বাড়তে উঁচু পাহাড় পর্যন্ত ডুবে গেল। কিন্তু বড় নৌকাটা নিরাপদে পানির ওপর ভেসে রইলো।' },
-    { img:'assets/img2/p6.webp', audio:'assets/audio/p6.mp3', text:'অনেক দিন পর বৃষ্টি থামলো। পানি আস্তে আস্তে নামতে লাগলো। নূহ (আ.) একটা কবুতর ছেড়ে দিলেন। কবুতরটা জলপাই গাছের পাতা ঠোঁটে নিয়ে ফিরে এলো। সবাই বুঝলো, কাছেই শুকনো মাটি আছে।' },
-    { img:'assets/img2/p7.webp', audio:'assets/audio/p7.mp3', text:'নৌকা গিয়ে থামলো এক পাহাড়ের ওপরে। দরজা খুলতেই সব প্রাণী খুশিতে বের হয়ে এলো। আর আকাশে দেখা দিলো সুন্দর রংধনু।' },
-    { img:'assets/img2/p8.webp', audio:'assets/audio/p8.mp3', text:'নূহ (আ.) আল্লাহর শুকরিয়া আদায় করলেন। সবাই মিলে নতুন করে ঘর বানালো, গাছ লাগালো। এই গল্পের শিক্ষা হলো, আল্লাহর কথা শুনলে আর ধৈর্য ধরলে, বিপদের মাঝেও তিনি রক্ষা করেন।' }
+  const P = (dir, n, imgDir, audDir, vidDir, text) => ({ img: imgDir + '/p' + n + '.webp', audio: audDir + '/p' + n + '.mp3', video: vidDir + '/p' + n + '.mp4', text });
+  const nuhTexts = [
+    'অনেক অনেক বছর আগে, এক দেশে নূহ (আ.) নামে একজন ভালো মানুষ থাকতেন। তিনি সবাইকে আল্লাহর কথা বলতেন, ভালো পথে চলতে বলতেন। কিন্তু বেশিরভাগ মানুষ তাঁর কথা শুনতো না, হাসাহাসি করতো।',
+    'একদিন আল্লাহ নূহ (আ.) কে বললেন, একটা অনেক বড় নৌকা বানাও। শীঘ্রই আকাশ থেকে অনেক বৃষ্টি নামবে, চারদিকে পানি আর পানি হয়ে যাবে।',
+    'নূহ (আ.) কাঠ জোগাড় করে দিনরাত নৌকা বানাতে লাগলেন। লোকেরা হেসে বললো, ডাঙায় আবার নৌকা কেন? নূহ (আ.) শান্ত গলায় বললেন, এটা আল্লাহর হুকুম, নৌকা তৈরি হবেই।',
+    'নৌকা তৈরি হলে আল্লাহ বললেন, প্রতিটা প্রাণী থেকে এক জোড়া করে নৌকায় তোলো। হাতি, সিংহ, ছাগল আর পাখিরা জোড়ায় জোড়ায় নৌকায় উঠলো। নূহ (আ.) এর পরিবারও নৌকায় উঠলো।',
+    'তারপর শুরু হলো মুষলধারে বৃষ্টি। বৃষ্টি পড়লো দিনের পর দিন। পানি বাড়তে বাড়তে উঁচু পাহাড় পর্যন্ত ডুবে গেল। কিন্তু বড় নৌকাটা নিরাপদে পানির ওপর ভেসে রইলো।',
+    'অনেক দিন পর বৃষ্টি থামলো। পানি আস্তে আস্তে নামতে লাগলো। নূহ (আ.) একটা কবুতর ছেড়ে দিলেন। কবুতরটা জলপাই গাছের পাতা ঠোঁটে নিয়ে ফিরে এলো। সবাই বুঝলো, কাছেই শুকনো মাটি আছে।',
+    'নৌকা গিয়ে থামলো এক পাহাড়ের ওপরে। দরজা খুলতেই সব প্রাণী খুশিতে বের হয়ে এলো। আর আকাশে দেখা দিলো সুন্দর রংধনু।',
+    'নূহ (আ.) আল্লাহর শুকরিয়া আদায় করলেন। সবাই মিলে নতুন করে ঘর বানালো, গাছ লাগালো। এই গল্পের শিক্ষা হলো, আল্লাহর কথা শুনলে আর ধৈর্য ধরলে, বিপদের মাঝেও তিনি রক্ষা করেন।'
   ];
-  let cur = 0, auto = true;
-  const player = document.getElementById('player');
-  const dotsBox = document.getElementById('dots');
-  pages.forEach((_, i) => { const d = document.createElement('div'); d.className = 'dot'; dotsBox.appendChild(d); });
+  const chorjaTexts = [
+    'চর্যাপদ হলো বাংলা সাহিত্যের সবচেয়ে পুরনো নিদর্শন, আমাদের সাহিত্যের আদি যুগের একমাত্র পাওয়া নমুনা। এটা আসলে বৌদ্ধ সহজিয়া সাধকদের লেখা কিছু গানের সংকলন। গানগুলোতে তাঁরা তাঁদের সাধনার গভীর কথা বলেছেন সহজ ভাষার আড়ালে। বিসিএসে চর্যাপদ থেকে প্রশ্ন প্রায় প্রতিবারই আসে।',
+    'এই পুঁথি পৃথিবীর সামনে আসে এক রোমাঞ্চকর আবিষ্কারের মধ্য দিয়ে। ১৯০৭ সালে মহামহোপাধ্যায় হরপ্রসাদ শাস্ত্রী নেপালের রাজদরবারের গ্রন্থাগার থেকে পুঁথিটি উদ্ধার করেন। পরে ১৯১৬ সালে তিনি এটি প্রকাশ করেন, নাম দেন হাজার বছরের পুরানো বাংলা ভাষায় বৌদ্ধগান ও দোহা।',
+    'চর্যাপদের রচনাকাল নিয়ে মতভেদ থাকলেও সাধারণভাবে ধরা হয় খ্রিস্টীয় সপ্তম থেকে দ্বাদশ শতাব্দী। অর্থাৎ পাল রাজাদের আমলের সৃষ্টি এটি। সেই যুগে বাংলায় বৌদ্ধ বিহারগুলো ছিল জ্ঞানচর্চার প্রাণকেন্দ্র, আর সেই পরিবেশেই সিদ্ধাচার্য সাধকেরা এই পদগুলো রচনা করেন।',
+    'পুঁথিতে মোট ৫১টি পদ ছিল। কিন্তু সবগুলো আমাদের কাছে পৌঁছায়নি। পুঁথির কয়েকটি পৃষ্ঠা ছিঁড়ে যাওয়ায় পাওয়া গেছে মোট সাড়ে ৪৬টি পদ, ৪৬টি পুরোপুরি আর একটির অর্ধেক। হারানো অংশগুলোর কথা জানা যায় পুঁথির তিব্বতি অনুবাদ থেকে।',
+    'চর্যাপদের পদকর্তা মোট ২৪ জন, তাঁদের বলা হয় সিদ্ধাচার্য। বাংলা সাহিত্যের আদি কবি হলেন লুইপা। আর সবচেয়ে বেশি পদ লিখেছেন কাহ্নপা, তাঁর পদ পাওয়া গেছে মোট ১৩টি। অন্য বড় নামগুলো হলো ভুসুকুপা, সরহপা, শবরপা ও কুক্কুরীপা।',
+    'চর্যাপদের ভাষাকে বলা হয় সান্ধ্যভাষা। এই নামটি দিয়েছেন হরপ্রসাদ শাস্ত্রী নিজে। সান্ধ্যা মানে আলো আঁধারি, অর্থাৎ এই ভাষার বাইরের অর্থ এক রকম, আর ভেতরের সাধনতত্ত্বের অর্থ আরেক রকম। সাধারণ পাঠক পড়বে একটা, কিন্তু সাধক বুঝবেন তার গভীর অন্য মানে।',
+    'কাহ্নপার বিখ্যাত পদের শুরুটা হলো, কা আ তরুবর পাঞ্চ বি ডাল। এখানে মানুষের দেহকে তুলনা করা হয়েছে গাছের সাথে, আর পাঁচটি ডাল হলো পাঁচটি ইন্দ্রিয়। এমনিভাবে নৌকা, নদী আর ডোম্বীর মতো রূপকের আড়ালে চর্যাপদে বলা হয়েছে সাধনার গভীর সব কথা। প্রতিটি পদের মাথায় আবার গাওয়ার রাগের নামও দেওয়া আছে।',
+    'শেষে পরীক্ষার হলে মনে রাখার মতো সারকথাগুলো একসাথে গুছিয়ে নিই। আবিষ্কার ১৯০৭ সাল, জায়গা নেপাল, আবিষ্কারক হরপ্রসাদ শাস্ত্রী। ভাষা সান্ধ্যভাষা। কবি ২৪ জন, আদি কবি লুইপা, সবচেয়ে বেশি পদ কাহ্নপার ১৩টি। মোট পদ ৫১টি, পাওয়া গেছে সাড়ে ৪৬টি। এই কয়েকটা তথ্য মুখস্থ থাকলেই চর্যাপদের বেশিরভাগ প্রশ্নের উত্তর তোমার হাতে।'
+  ];
+  const books = [
+    { section:'ছোটদের গল্পের তাক', title:'নূহ (আ.) এর বড় নৌকা', sub:'বড় বন্যা আর একটা বিশাল নৌকার গল্প · ৮ পৃষ্ঠা · অডিও ও অ্যানিমেশন সহ', chips:['নবীদের গল্প','বয়স ৪ থেকে ৮'], cover:'assets/img2/cover.webp',
+      pages: nuhTexts.map((t, i) => P(null, i + 1, 'assets/img2', 'assets/audio', 'assets/video', t)) },
+    { section:'বিসিএস বাংলার তাক', title:'চর্যাপদ', sub:'বাংলা সাহিত্যের আদি নিদর্শন · লেসন ১ · ৮ পৃষ্ঠা · অডিও ও অ্যানিমেশন সহ', chips:['বিসিএস বাংলা','আদি যুগ'], cover:'assets/bcs1/img/cover.webp',
+      pages: chorjaTexts.map((t, i) => P(null, i + 1, 'assets/bcs1/img', 'assets/bcs1/audio', 'assets/bcs1/video', t)) }
+  ];
+  // shelf render
+  const shelf = document.getElementById('shelf');
+  let shelfHtml = '';
+  books.forEach((b, bi) => {
+    shelfHtml += '<div class="shelfTitle">' + b.section + '</div>';
+    shelfHtml += '<div class="bookCard" onclick="openBook(' + bi + ')"><img src="' + b.cover + '" alt="">' +
+      '<div class="bookMeta"><h2>' + b.title + '</h2><p>' + b.sub + '</p>' +
+      b.chips.map((c, ci) => '<span class="chip' + (ci ? ' alt' : '') + '">' + c + '</span>').join('') +
+      '</div></div>';
+  });
+  shelfHtml += '<div class="soon">ডেমো সংস্করণে আপাতত এই দুটো বই আছে। পুরো সংস্করণে তাকে আরো অনেক গল্প আর লেসন আসবে ইনশাআল্লাহ।</div><div class="foot">গল্পের আসর · ডেমো</div>';
+  shelf.innerHTML = shelfHtml;
 
-  function openBook() {
+  let book = null, cur = 0, auto = true;
+  const player = document.getElementById('player');
+  const vid = document.getElementById('pageVid');
+  const dotsBox = document.getElementById('dots');
+  vid.addEventListener('error', () => { vid.style.display = 'none'; document.getElementById('pageImg').style.display = 'block'; }, true);
+
+  function openBook(bi) {
+    book = books[bi];
+    document.getElementById('rTitle').textContent = book.title;
+    dotsBox.innerHTML = '';
+    book.pages.forEach(() => { const d = document.createElement('div'); d.className = 'dot'; dotsBox.appendChild(d); });
     document.getElementById('shelf').style.display = 'none';
     document.getElementById('reader').style.display = 'block';
     goPage(0);
@@ -151,61 +174,49 @@
   }
   player.addEventListener('timeupdate', syncWords);
   player.addEventListener('seeked', syncWords);
-  player.addEventListener('ended', () => setHighlight(-1));
 
-  const vid = document.getElementById('pageVid');
-  vid.addEventListener('error', () => { vid.style.display = 'none'; document.getElementById('pageImg').style.display = 'block'; }, true);
   function render() {
-    const p = pages[cur];
+    const p = book.pages[cur];
     const img = document.getElementById('pageImg');
     img.src = p.img;
-    vid.src = 'assets/video/p' + (cur + 1) + '.mp4';
+    vid.src = p.video;
     vid.style.display = 'block'; img.style.display = 'none';
     vid.currentTime = 0;
     vid.play().catch(() => { vid.style.display = 'none'; img.style.display = 'block'; });
     buildWords(p.text);
-    document.getElementById('pageNum').textContent = 'পৃষ্ঠা ' + '০১২৩৪৫৬৭৮৯'[cur+1] + ' / ৮'.replace('৮','৮');
-    document.getElementById('pageNum').textContent = 'পৃষ্ঠা ' + (cur+1) + ' / ' + pages.length;
+    document.getElementById('pageNum').textContent = 'পৃষ্ঠা ' + (cur + 1) + ' / ' + book.pages.length;
     document.getElementById('prevBtn').disabled = cur === 0;
-    document.getElementById('nextBtn').disabled = cur === pages.length - 1;
+    document.getElementById('nextBtn').disabled = cur === book.pages.length - 1;
     [...dotsBox.children].forEach((d, i) => d.classList.toggle('on', i === cur));
     const card = document.getElementById('pageCard');
     card.classList.remove('fade'); void card.offsetWidth; card.classList.add('fade');
     player.src = p.audio;
   }
   function goPage(i) {
-    if (i < 0 || i >= pages.length) return;
+    if (!book || i < 0 || i >= book.pages.length) return;
     const wasPlaying = !player.paused;
     cur = i; render();
     if (wasPlaying || window._wantPlay) playNow();
   }
-  function playNow() {
-    player.play().catch(()=>{});
-    setPlayUI(true);
-  }
-  function stopPlay() {
-    player.pause(); player.currentTime = 0; setPlayUI(false); window._wantPlay = false;
-  }
+  function playNow() { player.play().catch(()=>{}); setPlayUI(true); }
+  function stopPlay() { player.pause(); player.currentTime = 0; setPlayUI(false); window._wantPlay = false; }
   function setPlayUI(on) {
     const b = document.getElementById('playBtn');
     b.classList.toggle('playing', on);
-    b.innerHTML = on ? '❚❚ &nbsp;থামাও' : '▶ &nbsp;গল্পটা শোনো';
+    b.innerHTML = on ? '❚❚ &nbsp;থামাও' : '▶ &nbsp;শোনো';
   }
   function togglePlay() {
     if (player.paused) { window._wantPlay = true; playNow(); }
     else { window._wantPlay = false; player.pause(); setPlayUI(false); }
   }
-  function toggleAuto() {
-    auto = !auto;
-    document.getElementById('autoSw').classList.toggle('on', auto);
-  }
+  function toggleAuto() { auto = !auto; document.getElementById('autoSw').classList.toggle('on', auto); }
   player.addEventListener('ended', () => {
     setPlayUI(false);
-    if (auto && cur < pages.length - 1) { cur++; render(); playNow(); }
+    setHighlight(-1);
+    if (auto && book && cur < book.pages.length - 1) { cur++; render(); playNow(); }
     else window._wantPlay = false;
   });
   player.addEventListener('pause', () => { if (!window._wantPlay) setPlayUI(false); });
-  // swipe
   let tx = null;
   document.getElementById('pageCard').addEventListener('touchstart', e => tx = e.touches[0].clientX, {passive:true});
   document.getElementById('pageCard').addEventListener('touchend', e => {
