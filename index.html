@@ -93,6 +93,17 @@ header{position:sticky;top:0;z-index:50;background:rgba(12,18,16,.92);backdrop-f
 .review h3{font-size:16px;margin-bottom:8px}
 .review .ritem{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--red);border-radius:12px;padding:12px 14px;margin-bottom:8px;font-size:14.5px;line-height:1.6}
 .review .ritem b{color:#fff}
+/* study / concept view */
+#studyView{display:none}
+.ccard{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-top:12px}
+.ccard h3{font-size:17px;font-weight:700;color:#fff;margin-bottom:8px}
+.ccard .cb{font-size:15.5px;line-height:1.75;color:var(--text);white-space:pre-line}
+.ccard .cex{background:#101b13;border:1px solid #2c4632;border-radius:12px;padding:12px 14px;margin-top:12px;font-size:14.5px;line-height:1.7}
+.ccard .cex b{color:var(--lime)}
+.ccard .ctrap{background:#241a10;border:1px solid #57431c;border-radius:12px;padding:12px 14px;margin-top:10px;font-size:14.5px;line-height:1.7}
+.ccard .ctrap b{color:var(--gold)}
+.study-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.study-actions .btn{flex:1;justify-content:center;min-width:140px}
 footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-height:1.7}
 .empty{color:var(--muted);text-align:center;padding:30px 0;font-size:15px}
 </style>
@@ -123,7 +134,11 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
     <div class="smart">
       <h2>আজকের স্মার্ট সেট</h2>
       <p>সিস্টেম নিজে বেছে দেবে কোন প্রশ্ন এখন দরকার। ভুলতে বসা তথ্যের রিভিশন, দুর্বল জায়গার অনুশীলন আর নতুন টপিক, সব মিলিয়ে এক সেট।</p>
-      <button class="btn" onclick="startSmart()">স্মার্ট সেট শুরু করো</button>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" onclick="startSmart()">স্মার্ট সেট শুরু করো</button>
+        <button class="btn ghost" onclick="startPastAll()">শুধু আসল বিগত প্রশ্ন</button>
+      </div>
+      <p id="pastCountLine" style="margin:12px 0 0;font-size:13.5px"></p>
     </div>
 
     <div id="topicList"></div>
@@ -132,6 +147,20 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
       প্রতিটা উত্তর তোমার ব্যক্তিগত হিসাবে জমা থাকে এই ডিভাইসেই।<br>
       ভুল করা তথ্য ঠিক সময়ে আবার সামনে আসবে, যতদিন না পুরোপুরি আয়ত্ত হচ্ছে।
     </footer>
+  </div>
+
+  <!-- STUDY -->
+  <div id="studyView">
+    <div class="qhead">
+      <button class="linkbtn" onclick="showHome()">← সব টপিক</button>
+    </div>
+    <h2 id="studyTitle" style="font-size:22px;margin-top:8px"></h2>
+    <p id="studyIntro" style="color:var(--muted);margin-top:4px;line-height:1.6"></p>
+    <div id="studyCards"></div>
+    <div class="study-actions">
+      <button class="btn" id="studyPracticeBtn">অনুশীলন শুরু করো</button>
+      <button class="btn ghost" id="studyPastBtn" style="display:none">শুধু আসল বিগত প্রশ্ন</button>
+    </div>
   </div>
 
   <!-- QUIZ -->
@@ -168,9 +197,36 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
 <script src="data/sahitya_prachin.js"></script>
 <script src="data/sahitya_adhunik.js"></script>
 <script src="data/byakoron.js"></script>
+<script src="data/past_10_20.js"></script>
+<script src="data/past_21_30.js"></script>
+<script src="data/past_31_40.js"></script>
+<script src="data/past_41_50.js"></script>
+<script src="data/concept_byakoron.js"></script>
+<script src="data/concept_sahitya.js"></script>
 <script>
 "use strict";
 var TOPICS = window.__T || [];
+var PAST_EXTRA = [];
+function normName(s){ return String(s || "").replace(/,/g, "").replace(/\s+/g, " ").trim(); }
+var TOPIC_BY_NORM = {};
+TOPICS.forEach(function(t){ TOPIC_BY_NORM[normName(t.name)] = t; t.past = t.past || []; });
+/* merge verified past questions into their topics */
+(window.__P || []).forEach(function(p){
+  var t = TOPIC_BY_NORM[normName(p.topic)];
+  var entry = { q: p.q, opts: p.opts, ans: p.ans, bcs: p.bcs };
+  if (t){
+    if (!t.past.some(function(x){ return x.q === p.q; })) t.past.push(entry);
+  } else {
+    if (!PAST_EXTRA.some(function(x){ return x.q === p.q && x.bcs === p.bcs; })) PAST_EXTRA.push(entry);
+  }
+});
+/* merge concept cards and application items */
+(window.__C || []).forEach(function(c){
+  var t = TOPIC_BY_NORM[normName(c.topic)];
+  if (!t) return;
+  t.cards = c.cards || [];
+  t.items = t.items.concat(c.apply || []);
+});
 var BN = ["০","১","২","৩","৪","৫","৬","৭","৮","৯"];
 function bn(n){ return String(n).replace(/[0-9]/g, function(d){ return BN[+d]; }); }
 function pctBn(x){ return bn(x) + "%"; }
@@ -265,6 +321,7 @@ function startSmart(){
   var qs = picked.map(function(pair){ return makeQuestion(pair[0], pair[1]); });
   var pastPool = [];
   TOPICS.forEach(function(t){ (t.past || []).forEach(function(p){ pastPool.push([t, p]); }); });
+  PAST_EXTRA.forEach(function(p){ pastPool.push([null, p]); });
   shuffle(pastPool).slice(0, 2).forEach(function(pair){ qs.push(makePast(pair[0], pair[1])); });
   qs = shuffle(qs).slice(0, 20);
   if (!qs.length){ alert("এখনো কোনো তথ্য লোড হয়নি।"); return; }
@@ -276,9 +333,43 @@ function startTopic(idx){
   (t.past || []).forEach(function(p){ qs.push(makePast(t, p)); });
   beginSession(shuffle(qs), t.name);
 }
+function startPastOnly(idx){
+  var t = TOPICS[idx];
+  var qs = shuffle((t.past || []).slice()).map(function(p){ return makePast(t, p); });
+  if (!qs.length){ alert("এই টপিকে এখনো কোনো আসল বিগত প্রশ্ন ট্যাগ হয়নি।"); return; }
+  beginSession(qs, t.name + " · বিগত প্রশ্ন");
+}
+function startPastAll(){
+  var pool = [];
+  TOPICS.forEach(function(t){ (t.past || []).forEach(function(p){ pool.push([t, p]); }); });
+  PAST_EXTRA.forEach(function(p){ pool.push([null, p]); });
+  var qs = shuffle(pool).slice(0, 25).map(function(pair){ return makePast(pair[0], pair[1]); });
+  if (!qs.length){ alert("এখনো কোনো বিগত প্রশ্ন লোড হয়নি।"); return; }
+  beginSession(qs, "আসল বিগত প্রশ্নের সেট");
+}
+function openStudy(idx){
+  var t = TOPICS[idx];
+  document.getElementById("homeView").style.display = "none";
+  document.getElementById("quizView").style.display = "none";
+  document.getElementById("resultView").style.display = "none";
+  document.getElementById("studyView").style.display = "block";
+  document.getElementById("studyTitle").textContent = t.name;
+  document.getElementById("studyIntro").textContent = t.intro;
+  document.getElementById("studyCards").innerHTML = (t.cards || []).map(function(c){
+    return "<div class='ccard'><h3>" + c.h + "</h3><div class='cb'>" + c.b + "</div>" +
+      (c.ex ? "<div class='cex'><b>উদাহরণ ও সূত্র</b><br>" + c.ex + "</div>" : "") +
+      (c.trap ? "<div class='ctrap'><b>সাবধান, ফাঁদ</b><br>" + c.trap + "</div>" : "") + "</div>";
+  }).join("");
+  document.getElementById("studyPracticeBtn").onclick = function(){ startTopic(idx); };
+  var pb = document.getElementById("studyPastBtn");
+  if (t.past && t.past.length){ pb.style.display = "inline-flex"; pb.onclick = function(){ startPastOnly(idx); }; }
+  else pb.style.display = "none";
+  window.scrollTo(0, 0);
+}
 function beginSession(qs, title){
   session = { qs: qs, i: 0, right: 0, wrongs: [], title: title };
   document.getElementById("homeView").style.display = "none";
+  document.getElementById("studyView").style.display = "none";
   document.getElementById("resultView").style.display = "none";
   document.getElementById("quizView").style.display = "block";
   window.scrollTo(0, 0);
@@ -379,6 +470,10 @@ function renderHome(){
   document.getElementById("mainBar").style.width = pct + "%";
   document.getElementById("progressNote").textContent =
     "বাংলা বিষয়ের " + bn(totalFacts) + "টি তথ্যের মধ্যে " + bn(mastered) + "টি পুরোপুরি আয়ত্ত হয়েছে।";
+  var pastTotalAll = PAST_EXTRA.length;
+  TOPICS.forEach(function(t){ pastTotalAll += (t.past || []).length; });
+  document.getElementById("pastCountLine").textContent =
+    "প্রশ্নব্যাংকে ১০ম থেকে ৫০তম বিসিএসের যাচাই করা আসল বাংলা প্রশ্ন আছে " + bn(pastTotalAll) + "টি।";
 
   var html = "";
   SECTION_ORDER.forEach(function(sec){
@@ -393,14 +488,17 @@ function renderHome(){
         "<div class='meta'><span class='chip'>" + bn(t.items.length) + "টি তথ্য</span>" +
         ((t.past && t.past.length) ? "<span class='chip gold'>" + bn(t.past.length) + "টি আসল বিগত প্রশ্ন</span>" : "") +
         "</div><div class='row'><div class='bar'><i style='width:" + mp + "%'></i></div>" +
-        "<span class='tpct'>" + pctBn(mp) + "</span>" +
-        "<button class='btn small' onclick='startTopic(" + idx + ")'>অনুশীলন</button></div></div>";
+        "<span class='tpct'>" + pctBn(mp) + "</span></div>" +
+        "<div style='display:flex;gap:8px;margin-top:12px'>" +
+        ((t.cards && t.cards.length) ? "<button class='btn ghost small' style='flex:1;justify-content:center' onclick='openStudy(" + idx + ")'>কনসেপ্ট</button>" : "") +
+        "<button class='btn small' style='flex:1;justify-content:center' onclick='startTopic(" + idx + ")'>অনুশীলন</button></div></div>";
     });
   });
   document.getElementById("topicList").innerHTML = html || "<div class='empty'>তথ্য লোড হচ্ছে…</div>";
 }
 function showHome(){
   document.getElementById("quizView").style.display = "none";
+  document.getElementById("studyView").style.display = "none";
   document.getElementById("resultView").style.display = "none";
   document.getElementById("homeView").style.display = "block";
   renderHome();
