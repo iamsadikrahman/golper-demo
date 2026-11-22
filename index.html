@@ -80,7 +80,7 @@
       <div class="rTitle">নূহ (আ.) এর বড় নৌকা</div>
     </div>
     <div class="pageCard" id="pageCard">
-      <div class="imgWrap"><img id="pageImg" src="" alt=""></div>
+      <div class="imgWrap"><img id="pageImg" src="" alt=""><video id="pageVid" muted loop playsinline style="display:none;width:100%;height:100%;object-fit:cover"></video></div>
       <div class="pageText" id="pageText"></div>
       <div class="dots" id="dots"></div>
     </div>
@@ -121,6 +121,7 @@
   }
   function closeBook() {
     stopPlay();
+    vid.pause();
     document.getElementById('reader').style.display = 'none';
     document.getElementById('shelf').style.display = 'block';
     window.scrollTo(0, 0);
@@ -152,10 +153,16 @@
   player.addEventListener('seeked', syncWords);
   player.addEventListener('ended', () => setHighlight(-1));
 
+  const vid = document.getElementById('pageVid');
+  vid.addEventListener('error', () => { vid.style.display = 'none'; document.getElementById('pageImg').style.display = 'block'; }, true);
   function render() {
     const p = pages[cur];
     const img = document.getElementById('pageImg');
     img.src = p.img;
+    vid.src = 'assets/video/p' + (cur + 1) + '.mp4';
+    vid.style.display = 'block'; img.style.display = 'none';
+    vid.currentTime = 0;
+    vid.play().catch(() => { vid.style.display = 'none'; img.style.display = 'block'; });
     buildWords(p.text);
     document.getElementById('pageNum').textContent = 'পৃষ্ঠা ' + '০১২৩৪৫৬৭৮৯'[cur+1] + ' / ৮'.replace('৮','৮');
     document.getElementById('pageNum').textContent = 'পৃষ্ঠা ' + (cur+1) + ' / ' + pages.length;
