@@ -3,229 +3,410 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>গল্পের আসর · ডেমো</title>
+<title>বিসিএস বাচাকুরী প্রিপারেশন · বাংলা</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-  body { font-family:'Hind Siliguri',sans-serif; background:#FBF6EC; color:#263238; min-height:100vh; }
-  .topbar { background:linear-gradient(135deg,#14532D,#166534); color:#fff; padding:18px 20px 16px; border-radius:0 0 26px 26px; box-shadow:0 6px 20px rgba(20,83,45,.25); }
-  .topbar h1 { font-size:27px; font-weight:700; letter-spacing:.2px; }
-  .topbar p { font-size:14.5px; opacity:.88; margin-top:2px; }
-  .wrap { max-width:560px; margin:0 auto; padding:18px 16px 40px; }
-  .shelfTitle { font-size:18px; font-weight:600; margin:16px 2px 12px; color:#37474F; }
-  .bookCard { background:#fff; border-radius:22px; overflow:hidden; box-shadow:0 10px 28px rgba(60,50,20,.14); cursor:pointer; transition:transform .15s; margin-bottom:16px; }
-  .bookCard:active { transform:scale(.985); }
-  .bookCard img { width:100%; display:block; aspect-ratio:16/10; object-fit:cover; }
-  .bookMeta { padding:14px 18px 16px; }
-  .bookMeta h2 { font-size:21px; font-weight:700; color:#1B4332; }
-  .bookMeta p { font-size:14px; color:#78909C; margin-top:2px; }
-  .chip { display:inline-block; background:#E8F5E9; color:#2E7D32; font-size:12.5px; font-weight:600; padding:3px 10px; border-radius:20px; margin-top:8px; margin-right:6px; }
-  .chip.alt { background:#FFF3E0; color:#E65100; }
-  .soon { margin-top:6px; background:#FFF8E1; border:1.5px dashed #FFD54F; color:#8D6E00; border-radius:16px; padding:13px 16px; font-size:14px; text-align:center; }
-  #reader { display:none; }
-  .rTop { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
-  .backBtn { background:#fff; border:none; box-shadow:0 3px 10px rgba(0,0,0,.1); border-radius:14px; padding:9px 14px; font-family:inherit; font-size:15px; font-weight:600; color:#14532D; cursor:pointer; }
-  .rTitle { font-size:18.5px; font-weight:700; color:#1B4332; flex:1; }
-  .pageCard { background:#fff; border-radius:24px; overflow:hidden; box-shadow:0 12px 30px rgba(60,50,20,.15); }
-  .imgWrap { overflow:hidden; aspect-ratio:16/10.6; background:#F1E9D8; }
-  .imgWrap img { width:100%; height:100%; display:block; object-fit:cover; animation:kb 16s ease-in-out infinite alternate; }
-  .imgWrap video { width:100%; height:100%; display:block; object-fit:cover; }
-  @keyframes kb { from { transform:scale(1.03) translate(0.6%,0.4%);} to { transform:scale(1.16) translate(-1.6%,1.6%);} }
-  .pageText { padding:18px 20px 8px; font-size:19px; line-height:1.75; color:#37474F; min-height:118px; }
-  .pageText .w { border-radius:6px; padding:0 2px; transition:background .18s, color .18s; }
-  .pageText .w.hl { background:#FFD54F; color:#4E342E; font-weight:700; box-shadow:0 1px 4px rgba(255,180,0,.45); }
-  .dots { display:flex; justify-content:center; gap:7px; padding:10px 0 16px; }
-  .dot { width:9px; height:9px; border-radius:50%; background:#D7CCC8; transition:all .2s; }
-  .dot.on { background:#2E7D32; width:24px; border-radius:6px; }
-  .controls { display:flex; gap:10px; align-items:stretch; margin-top:16px; }
-  .navBtn { flex:0 0 62px; background:#fff; border:none; border-radius:18px; box-shadow:0 4px 14px rgba(0,0,0,.1); font-size:24px; color:#14532D; cursor:pointer; padding:12px 0; }
-  .navBtn:disabled { opacity:.35; }
-  .playBtn { flex:1; background:linear-gradient(135deg,#2E7D32,#43A047); color:#fff; border:none; border-radius:18px; font-family:inherit; font-size:18.5px; font-weight:700; cursor:pointer; box-shadow:0 8px 20px rgba(46,125,50,.35); padding:13px 0; }
-  .playBtn.playing { background:linear-gradient(135deg,#C62828,#E53935); box-shadow:0 8px 20px rgba(198,40,40,.3); }
-  .autoRow { display:flex; align-items:center; justify-content:center; gap:9px; margin-top:15px; font-size:14.5px; color:#607D8B; }
-  .switch { position:relative; width:50px; height:28px; background:#CFD8DC; border-radius:20px; cursor:pointer; transition:background .2s; flex:0 0 50px; }
-  .switch::after { content:''; position:absolute; top:3px; left:3px; width:22px; height:22px; border-radius:50%; background:#fff; transition:left .2s; box-shadow:0 2px 5px rgba(0,0,0,.2); }
-  .switch.on { background:#43A047; }
-  .switch.on::after { left:25px; }
-  .pageNum { text-align:center; font-size:13.5px; color:#90A4AE; margin-top:10px; }
-  .fade { animation:fadeIn .35s ease; }
-  @keyframes fadeIn { from { opacity:.25; transform:translateX(8px);} to { opacity:1; transform:none;} }
-  .foot { text-align:center; font-size:12.5px; color:#B0A58E; margin-top:26px; }
+:root{
+  --bg:#0c1210; --panel:#131c18; --panel2:#182420; --line:#24352c;
+  --text:#eef5f0; --muted:#9db3a6; --lime:#b3fa39; --lime-dim:#8fd41f;
+  --red:#ff6b5e; --gold:#ffd34d; --radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Hind Siliguri',sans-serif;min-height:100vh}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 90px}
+
+/* header */
+header{position:sticky;top:0;z-index:50;background:rgba(12,18,16,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hd{max-width:760px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;gap:12px}
+.logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#1d2f24,#0f1a13);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:var(--lime)}
+.hd h1{font-size:19px;font-weight:700;line-height:1.15}
+.hd p{font-size:12px;color:var(--muted)}
+.hd .pct{margin-left:auto;text-align:right}
+.hd .pct b{font-size:20px;color:var(--lime)}
+.hd .pct span{display:block;font-size:11px;color:var(--muted)}
+
+/* hero stats */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0 6px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:14px 10px;text-align:center}
+.stat b{font-size:22px;display:block;color:#fff}
+.stat span{font-size:12px;color:var(--muted)}
+.bar{height:10px;background:#0a0f0c;border:1px solid var(--line);border-radius:99px;overflow:hidden;margin-top:10px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--lime-dim),var(--lime));border-radius:99px;transition:width .5s}
+.progress-note{font-size:13px;color:var(--muted);margin-top:8px;text-align:center}
+
+/* smart set */
+.smart{margin:20px 0 6px;background:linear-gradient(135deg,#1a2b1e,#101a12);border:1px solid #2c4632;border-radius:20px;padding:20px}
+.smart h2{font-size:20px;font-weight:700}
+.smart p{color:var(--muted);font-size:14px;margin:6px 0 14px;line-height:1.55}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--lime);color:#0c1407;font-weight:700;font-size:16px;padding:13px 22px;border-radius:99px;transition:transform .15s}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--lime);border:1.5px solid var(--lime-dim)}
+.btn.small{padding:9px 16px;font-size:14px}
+
+/* sections & topics */
+.sec-title{font-size:17px;font-weight:700;margin:26px 0 4px;display:flex;align-items:baseline;gap:8px}
+.sec-title small{color:var(--muted);font-weight:500;font-size:12px}
+.topic{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-top:10px}
+.topic h3{font-size:16.5px;font-weight:600}
+.topic p{font-size:13px;color:var(--muted);margin:3px 0 10px;line-height:1.5}
+.topic .meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.chip{font-size:12px;background:var(--panel2);border:1px solid var(--line);color:var(--muted);padding:4px 10px;border-radius:99px}
+.chip.gold{color:var(--gold);border-color:#4a3d14}
+.topic .row{display:flex;align-items:center;gap:12px}
+.topic .bar{flex:1;margin-top:0}
+.topic .tpct{font-size:13px;color:var(--lime);font-weight:600;min-width:42px;text-align:right}
+
+/* quiz */
+#quizView{display:none}
+.qhead{display:flex;align-items:center;gap:10px;margin:18px 0 6px}
+.qhead .bar{flex:1;margin-top:0}
+.qcount{font-size:13px;color:var(--muted);white-space:nowrap}
+.qcard{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px 18px;margin-top:12px}
+.badge{display:inline-block;font-size:12px;font-weight:600;padding:4px 11px;border-radius:99px;margin-bottom:12px;background:#223128;color:var(--muted);border:1px solid var(--line)}
+.badge.past{background:#3a2f0e;color:var(--gold);border-color:#5c4a12}
+.badge.neg{background:#33222e;color:#ff9ecf;border-color:#57324a}
+.badge.topic{background:#14261a;color:var(--lime);border-color:#2c4632}
+.qtext{font-size:19px;font-weight:600;line-height:1.6;margin-bottom:18px}
+.opt{display:block;width:100%;text-align:left;background:var(--panel2);border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;font-size:16.5px;margin-bottom:10px;color:var(--text);transition:border-color .15s,background .15s;line-height:1.5}
+.opt:active{transform:scale(.99)}
+.opt.right{border-color:var(--lime);background:#1c2f16}
+.opt.wrong{border-color:var(--red);background:#331b18}
+.opt.dim{opacity:.55}
+.opt:disabled{cursor:default}
+.factbox{display:none;background:#101b13;border:1px solid #2c4632;border-radius:14px;padding:14px 16px;margin-top:6px;font-size:15px;line-height:1.65}
+.factbox.show{display:block}
+.factbox b{color:var(--lime)}
+.factbox.bad b{color:var(--red)}
+.qnav{display:flex;gap:10px;margin-top:16px}
+.qnav .btn{flex:1;justify-content:center}
+.linkbtn{color:var(--muted);font-size:14px;text-decoration:underline;padding:10px}
+
+/* result */
+#resultView{display:none;text-align:center;padding-top:34px}
+#resultView .big{font-size:52px;font-weight:700;color:var(--lime)}
+#resultView h2{font-size:22px;margin-bottom:6px}
+#resultView p{color:var(--muted);line-height:1.6}
+.review{text-align:left;margin-top:22px}
+.review h3{font-size:16px;margin-bottom:8px}
+.review .ritem{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--red);border-radius:12px;padding:12px 14px;margin-bottom:8px;font-size:14.5px;line-height:1.6}
+.review .ritem b{color:#fff}
+footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-height:1.7}
+.empty{color:var(--muted);text-align:center;padding:30px 0;font-size:15px}
 </style>
 </head>
 <body>
-<div class="topbar">
-  <h1>গল্পের আসর</h1>
-  <p>ছবিতে দেখো, বাংলায় শোনো · গল্প আর পড়া, একই আসরে</p>
-</div>
-<div class="wrap">
-  <div id="shelf"></div>
+<header>
+  <div class="hd">
+    <div class="logo">বা</div>
+    <div>
+      <h1>বিসিএস বাচাকুরী প্রিপারেশন</h1>
+      <p>বাংলা বিষয় · তথ্যের জাল পদ্ধতি</p>
+    </div>
+    <div class="pct"><b id="hdPct">০%</b><span>মোট আয়ত্ত</span></div>
+  </div>
+</header>
 
-  <div id="reader">
-    <div class="rTop">
-      <button class="backBtn" onclick="closeBook()">‹ তাকে ফিরুন</button>
-      <div class="rTitle" id="rTitle"></div>
+<div class="wrap">
+  <!-- HOME -->
+  <div id="homeView">
+    <div class="stats">
+      <div class="stat"><b id="stFacts">০</b><span>মোট তথ্য</span></div>
+      <div class="stat"><b id="stMastered">০</b><span>আয়ত্ত হয়েছে</span></div>
+      <div class="stat"><b id="stDue">০</b><span>রিভিশনের বাকি</span></div>
     </div>
-    <div class="pageCard" id="pageCard">
-      <div class="imgWrap"><img id="pageImg" src="" alt=""><video id="pageVid" muted loop playsinline style="display:none"></video></div>
-      <div class="pageText" id="pageText"></div>
-      <div class="dots" id="dots"></div>
+    <div class="bar"><i id="mainBar" style="width:0%"></i></div>
+    <p class="progress-note" id="progressNote"></p>
+
+    <div class="smart">
+      <h2>আজকের স্মার্ট সেট</h2>
+      <p>সিস্টেম নিজে বেছে দেবে কোন প্রশ্ন এখন দরকার। ভুলতে বসা তথ্যের রিভিশন, দুর্বল জায়গার অনুশীলন আর নতুন টপিক, সব মিলিয়ে এক সেট।</p>
+      <button class="btn" onclick="startSmart()">স্মার্ট সেট শুরু করো</button>
     </div>
-    <div class="controls">
-      <button class="navBtn" id="prevBtn" onclick="goPage(cur-1)">‹</button>
-      <button class="playBtn" id="playBtn" onclick="togglePlay()">▶ &nbsp;শোনো</button>
-      <button class="navBtn" id="nextBtn" onclick="goPage(cur+1)">›</button>
+
+    <div id="topicList"></div>
+
+    <footer>
+      প্রতিটা উত্তর তোমার ব্যক্তিগত হিসাবে জমা থাকে এই ডিভাইসেই।<br>
+      ভুল করা তথ্য ঠিক সময়ে আবার সামনে আসবে, যতদিন না পুরোপুরি আয়ত্ত হচ্ছে।
+    </footer>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quizView">
+    <div class="qhead">
+      <button class="linkbtn" onclick="quitQuiz()">← ফিরে যাও</button>
+      <div class="bar"><i id="qBar" style="width:0%"></i></div>
+      <span class="qcount" id="qCount"></span>
     </div>
-    <div class="autoRow">
-      <div class="switch on" id="autoSw" onclick="toggleAuto()"></div>
-      <span>শোনা শেষ হলে নিজে নিজে পৃষ্ঠা উল্টাবে</span>
+    <div class="qcard">
+      <span class="badge" id="qBadge"></span>
+      <div class="qtext" id="qText"></div>
+      <div id="qOpts"></div>
+      <div class="factbox" id="factBox"></div>
+      <div class="qnav">
+        <button class="btn" id="nextBtn" style="display:none" onclick="nextQ()">পরের প্রশ্ন →</button>
+      </div>
     </div>
-    <div class="pageNum" id="pageNum"></div>
+  </div>
+
+  <!-- RESULT -->
+  <div id="resultView">
+    <h2>সেট শেষ</h2>
+    <div class="big" id="resScore"></div>
+    <p id="resLine"></p>
+    <div style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="btn" onclick="showHome()">হোমে ফিরে যাও</button>
+      <button class="btn ghost" onclick="startSmart()">আরেকটা স্মার্ট সেট</button>
+    </div>
+    <div class="review" id="reviewBox"></div>
   </div>
 </div>
-<audio id="player" preload="auto"></audio>
+
+<script src="data/sahitya_prachin.js"></script>
+<script src="data/sahitya_adhunik.js"></script>
+<script src="data/byakoron.js"></script>
 <script>
-  const P = (dir, n, imgDir, audDir, vidDir, text) => ({ img: imgDir + '/p' + n + '.webp', audio: audDir + '/p' + n + '.mp3', video: vidDir + '/p' + n + '.mp4', text });
-  const nuhTexts = [
-    'অনেক অনেক বছর আগে, এক দেশে নূহ (আ.) নামে একজন ভালো মানুষ থাকতেন। তিনি সবাইকে আল্লাহর কথা বলতেন, ভালো পথে চলতে বলতেন। কিন্তু বেশিরভাগ মানুষ তাঁর কথা শুনতো না, হাসাহাসি করতো।',
-    'একদিন আল্লাহ নূহ (আ.) কে বললেন, একটা অনেক বড় নৌকা বানাও। শীঘ্রই আকাশ থেকে অনেক বৃষ্টি নামবে, চারদিকে পানি আর পানি হয়ে যাবে।',
-    'নূহ (আ.) কাঠ জোগাড় করে দিনরাত নৌকা বানাতে লাগলেন। লোকেরা হেসে বললো, ডাঙায় আবার নৌকা কেন? নূহ (আ.) শান্ত গলায় বললেন, এটা আল্লাহর হুকুম, নৌকা তৈরি হবেই।',
-    'নৌকা তৈরি হলে আল্লাহ বললেন, প্রতিটা প্রাণী থেকে এক জোড়া করে নৌকায় তোলো। হাতি, সিংহ, ছাগল আর পাখিরা জোড়ায় জোড়ায় নৌকায় উঠলো। নূহ (আ.) এর পরিবারও নৌকায় উঠলো।',
-    'তারপর শুরু হলো মুষলধারে বৃষ্টি। বৃষ্টি পড়লো দিনের পর দিন। পানি বাড়তে বাড়তে উঁচু পাহাড় পর্যন্ত ডুবে গেল। কিন্তু বড় নৌকাটা নিরাপদে পানির ওপর ভেসে রইলো।',
-    'অনেক দিন পর বৃষ্টি থামলো। পানি আস্তে আস্তে নামতে লাগলো। নূহ (আ.) একটা কবুতর ছেড়ে দিলেন। কবুতরটা জলপাই গাছের পাতা ঠোঁটে নিয়ে ফিরে এলো। সবাই বুঝলো, কাছেই শুকনো মাটি আছে।',
-    'নৌকা গিয়ে থামলো এক পাহাড়ের ওপরে। দরজা খুলতেই সব প্রাণী খুশিতে বের হয়ে এলো। আর আকাশে দেখা দিলো সুন্দর রংধনু।',
-    'নূহ (আ.) আল্লাহর শুকরিয়া আদায় করলেন। সবাই মিলে নতুন করে ঘর বানালো, গাছ লাগালো। এই গল্পের শিক্ষা হলো, আল্লাহর কথা শুনলে আর ধৈর্য ধরলে, বিপদের মাঝেও তিনি রক্ষা করেন।'
-  ];
-  const chorjaTexts = [
-    'চর্যাপদ হলো বাংলা সাহিত্যের সবচেয়ে পুরনো নিদর্শন, আমাদের সাহিত্যের আদি যুগের একমাত্র পাওয়া নমুনা। এটা আসলে বৌদ্ধ সহজিয়া সাধকদের লেখা কিছু গানের সংকলন। গানগুলোতে তাঁরা তাঁদের সাধনার গভীর কথা বলেছেন সহজ ভাষার আড়ালে। বিসিএসে চর্যাপদ থেকে প্রশ্ন প্রায় প্রতিবারই আসে।',
-    'এই পুঁথি পৃথিবীর সামনে আসে এক রোমাঞ্চকর আবিষ্কারের মধ্য দিয়ে। ১৯০৭ সালে মহামহোপাধ্যায় হরপ্রসাদ শাস্ত্রী নেপালের রাজদরবারের গ্রন্থাগার থেকে পুঁথিটি উদ্ধার করেন। পরে ১৯১৬ সালে তিনি এটি প্রকাশ করেন, নাম দেন হাজার বছরের পুরানো বাংলা ভাষায় বৌদ্ধগান ও দোহা।',
-    'চর্যাপদের রচনাকাল নিয়ে মতভেদ থাকলেও সাধারণভাবে ধরা হয় খ্রিস্টীয় সপ্তম থেকে দ্বাদশ শতাব্দী। অর্থাৎ পাল রাজাদের আমলের সৃষ্টি এটি। সেই যুগে বাংলায় বৌদ্ধ বিহারগুলো ছিল জ্ঞানচর্চার প্রাণকেন্দ্র, আর সেই পরিবেশেই সিদ্ধাচার্য সাধকেরা এই পদগুলো রচনা করেন।',
-    'পুঁথিতে মোট ৫১টি পদ ছিল। কিন্তু সবগুলো আমাদের কাছে পৌঁছায়নি। পুঁথির কয়েকটি পৃষ্ঠা ছিঁড়ে যাওয়ায় পাওয়া গেছে মোট সাড়ে ৪৬টি পদ, ৪৬টি পুরোপুরি আর একটির অর্ধেক। হারানো অংশগুলোর কথা জানা যায় পুঁথির তিব্বতি অনুবাদ থেকে।',
-    'চর্যাপদের পদকর্তা মোট ২৪ জন, তাঁদের বলা হয় সিদ্ধাচার্য। বাংলা সাহিত্যের আদি কবি হলেন লুইপা। আর সবচেয়ে বেশি পদ লিখেছেন কাহ্নপা, তাঁর পদ পাওয়া গেছে মোট ১৩টি। অন্য বড় নামগুলো হলো ভুসুকুপা, সরহপা, শবরপা ও কুক্কুরীপা।',
-    'চর্যাপদের ভাষাকে বলা হয় সান্ধ্যভাষা। এই নামটি দিয়েছেন হরপ্রসাদ শাস্ত্রী নিজে। সান্ধ্যা মানে আলো আঁধারি, অর্থাৎ এই ভাষার বাইরের অর্থ এক রকম, আর ভেতরের সাধনতত্ত্বের অর্থ আরেক রকম। সাধারণ পাঠক পড়বে একটা, কিন্তু সাধক বুঝবেন তার গভীর অন্য মানে।',
-    'কাহ্নপার বিখ্যাত পদের শুরুটা হলো, কা আ তরুবর পাঞ্চ বি ডাল। এখানে মানুষের দেহকে তুলনা করা হয়েছে গাছের সাথে, আর পাঁচটি ডাল হলো পাঁচটি ইন্দ্রিয়। এমনিভাবে নৌকা, নদী আর ডোম্বীর মতো রূপকের আড়ালে চর্যাপদে বলা হয়েছে সাধনার গভীর সব কথা। প্রতিটি পদের মাথায় আবার গাওয়ার রাগের নামও দেওয়া আছে।',
-    'শেষে পরীক্ষার হলে মনে রাখার মতো সারকথাগুলো একসাথে গুছিয়ে নিই। আবিষ্কার ১৯০৭ সাল, জায়গা নেপাল, আবিষ্কারক হরপ্রসাদ শাস্ত্রী। ভাষা সান্ধ্যভাষা। কবি ২৪ জন, আদি কবি লুইপা, সবচেয়ে বেশি পদ কাহ্নপার ১৩টি। মোট পদ ৫১টি, পাওয়া গেছে সাড়ে ৪৬টি। এই কয়েকটা তথ্য মুখস্থ থাকলেই চর্যাপদের বেশিরভাগ প্রশ্নের উত্তর তোমার হাতে।'
-  ];
-  const books = [
-    { section:'ছোটদের গল্পের তাক', title:'নূহ (আ.) এর বড় নৌকা', sub:'বড় বন্যা আর একটা বিশাল নৌকার গল্প · ৮ পৃষ্ঠা · অডিও ও অ্যানিমেশন সহ', chips:['নবীদের গল্প','বয়স ৪ থেকে ৮'], cover:'assets/img2/cover.webp',
-      pages: nuhTexts.map((t, i) => P(null, i + 1, 'assets/img2', 'assets/audio', 'assets/video', t)) },
-    { section:'বিসিএস বাংলার তাক', title:'চর্যাপদ', sub:'বাংলা সাহিত্যের আদি নিদর্শন · লেসন ১ · ৮ পৃষ্ঠা · অডিও ও অ্যানিমেশন সহ', chips:['বিসিএস বাংলা','আদি যুগ'], cover:'assets/bcs1/img/cover.webp',
-      pages: chorjaTexts.map((t, i) => P(null, i + 1, 'assets/bcs1/img', 'assets/bcs1/audio', 'assets/bcs1/video', t)) }
-  ];
-  // shelf render
-  const shelf = document.getElementById('shelf');
-  let shelfHtml = '';
-  books.forEach((b, bi) => {
-    shelfHtml += '<div class="shelfTitle">' + b.section + '</div>';
-    shelfHtml += '<div class="bookCard" onclick="openBook(' + bi + ')"><img src="' + b.cover + '" alt="">' +
-      '<div class="bookMeta"><h2>' + b.title + '</h2><p>' + b.sub + '</p>' +
-      b.chips.map((c, ci) => '<span class="chip' + (ci ? ' alt' : '') + '">' + c + '</span>').join('') +
-      '</div></div>';
+"use strict";
+var TOPICS = window.__T || [];
+var BN = ["০","১","২","৩","৪","৫","৬","৭","৮","৯"];
+function bn(n){ return String(n).replace(/[0-9]/g, function(d){ return BN[+d]; }); }
+function pctBn(x){ return bn(x) + "%"; }
+
+/* ---------- storage ---------- */
+var DBKEY = "bachakuri_bangla_v1";
+var DB = {};
+try { DB = JSON.parse(localStorage.getItem(DBKEY) || "{}"); } catch(e){ DB = {}; }
+function saveDB(){ try { localStorage.setItem(DBKEY, JSON.stringify(DB)); } catch(e){} }
+function keyOf(t, it){ return t.name + "|" + it.q; }
+function stateOf(t, it){ return DB[keyOf(t, it)] || null; }
+
+/* intervals in minutes by level */
+var INTERVALS = [10, 1440, 4320, 10080, 23040, 50400];
+function recordAnswer(t, it, correct){
+  var k = keyOf(t, it);
+  var s = DB[k] || { lvl:0, due:0, seen:0, right:0 };
+  s.seen++;
+  if (correct){ s.right++; s.lvl = Math.min(5, s.lvl + 1); }
+  else { s.lvl = 0; }
+  s.due = Date.now() + INTERVALS[s.lvl] * 60000;
+  DB[k] = s; saveDB();
+}
+function isMastered(t, it){ var s = stateOf(t, it); return s && s.lvl >= 4; }
+
+/* ---------- pools ---------- */
+var POOLS = {};
+TOPICS.forEach(function(t){ t.items.forEach(function(it){
+  if (!POOLS[it.pool]) POOLS[it.pool] = {};
+  POOLS[it.pool][it.a] = true;
+});});
+function poolAnswers(pool, exclude){
+  var arr = Object.keys(POOLS[pool] || {}).filter(function(x){ return x !== exclude; });
+  return shuffle(arr);
+}
+function shuffle(a){ a = a.slice(); for (var i=a.length-1;i>0;i--){ var j = Math.floor(Math.random()*(i+1)); var x=a[i]; a[i]=a[j]; a[j]=x; } return a; }
+
+/* ---------- question generation ---------- */
+function makeForward(t, it){
+  var distract = poolAnswers(it.pool, it.a);
+  var opts = [it.a];
+  for (var i=0;i<distract.length && opts.length<4;i++) opts.push(distract[i]);
+  if (opts.length < 4){
+    /* fall back to other pools */
+    var all = [];
+    Object.keys(POOLS).forEach(function(p){ if (p !== it.pool) all = all.concat(Object.keys(POOLS[p])); });
+    all = shuffle(all.filter(function(x){ return opts.indexOf(x) < 0; }));
+    for (var j=0;j<all.length && opts.length<4;j++) opts.push(all[j]);
+  }
+  opts = shuffle(opts);
+  return { topic:t, item:it, q: it.q, opts: opts, ans: opts.indexOf(it.a),
+           fact: it.fact, st: it.st, badge: t.name, badgeCls: "topic" };
+}
+function makeNegative(t){
+  var withSt = t.items.filter(function(it){ return it.st && it.st.indexOf(it.a) >= 0; });
+  if (withSt.length < 4) return null;
+  var picked = shuffle(withSt).slice(0, 4);
+  var target = picked[0];
+  var others = poolAnswers(target.pool, target.a);
+  if (!others.length) return null;
+  var falseSt = target.st.replace(target.a, others[0]);
+  if (falseSt === target.st) return null;
+  var opts = shuffle([picked[1].st, picked[2].st, picked[3].st, falseSt]);
+  return { topic:t, item:target, q: "কোনটি সঠিক নয়?", opts: opts, ans: opts.indexOf(falseSt),
+           fact: "সঠিক তথ্য হলো, " + target.st, st: target.st, badge: "সঠিক নয় বাছাই", badgeCls: "neg" };
+}
+function makePast(t, p){
+  var opts = shuffle(p.opts.slice());
+  return { topic:t, item:null, q: p.q, opts: opts, ans: opts.indexOf(p.opts[p.ans]),
+           fact: "", st: "", badge: p.bcs + " বিসিএসে এসেছে", badgeCls: "past", pastObj: p };
+}
+function makeQuestion(t, it){
+  if (Math.random() < 0.22){
+    var neg = makeNegative(t);
+    if (neg) return neg;
+  }
+  return makeForward(t, it);
+}
+
+/* ---------- sessions ---------- */
+var session = null;
+function startSmart(){
+  var now = Date.now();
+  var due = [], weak = [], fresh = [];
+  TOPICS.forEach(function(t){ t.items.forEach(function(it){
+    var s = stateOf(t, it);
+    if (!s) fresh.push([t, it]);
+    else if (s.due <= now) due.push([t, it]);
+    else if (s.lvl < 3) weak.push([t, it]);
+  });});
+  var picked = shuffle(due).concat(shuffle(weak)).concat(shuffle(fresh)).slice(0, 18);
+  var qs = picked.map(function(pair){ return makeQuestion(pair[0], pair[1]); });
+  var pastPool = [];
+  TOPICS.forEach(function(t){ (t.past || []).forEach(function(p){ pastPool.push([t, p]); }); });
+  shuffle(pastPool).slice(0, 2).forEach(function(pair){ qs.push(makePast(pair[0], pair[1])); });
+  qs = shuffle(qs).slice(0, 20);
+  if (!qs.length){ alert("এখনো কোনো তথ্য লোড হয়নি।"); return; }
+  beginSession(qs, "স্মার্ট সেট");
+}
+function startTopic(idx){
+  var t = TOPICS[idx];
+  var qs = shuffle(t.items.slice()).map(function(it){ return makeQuestion(t, it); });
+  (t.past || []).forEach(function(p){ qs.push(makePast(t, p)); });
+  beginSession(shuffle(qs), t.name);
+}
+function beginSession(qs, title){
+  session = { qs: qs, i: 0, right: 0, wrongs: [], title: title };
+  document.getElementById("homeView").style.display = "none";
+  document.getElementById("resultView").style.display = "none";
+  document.getElementById("quizView").style.display = "block";
+  window.scrollTo(0, 0);
+  renderQ();
+}
+function renderQ(){
+  var q = session.qs[session.i];
+  document.getElementById("qBar").style.width = Math.round(session.i / session.qs.length * 100) + "%";
+  document.getElementById("qCount").textContent = bn(session.i + 1) + " / " + bn(session.qs.length);
+  var badge = document.getElementById("qBadge");
+  badge.textContent = q.badge; badge.className = "badge " + q.badgeCls;
+  document.getElementById("qText").textContent = q.q;
+  var box = document.getElementById("factBox");
+  box.className = "factbox"; box.innerHTML = "";
+  document.getElementById("nextBtn").style.display = "none";
+  var optsEl = document.getElementById("qOpts");
+  optsEl.innerHTML = "";
+  q.opts.forEach(function(o, idx){
+    var b = document.createElement("button");
+    b.className = "opt"; b.textContent = o;
+    b.onclick = function(){ answer(idx); };
+    optsEl.appendChild(b);
   });
-  shelfHtml += '<div class="soon">ডেমো সংস্করণে আপাতত এই দুটো বই আছে। পুরো সংস্করণে তাকে আরো অনেক গল্প আর লেসন আসবে ইনশাআল্লাহ।</div><div class="foot">গল্পের আসর · ডেমো</div>';
-  shelf.innerHTML = shelfHtml;
-
-  let book = null, cur = 0, auto = true;
-  const player = document.getElementById('player');
-  const vid = document.getElementById('pageVid');
-  const dotsBox = document.getElementById('dots');
-  vid.addEventListener('error', () => { vid.style.display = 'none'; document.getElementById('pageImg').style.display = 'block'; }, true);
-
-  function openBook(bi) {
-    book = books[bi];
-    document.getElementById('rTitle').textContent = book.title;
-    dotsBox.innerHTML = '';
-    book.pages.forEach(() => { const d = document.createElement('div'); d.className = 'dot'; dotsBox.appendChild(d); });
-    document.getElementById('shelf').style.display = 'none';
-    document.getElementById('reader').style.display = 'block';
-    goPage(0);
-    window.scrollTo(0, 0);
-  }
-  function closeBook() {
-    stopPlay();
-    vid.pause();
-    document.getElementById('reader').style.display = 'none';
-    document.getElementById('shelf').style.display = 'block';
-    window.scrollTo(0, 0);
-  }
-  let wordSpans = [], wordWeights = [], totalWeight = 0, hlIndex = -1;
-  function buildWords(text) {
-    const words = text.split(/\s+/).filter(Boolean);
-    wordWeights = words.map(w => w.length + 1);
-    totalWeight = wordWeights.reduce((a, b) => a + b, 0);
-    hlIndex = -1;
-    const box = document.getElementById('pageText');
-    box.innerHTML = words.map(w => '<span class="w">' + w + '</span>').join(' ');
-    wordSpans = [...box.querySelectorAll('.w')];
-  }
-  function setHighlight(idx) {
-    if (idx === hlIndex) return;
-    if (hlIndex >= 0 && wordSpans[hlIndex]) wordSpans[hlIndex].classList.remove('hl');
-    hlIndex = idx;
-    if (idx >= 0 && wordSpans[idx]) wordSpans[idx].classList.add('hl');
-  }
-  function syncWords() {
-    if (!player.duration || !wordSpans.length) return;
-    let target = (player.currentTime / player.duration) * totalWeight;
-    let acc = 0, idx = wordSpans.length - 1;
-    for (let i = 0; i < wordWeights.length; i++) { acc += wordWeights[i]; if (target < acc) { idx = i; break; } }
-    setHighlight(idx);
-  }
-  player.addEventListener('timeupdate', syncWords);
-  player.addEventListener('seeked', syncWords);
-
-  function render() {
-    const p = book.pages[cur];
-    const img = document.getElementById('pageImg');
-    img.src = p.img;
-    vid.src = p.video;
-    vid.style.display = 'block'; img.style.display = 'none';
-    vid.currentTime = 0;
-    vid.play().catch(() => { vid.style.display = 'none'; img.style.display = 'block'; });
-    buildWords(p.text);
-    document.getElementById('pageNum').textContent = 'পৃষ্ঠা ' + (cur + 1) + ' / ' + book.pages.length;
-    document.getElementById('prevBtn').disabled = cur === 0;
-    document.getElementById('nextBtn').disabled = cur === book.pages.length - 1;
-    [...dotsBox.children].forEach((d, i) => d.classList.toggle('on', i === cur));
-    const card = document.getElementById('pageCard');
-    card.classList.remove('fade'); void card.offsetWidth; card.classList.add('fade');
-    player.src = p.audio;
-  }
-  function goPage(i) {
-    if (!book || i < 0 || i >= book.pages.length) return;
-    const wasPlaying = !player.paused;
-    cur = i; render();
-    if (wasPlaying || window._wantPlay) playNow();
-  }
-  function playNow() { player.play().catch(()=>{}); setPlayUI(true); }
-  function stopPlay() { player.pause(); player.currentTime = 0; setPlayUI(false); window._wantPlay = false; }
-  function setPlayUI(on) {
-    const b = document.getElementById('playBtn');
-    b.classList.toggle('playing', on);
-    b.innerHTML = on ? '❚❚ &nbsp;থামাও' : '▶ &nbsp;শোনো';
-  }
-  function togglePlay() {
-    if (player.paused) { window._wantPlay = true; playNow(); }
-    else { window._wantPlay = false; player.pause(); setPlayUI(false); }
-  }
-  function toggleAuto() { auto = !auto; document.getElementById('autoSw').classList.toggle('on', auto); }
-  player.addEventListener('ended', () => {
-    setPlayUI(false);
-    setHighlight(-1);
-    if (auto && book && cur < book.pages.length - 1) { cur++; render(); playNow(); }
-    else window._wantPlay = false;
+}
+function answer(idx){
+  var q = session.qs[session.i];
+  var correct = idx === q.ans;
+  var btns = document.querySelectorAll("#qOpts .opt");
+  btns.forEach(function(b, i){
+    b.disabled = true;
+    if (i === q.ans) b.classList.add("right");
+    else if (i === idx) b.classList.add("wrong");
+    else b.classList.add("dim");
   });
-  player.addEventListener('pause', () => { if (!window._wantPlay) setPlayUI(false); });
-  let tx = null;
-  document.getElementById('pageCard').addEventListener('touchstart', e => tx = e.touches[0].clientX, {passive:true});
-  document.getElementById('pageCard').addEventListener('touchend', e => {
-    if (tx === null) return;
-    const dx = e.changedTouches[0].clientX - tx;
-    if (dx < -55) goPage(cur + 1);
-    if (dx > 55) goPage(cur - 1);
-    tx = null;
-  }, {passive:true});
+  if (q.item) recordAnswer(q.topic, q.item, correct);
+  if (q.pastObj){
+    /* past questions also train the linked memory lightly: no item state */
+  }
+  var box = document.getElementById("factBox");
+  if (correct){ session.right++; box.innerHTML = "<b>সঠিক।</b> " + (q.fact || q.st || ""); }
+  else {
+    session.wrongs.push(q);
+    box.innerHTML = "<b>ভুল হয়েছে।</b> সঠিক উত্তর, " + q.opts[q.ans] + "। " + (q.fact || q.st || "");
+    box.classList.add("bad");
+  }
+  box.classList.add("show");
+  var nb = document.getElementById("nextBtn");
+  nb.textContent = session.i === session.qs.length - 1 ? "ফলাফল দেখো →" : "পরের প্রশ্ন →";
+  nb.style.display = "inline-flex";
+}
+function nextQ(){
+  session.i++;
+  if (session.i >= session.qs.length){ showResult(); return; }
+  renderQ();
+}
+function quitQuiz(){ session = null; showHome(); }
+function showResult(){
+  document.getElementById("quizView").style.display = "none";
+  document.getElementById("resultView").style.display = "block";
+  var total = session.qs.length;
+  document.getElementById("resScore").textContent = bn(session.right) + " / " + bn(total);
+  document.getElementById("resLine").textContent =
+    session.right === total ? "দারুণ, এই সেটের সবকটাই ঠিক হয়েছে।" :
+    session.right >= total * 0.7 ? "ভালো হচ্ছে। ভুলগুলো আবার ফিরে আসবে রিভিশনে।" :
+    "ভুলগুলোই এখন সবচেয়ে দামি। সেগুলো সিস্টেম আবার সামনে আনবে।";
+  var rb = document.getElementById("reviewBox");
+  if (session.wrongs.length){
+    rb.innerHTML = "<h3>যেগুলো ভুল হলো</h3>" + session.wrongs.map(function(q){
+      return "<div class='ritem'><b>" + q.q + "</b><br>সঠিক উত্তর, " + q.opts[q.ans] + (q.fact ? "<br>" + q.fact : (q.st ? "<br>" + q.st : "")) + "</div>";
+    }).join("");
+  } else rb.innerHTML = "";
+  session = null;
+  renderHome();
+  window.scrollTo(0, 0);
+}
+
+/* ---------- home ---------- */
+var SECTION_ORDER = ["প্রাচীন ও মধ্যযুগের সাহিত্য", "আধুনিক সাহিত্য", "বাংলা ভাষা ও ব্যাকরণ"];
+function topicMastery(t){
+  if (!t.items.length) return 0;
+  var m = 0;
+  t.items.forEach(function(it){ if (isMastered(t, it)) m++; });
+  return Math.round(m / t.items.length * 100);
+}
+function renderHome(){
+  var totalFacts = 0, mastered = 0, dueCount = 0, now = Date.now();
+  TOPICS.forEach(function(t){ t.items.forEach(function(it){
+    totalFacts++;
+    if (isMastered(t, it)) mastered++;
+    var s = stateOf(t, it);
+    if (s && s.due <= now) dueCount++;
+  });});
+  var pct = totalFacts ? Math.round(mastered / totalFacts * 100) : 0;
+  document.getElementById("hdPct").textContent = pctBn(pct);
+  document.getElementById("stFacts").textContent = bn(totalFacts);
+  document.getElementById("stMastered").textContent = bn(mastered);
+  document.getElementById("stDue").textContent = bn(dueCount);
+  document.getElementById("mainBar").style.width = pct + "%";
+  document.getElementById("progressNote").textContent =
+    "বাংলা বিষয়ের " + bn(totalFacts) + "টি তথ্যের মধ্যে " + bn(mastered) + "টি পুরোপুরি আয়ত্ত হয়েছে।";
+
+  var html = "";
+  SECTION_ORDER.forEach(function(sec){
+    var list = TOPICS.map(function(t, i){ return [t, i]; }).filter(function(pair){ return pair[0].section === sec; });
+    if (!list.length) return;
+    var secFacts = 0; list.forEach(function(pair){ secFacts += pair[0].items.length; });
+    html += "<div class='sec-title'>" + sec + " <small>" + bn(list.length) + "টি টপিক · " + bn(secFacts) + "টি তথ্য</small></div>";
+    list.forEach(function(pair){
+      var t = pair[0], idx = pair[1];
+      var mp = topicMastery(t);
+      html += "<div class='topic'><h3>" + t.name + "</h3><p>" + t.intro + "</p>" +
+        "<div class='meta'><span class='chip'>" + bn(t.items.length) + "টি তথ্য</span>" +
+        ((t.past && t.past.length) ? "<span class='chip gold'>" + bn(t.past.length) + "টি আসল বিগত প্রশ্ন</span>" : "") +
+        "</div><div class='row'><div class='bar'><i style='width:" + mp + "%'></i></div>" +
+        "<span class='tpct'>" + pctBn(mp) + "</span>" +
+        "<button class='btn small' onclick='startTopic(" + idx + ")'>অনুশীলন</button></div></div>";
+    });
+  });
+  document.getElementById("topicList").innerHTML = html || "<div class='empty'>তথ্য লোড হচ্ছে…</div>";
+}
+function showHome(){
+  document.getElementById("quizView").style.display = "none";
+  document.getElementById("resultView").style.display = "none";
+  document.getElementById("homeView").style.display = "block";
+  renderHome();
+  window.scrollTo(0, 0);
+}
+renderHome();
 </script>
 </body>
 </html>
