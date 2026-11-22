@@ -28,7 +28,11 @@
   .backBtn { background:#fff; border:none; box-shadow:0 3px 10px rgba(0,0,0,.1); border-radius:14px; padding:9px 14px; font-family:inherit; font-size:15px; font-weight:600; color:#14532D; cursor:pointer; }
   .rTitle { font-size:18.5px; font-weight:700; color:#1B4332; flex:1; }
   .pageCard { background:#fff; border-radius:24px; overflow:hidden; box-shadow:0 12px 30px rgba(60,50,20,.15); }
-  .pageCard img { width:100%; display:block; aspect-ratio:16/10.6; object-fit:cover; background:#F1E9D8; }
+  .imgWrap { overflow:hidden; aspect-ratio:16/10.6; background:#F1E9D8; }
+  .imgWrap img { width:100%; height:100%; display:block; object-fit:cover; animation:kb 16s ease-in-out infinite alternate; }
+  @keyframes kb { from { transform:scale(1.03) translate(0.6%,0.4%);} to { transform:scale(1.16) translate(-1.6%,1.6%);} }
+  .pageText .w { border-radius:6px; padding:0 2px; transition:background .18s, color .18s; }
+  .pageText .w.hl { background:#FFD54F; color:#4E342E; font-weight:700; box-shadow:0 1px 4px rgba(255,180,0,.45); }
   .pageText { padding:18px 20px 8px; font-size:19px; line-height:1.75; color:#37474F; min-height:118px; }
   .dots { display:flex; justify-content:center; gap:7px; padding:10px 0 16px; }
   .dot { width:9px; height:9px; border-radius:50%; background:#D7CCC8; transition:all .2s; }
@@ -76,7 +80,7 @@
       <div class="rTitle">নূহ (আ.) এর বড় নৌকা</div>
     </div>
     <div class="pageCard" id="pageCard">
-      <img id="pageImg" src="" alt="">
+      <div class="imgWrap"><img id="pageImg" src="" alt=""></div>
       <div class="pageText" id="pageText"></div>
       <div class="dots" id="dots"></div>
     </div>
@@ -121,11 +125,38 @@
     document.getElementById('shelf').style.display = 'block';
     window.scrollTo(0, 0);
   }
+  let wordSpans = [], wordWeights = [], totalWeight = 0, hlIndex = -1;
+  function buildWords(text) {
+    const words = text.split(/\s+/).filter(Boolean);
+    wordWeights = words.map(w => w.length + 1);
+    totalWeight = wordWeights.reduce((a, b) => a + b, 0);
+    hlIndex = -1;
+    const box = document.getElementById('pageText');
+    box.innerHTML = words.map(w => '<span class="w">' + w + '</span>').join(' ');
+    wordSpans = [...box.querySelectorAll('.w')];
+  }
+  function setHighlight(idx) {
+    if (idx === hlIndex) return;
+    if (hlIndex >= 0 && wordSpans[hlIndex]) wordSpans[hlIndex].classList.remove('hl');
+    hlIndex = idx;
+    if (idx >= 0 && wordSpans[idx]) wordSpans[idx].classList.add('hl');
+  }
+  function syncWords() {
+    if (!player.duration || !wordSpans.length) return;
+    let target = (player.currentTime / player.duration) * totalWeight;
+    let acc = 0, idx = wordSpans.length - 1;
+    for (let i = 0; i < wordWeights.length; i++) { acc += wordWeights[i]; if (target < acc) { idx = i; break; } }
+    setHighlight(idx);
+  }
+  player.addEventListener('timeupdate', syncWords);
+  player.addEventListener('seeked', syncWords);
+  player.addEventListener('ended', () => setHighlight(-1));
+
   function render() {
     const p = pages[cur];
     const img = document.getElementById('pageImg');
     img.src = p.img;
-    document.getElementById('pageText').textContent = p.text;
+    buildWords(p.text);
     document.getElementById('pageNum').textContent = 'পৃষ্ঠা ' + '০১২৩৪৫৬৭৮৯'[cur+1] + ' / ৮'.replace('৮','৮');
     document.getElementById('pageNum').textContent = 'পৃষ্ঠা ' + (cur+1) + ' / ' + pages.length;
     document.getElementById('prevBtn').disabled = cur === 0;
