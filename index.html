@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>গল্পের আসর · ডেমো</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body { font-family:'Hind Siliguri',sans-serif; background:#FBF6EC; color:#263238; min-height:100vh; }
+  .topbar { background:linear-gradient(135deg,#14532D,#166534); color:#fff; padding:18px 20px 16px; border-radius:0 0 26px 26px; box-shadow:0 6px 20px rgba(20,83,45,.25); }
+  .topbar h1 { font-size:27px; font-weight:700; letter-spacing:.2px; }
+  .topbar p { font-size:14.5px; opacity:.88; margin-top:2px; }
+  .wrap { max-width:560px; margin:0 auto; padding:18px 16px 40px; }
+  .shelfTitle { font-size:18px; font-weight:600; margin:8px 2px 12px; color:#37474F; }
+  .bookCard { background:#fff; border-radius:22px; overflow:hidden; box-shadow:0 10px 28px rgba(60,50,20,.14); cursor:pointer; transition:transform .15s; }
+  .bookCard:active { transform:scale(.985); }
+  .bookCard img { width:100%; display:block; aspect-ratio:16/10; object-fit:cover; }
+  .bookMeta { padding:14px 18px 16px; }
+  .bookMeta h2 { font-size:21px; font-weight:700; color:#1B4332; }
+  .bookMeta p { font-size:14px; color:#78909C; margin-top:2px; }
+  .chip { display:inline-block; background:#E8F5E9; color:#2E7D32; font-size:12.5px; font-weight:600; padding:3px 10px; border-radius:20px; margin-top:8px; }
+  .soon { margin-top:16px; background:#FFF8E1; border:1.5px dashed #FFD54F; color:#8D6E00; border-radius:16px; padding:13px 16px; font-size:14px; text-align:center; }
+  /* reader */
+  #reader { display:none; }
+  .rTop { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+  .backBtn { background:#fff; border:none; box-shadow:0 3px 10px rgba(0,0,0,.1); border-radius:14px; padding:9px 14px; font-family:inherit; font-size:15px; font-weight:600; color:#14532D; cursor:pointer; }
+  .rTitle { font-size:18.5px; font-weight:700; color:#1B4332; flex:1; }
+  .pageCard { background:#fff; border-radius:24px; overflow:hidden; box-shadow:0 12px 30px rgba(60,50,20,.15); }
+  .pageCard img { width:100%; display:block; aspect-ratio:16/10.6; object-fit:cover; background:#F1E9D8; }
+  .pageText { padding:18px 20px 8px; font-size:19px; line-height:1.75; color:#37474F; min-height:118px; }
+  .dots { display:flex; justify-content:center; gap:7px; padding:10px 0 16px; }
+  .dot { width:9px; height:9px; border-radius:50%; background:#D7CCC8; transition:all .2s; }
+  .dot.on { background:#2E7D32; width:24px; border-radius:6px; }
+  .controls { display:flex; gap:10px; align-items:stretch; margin-top:16px; }
+  .navBtn { flex:0 0 62px; background:#fff; border:none; border-radius:18px; box-shadow:0 4px 14px rgba(0,0,0,.1); font-size:24px; color:#14532D; cursor:pointer; padding:12px 0; }
+  .navBtn:disabled { opacity:.35; }
+  .playBtn { flex:1; background:linear-gradient(135deg,#2E7D32,#43A047); color:#fff; border:none; border-radius:18px; font-family:inherit; font-size:18.5px; font-weight:700; cursor:pointer; box-shadow:0 8px 20px rgba(46,125,50,.35); padding:13px 0; }
+  .playBtn.playing { background:linear-gradient(135deg,#C62828,#E53935); box-shadow:0 8px 20px rgba(198,40,40,.3); }
+  .autoRow { display:flex; align-items:center; justify-content:center; gap:9px; margin-top:15px; font-size:14.5px; color:#607D8B; }
+  .switch { position:relative; width:50px; height:28px; background:#CFD8DC; border-radius:20px; cursor:pointer; transition:background .2s; flex:0 0 50px; }
+  .switch::after { content:''; position:absolute; top:3px; left:3px; width:22px; height:22px; border-radius:50%; background:#fff; transition:left .2s; box-shadow:0 2px 5px rgba(0,0,0,.2); }
+  .switch.on { background:#43A047; }
+  .switch.on::after { left:25px; }
+  .pageNum { text-align:center; font-size:13.5px; color:#90A4AE; margin-top:10px; }
+  .fade { animation:fadeIn .35s ease; }
+  @keyframes fadeIn { from { opacity:.25; transform:translateX(8px);} to { opacity:1; transform:none;} }
+  .foot { text-align:center; font-size:12.5px; color:#B0A58E; margin-top:26px; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <h1>গল্পের আসর</h1>
+  <p>ছবিতে দেখো, বাংলায় শোনো · ছোটদের ইসলামী গল্পের অডিও বই</p>
+</div>
+<div class="wrap">
+  <div id="shelf">
+    <div class="shelfTitle">বইয়ের তাক</div>
+    <div class="bookCard" onclick="openBook()">
+      <img src="assets/img/cover.webp" alt="নূহ (আ.) এর বড় নৌকা">
+      <div class="bookMeta">
+        <h2>নূহ (আ.) এর বড় নৌকা</h2>
+        <p>বড় বন্যা আর একটা বিশাল নৌকার গল্প · ৮ পৃষ্ঠা · অডিও সহ</p>
+        <span class="chip">নবীদের গল্প</span>
+        <span class="chip" style="background:#FFF3E0;color:#E65100;">বয়স ৪ থেকে ৮</span>
+      </div>
+    </div>
+    <div class="soon">ডেমো সংস্করণে আপাতত এই একটাই বই আছে। পুরো সংস্করণে তাকে আরো অনেক বই আসবে ইনশাআল্লাহ।</div>
+    <div class="foot">গল্পের আসর · ডেমো</div>
+  </div>
+
+  <div id="reader">
+    <div class="rTop">
+      <button class="backBtn" onclick="closeBook()">‹ তাকে ফিরুন</button>
+      <div class="rTitle">নূহ (আ.) এর বড় নৌকা</div>
+    </div>
+    <div class="pageCard" id="pageCard">
+      <img id="pageImg" src="" alt="">
+      <div class="pageText" id="pageText"></div>
+      <div class="dots" id="dots"></div>
+    </div>
+    <div class="controls">
+      <button class="navBtn" id="prevBtn" onclick="goPage(cur-1)">‹</button>
+      <button class="playBtn" id="playBtn" onclick="togglePlay()">▶ &nbsp;গল্পটা শোনো</button>
+      <button class="navBtn" id="nextBtn" onclick="goPage(cur+1)">›</button>
+    </div>
+    <div class="autoRow">
+      <div class="switch on" id="autoSw" onclick="toggleAuto()"></div>
+      <span>শোনা শেষ হলে নিজে নিজে পৃষ্ঠা উল্টাবে</span>
+    </div>
+    <div class="pageNum" id="pageNum"></div>
+  </div>
+</div>
+<audio id="player" preload="auto"></audio>
+<script>
+  const pages = [
+    { img:'assets/img/p1.webp', audio:'assets/audio/p1.mp3', text:'অনেক অনেক বছর আগে, এক দেশে নূহ (আ.) নামে একজন ভালো মানুষ থাকতেন। তিনি সবাইকে আল্লাহর কথা বলতেন, ভালো পথে চলতে বলতেন। কিন্তু বেশিরভাগ মানুষ তাঁর কথা শুনতো না, হাসাহাসি করতো।' },
+    { img:'assets/img/p2.webp', audio:'assets/audio/p2.mp3', text:'একদিন আল্লাহ নূহ (আ.) কে বললেন, একটা অনেক বড় নৌকা বানাও। শীঘ্রই আকাশ থেকে অনেক বৃষ্টি নামবে, চারদিকে পানি আর পানি হয়ে যাবে।' },
+    { img:'assets/img/p3.webp', audio:'assets/audio/p3.mp3', text:'নূহ (আ.) কাঠ জোগাড় করে দিনরাত নৌকা বানাতে লাগলেন। লোকেরা হেসে বললো, ডাঙায় আবার নৌকা কেন? নূহ (আ.) শান্ত গলায় বললেন, এটা আল্লাহর হুকুম, নৌকা তৈরি হবেই।' },
+    { img:'assets/img/p4.webp', audio:'assets/audio/p4.mp3', text:'নৌকা তৈরি হলে আল্লাহ বললেন, প্রতিটা প্রাণী থেকে এক জোড়া করে নৌকায় তোলো। হাতি, সিংহ, ছাগল আর পাখিরা জোড়ায় জোড়ায় নৌকায় উঠলো। নূহ (আ.) এর পরিবারও নৌকায় উঠলো।' },
+    { img:'assets/img/p5.webp', audio:'assets/audio/p5.mp3', text:'তারপর শুরু হলো মুষলধারে বৃষ্টি। বৃষ্টি পড়লো দিনের পর দিন। পানি বাড়তে বাড়তে উঁচু পাহাড় পর্যন্ত ডুবে গেল। কিন্তু বড় নৌকাটা নিরাপদে পানির ওপর ভেসে রইলো।' },
+    { img:'assets/img/p6.webp', audio:'assets/audio/p6.mp3', text:'অনেক দিন পর বৃষ্টি থামলো। পানি আস্তে আস্তে নামতে লাগলো। নূহ (আ.) একটা কবুতর ছেড়ে দিলেন। কবুতরটা জলপাই গাছের পাতা ঠোঁটে নিয়ে ফিরে এলো। সবাই বুঝলো, কাছেই শুকনো মাটি আছে।' },
+    { img:'assets/img/p7.webp', audio:'assets/audio/p7.mp3', text:'নৌকা গিয়ে থামলো এক পাহাড়ের ওপরে। দরজা খুলতেই সব প্রাণী খুশিতে বের হয়ে এলো। আর আকাশে দেখা দিলো সুন্দর রংধনু।' },
+    { img:'assets/img/p8.webp', audio:'assets/audio/p8.mp3', text:'নূহ (আ.) আল্লাহর শুকরিয়া আদায় করলেন। সবাই মিলে নতুন করে ঘর বানালো, গাছ লাগালো। এই গল্পের শিক্ষা হলো, আল্লাহর কথা শুনলে আর ধৈর্য ধরলে, বিপদের মাঝেও তিনি রক্ষা করেন।' }
+  ];
+  let cur = 0, auto = true;
+  const player = document.getElementById('player');
+  const dotsBox = document.getElementById('dots');
+  pages.forEach((_, i) => { const d = document.createElement('div'); d.className = 'dot'; dotsBox.appendChild(d); });
+
+  function openBook() {
+    document.getElementById('shelf').style.display = 'none';
+    document.getElementById('reader').style.display = 'block';
+    goPage(0);
+    window.scrollTo(0, 0);
+  }
+  function closeBook() {
+    stopPlay();
+    document.getElementById('reader').style.display = 'none';
+    document.getElementById('shelf').style.display = 'block';
+    window.scrollTo(0, 0);
+  }
+  function render() {
+    const p = pages[cur];
+    const img = document.getElementById('pageImg');
+    img.src = p.img;
+    document.getElementById('pageText').textContent = p.text;
+    document.getElementById('pageNum').textContent = 'পৃষ্ঠা ' + '০১২৩৪৫৬৭৮৯'[cur+1] + ' / ৮'.replace('৮','৮');
+    document.getElementById('pageNum').textContent = 'পৃষ্ঠা ' + (cur+1) + ' / ' + pages.length;
+    document.getElementById('prevBtn').disabled = cur === 0;
+    document.getElementById('nextBtn').disabled = cur === pages.length - 1;
+    [...dotsBox.children].forEach((d, i) => d.classList.toggle('on', i === cur));
+    const card = document.getElementById('pageCard');
+    card.classList.remove('fade'); void card.offsetWidth; card.classList.add('fade');
+    player.src = p.audio;
+  }
+  function goPage(i) {
+    if (i < 0 || i >= pages.length) return;
+    const wasPlaying = !player.paused;
+    cur = i; render();
+    if (wasPlaying || window._wantPlay) playNow();
+  }
+  function playNow() {
+    player.play().catch(()=>{});
+    setPlayUI(true);
+  }
+  function stopPlay() {
+    player.pause(); player.currentTime = 0; setPlayUI(false); window._wantPlay = false;
+  }
+  function setPlayUI(on) {
+    const b = document.getElementById('playBtn');
+    b.classList.toggle('playing', on);
+    b.innerHTML = on ? '❚❚ &nbsp;থামাও' : '▶ &nbsp;গল্পটা শোনো';
+  }
+  function togglePlay() {
+    if (player.paused) { window._wantPlay = true; playNow(); }
+    else { window._wantPlay = false; player.pause(); setPlayUI(false); }
+  }
+  function toggleAuto() {
+    auto = !auto;
+    document.getElementById('autoSw').classList.toggle('on', auto);
+  }
+  player.addEventListener('ended', () => {
+    setPlayUI(false);
+    if (auto && cur < pages.length - 1) { cur++; render(); playNow(); }
+    else window._wantPlay = false;
+  });
+  player.addEventListener('pause', () => { if (!window._wantPlay) setPlayUI(false); });
+  // swipe
+  let tx = null;
+  document.getElementById('pageCard').addEventListener('touchstart', e => tx = e.touches[0].clientX, {passive:true});
+  document.getElementById('pageCard').addEventListener('touchend', e => {
+    if (tx === null) return;
+    const dx = e.changedTouches[0].clientX - tx;
+    if (dx < -55) goPage(cur + 1);
+    if (dx > 55) goPage(cur - 1);
+    tx = null;
+  }, {passive:true});
+</script>
+</body>
+</html>
