@@ -152,6 +152,24 @@ header{position:sticky;top:0;z-index:50;background:rgba(12,18,16,.92);backdrop-f
 .factmap li{counter-increment:fm;position:relative;padding:6px 0 6px 34px;font-size:14px;line-height:1.6;border-bottom:1px dashed #1d2a22}
 .factmap li:last-child{border-bottom:none}
 .factmap li:before{content:counter(fm);position:absolute;left:0;top:6px;width:24px;height:24px;border-radius:8px;background:var(--panel2);border:1px solid var(--line);color:var(--lime);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+/* top navigation */
+.topnav{max-width:760px;margin:0 auto;padding:0 16px 12px;display:flex;gap:8px}
+.topnav a{color:var(--muted);text-decoration:none;font-size:13.5px;font-weight:600;padding:7px 14px;border:1px solid var(--line);border-radius:999px;background:var(--panel)}
+.topnav a:hover{color:var(--lime);border-color:var(--lime)}
+/* dashboard */
+.secTitle{font-size:18px;margin:28px 0 12px}
+.subjcard{display:block;width:100%;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px;cursor:pointer;color:var(--text);margin-bottom:12px}
+.subjcard:hover{border-color:var(--lime)}
+.subjcard h3{font-size:19px;margin-bottom:2px}
+.subjcard p{font-size:13px;color:var(--muted);margin-bottom:12px}
+.subjcard .srow{display:flex;align-items:center;gap:10px}
+.subjcard .srow .bar{flex:1}
+.subjcard .spct{color:var(--lime);font-weight:700;font-size:14px}
+.weakrow{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;margin-bottom:8px}
+.weakrow .winfo{flex:1;min-width:0}
+.weakrow .wname{font-weight:700;font-size:15px}
+.weakrow .wsec{font-size:12px;color:var(--muted)}
+.weakrow .wpct{color:var(--gold,#e8b93e);font-weight:700;font-size:14px;white-space:nowrap}
 .study-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 .study-actions .btn{flex:1;justify-content:center;min-width:140px}
 footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-height:1.7}
@@ -164,21 +182,20 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
     <div class="logo">সা</div>
     <div>
       <h1>সারথি বিসিএস প্রিপারেশন</h1>
-      <p>বাংলা বিষয় · তথ্যের জাল পদ্ধতি</p>
+      <p>তথ্যের জাল পদ্ধতিতে পূর্ণাঙ্গ প্রস্তুতি</p>
     </div>
     <div class="pct"><b id="hdPct">০%</b><span>মোট আয়ত্ত</span></div>
   </div>
+  <nav class="topnav">
+    <a href="#/">ড্যাশবোর্ড</a>
+    <a href="#/subject/bangla">বাংলা</a>
+  </nav>
 </header>
 
 <div class="wrap">
-  <!-- HOME -->
+  <!-- HOME / DASHBOARD -->
   <div id="homeView">
-    <div class="stats">
-      <div class="stat"><b id="stFacts">০</b><span>মোট তথ্য</span></div>
-      <div class="stat"><b id="stPast">০</b><span>আসল বিগত প্রশ্ন</span></div>
-      <div class="stat"><b id="stMastered">০</b><span>আয়ত্ত হয়েছে</span></div>
-      <div class="stat"><b id="stDue">০</b><span>রিভিশনের বাকি</span></div>
-    </div>
+    <div class="stats" id="dashStats"></div>
     <div class="bar"><i id="mainBar" style="width:0%"></i></div>
     <p class="progress-note" id="progressNote"></p>
 
@@ -192,7 +209,11 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
       <p id="pastCountLine" style="margin:12px 0 0;font-size:13.5px"></p>
     </div>
 
-    <div id="topicList"></div>
+    <h2 class="secTitle">বিষয়সমূহ</h2>
+    <div id="subjectCards"></div>
+
+    <h2 class="secTitle">যেখানে এখনো দুর্বল</h2>
+    <div id="weakList"></div>
 
     <footer>
       প্রতিটা উত্তর তোমার ব্যক্তিগত হিসাবে জমা থাকে এই ডিভাইসেই।<br>
@@ -200,10 +221,22 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
     </footer>
   </div>
 
+  <!-- SUBJECT -->
+  <div id="subjectView" style="display:none">
+    <div class="qhead">
+      <button class="linkbtn" onclick="goHome()">← ড্যাশবোর্ড</button>
+    </div>
+    <h2 id="subjectTitle" style="font-size:22px;margin-top:8px"></h2>
+    <p id="subjectSub" style="color:var(--muted);margin-top:4px;line-height:1.6"></p>
+    <div class="bar" style="margin:12px 0 4px"><i id="subjectBar" style="width:0%"></i></div>
+    <p class="progress-note" id="subjectNote"></p>
+    <div id="subjectTopics"></div>
+  </div>
+
   <!-- STUDY -->
   <div id="studyView">
     <div class="qhead">
-      <button class="linkbtn" onclick="navBack()">← সব টপিক</button>
+      <button class="linkbtn" onclick="navBack()">← পেছনে</button>
     </div>
     <h2 id="studyTitle" style="font-size:22px;margin-top:8px"></h2>
     <p id="studyIntro" style="color:var(--muted);margin-top:4px;line-height:1.6"></p>
@@ -297,28 +330,49 @@ var BN = ["০","১","২","৩","৪","৫","৬","৭","৮","৯"];
 function bn(n){ return String(n).replace(/[0-9]/g, function(d){ return BN[+d]; }); }
 function pctBn(x){ return bn(x) + "%"; }
 
-/* ---------- in app navigation with browser history ---------- */
-var curDepth = 0;
+/* ---------- subjects, structure and routing ---------- */
+var SUBJECTS = [
+  { id: "bangla", name: "বাংলা", tag: "সাহিত্য ও ব্যাকরণ", sections: ["প্রাচীন ও মধ্যযুগের সাহিত্য", "আধুনিক সাহিত্য", "বাংলা ভাষা ও ব্যাকরণ"] }
+];
+function subjectOf(t){ return t.subject || "bangla"; }
+function subjectById(id){
+  for (var i = 0; i < SUBJECTS.length; i++) if (SUBJECTS[i].id === id) return SUBJECTS[i];
+  return SUBJECTS[0];
+}
 var resultShown = false;
 function setView(name){
   document.getElementById("homeView").style.display = name === "home" ? "block" : "none";
+  document.getElementById("subjectView").style.display = name === "subject" ? "block" : "none";
   document.getElementById("studyView").style.display = name === "study" ? "block" : "none";
   document.getElementById("quizView").style.display = name === "quiz" ? "block" : "none";
   document.getElementById("resultView").style.display = name === "result" ? "block" : "none";
   window.scrollTo(0, 0);
 }
-function pushNav(state){ curDepth = state.d; try { history.pushState(state, ""); } catch(e){} }
-function navBack(){ if (curDepth > 0) history.back(); else showHome(); }
-function goHome(){ if (curDepth > 0) history.go(-curDepth); else showHome(); }
-window.addEventListener("popstate", function(e){
-  var s = e.state;
-  if (!s || s.v === "home"){ curDepth = 0; session = null; showHome(); return; }
-  curDepth = s.d || 0;
-  if (s.v === "study"){ openStudy(s.idx || 0, false); }
-  else if (s.v === "quiz"){ if (session) setView("quiz"); else showHome(); }
-  else if (s.v === "result"){ if (resultShown) setView("result"); else showHome(); }
-});
-try { history.replaceState({ v: "home", d: 0 }, ""); } catch(e){}
+function setHash(h){ if (location.hash !== h) location.hash = h; }
+function navBack(){ history.back(); }
+function goHome(){ setHash("#/"); }
+function goTopic(idx){ setHash("#/topic/" + idx); }
+function goSubject(id){ setHash("#/subject/" + id); }
+function goReplace(h){ try { history.replaceState(null, "", h); } catch(e){} route(); }
+function parseRoute(){
+  var h = (location.hash || "#/").replace(/^#\/?/, "");
+  var p = h.split("/").filter(function(x){ return x !== ""; });
+  if (!p.length) return { name: "home" };
+  if (p[0] === "subject") return { name: "subject", id: p[1] || "bangla" };
+  if (p[0] === "topic") return { name: "topic", idx: parseInt(p[1], 10) || 0 };
+  if (p[0] === "quiz") return { name: "quiz" };
+  if (p[0] === "result") return { name: "result" };
+  return { name: "home" };
+}
+function route(){
+  var r = parseRoute();
+  if (r.name === "home") showHome();
+  else if (r.name === "subject") renderSubject(r.id);
+  else if (r.name === "topic") renderStudy(r.idx);
+  else if (r.name === "quiz"){ if (session) setView("quiz"); else goHome(); }
+  else if (r.name === "result"){ if (resultShown) setView("result"); else goHome(); }
+}
+window.addEventListener("hashchange", route);
 
 /* ---------- storage ---------- */
 var DBKEY = "bachakuri_bangla_v1";
@@ -337,9 +391,20 @@ function recordAnswer(t, it, correct){
   if (correct){ s.right++; s.lvl = Math.min(5, s.lvl + 1); }
   else { s.lvl = 0; }
   s.due = Date.now() + INTERVALS[s.lvl] * 60000;
-  DB[k] = s; saveDB();
+  DB[k] = s; bumpDay(); saveDB();
 }
 function isMastered(t, it){ var s = stateOf(t, it); return s && s.lvl >= 4; }
+
+/* ---------- activity stats for the dashboard ---------- */
+function statsObj(){ if (!DB.__stats) DB.__stats = { sessions: 0, days: {} }; return DB.__stats; }
+function dayKey(d){ return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate(); }
+function bumpDay(){ var st = statsObj(); var k = dayKey(new Date()); st.days[k] = (st.days[k] || 0) + 1; }
+function streakDays(){
+  var st = statsObj(), n = 0, d = new Date();
+  if (!st.days[dayKey(d)]) d.setDate(d.getDate() - 1);
+  while (st.days[dayKey(d)]){ n++; d.setDate(d.getDate() - 1); }
+  return n;
+}
 
 /* ---------- pools ---------- */
 var POOLS = {};
@@ -465,7 +530,7 @@ function renderViz(v){
   }
   return h + "</div>";
 }
-function openStudy(idx, push){
+function renderStudy(idx){
   var t = TOPICS[idx];
   session = null;
   setView("study");
@@ -488,13 +553,13 @@ function openStudy(idx, push){
   var pb = document.getElementById("studyPastBtn");
   if (t.past && t.past.length){ pb.style.display = "inline-flex"; pb.onclick = function(){ startPastOnly(idx); }; }
   else pb.style.display = "none";
-  if (push !== false) pushNav({ v: "study", d: curDepth + 1, idx: idx });
 }
 function beginSession(qs, title){
   session = { qs: qs, i: 0, right: 0, wrongs: [], title: title };
+  statsObj().sessions++; saveDB();
   setView("quiz");
-  pushNav({ v: "quiz", d: curDepth + 1 });
   renderQ();
+  setHash("#/quiz");
 }
 function renderQ(){
   var q = session.qs[session.i];
@@ -548,9 +613,7 @@ function nextQ(){
 }
 function quitQuiz(){ navBack(); }
 function showResult(){
-  setView("result");
   resultShown = true;
-  try { history.replaceState({ v: "result", d: curDepth }, ""); } catch(e){}
   var total = session.qs.length;
   document.getElementById("resScore").textContent = bn(session.right) + " / " + bn(total);
   document.getElementById("resLine").textContent =
@@ -565,7 +628,7 @@ function showResult(){
   } else rb.innerHTML = "";
   session = null;
   renderHome();
-  window.scrollTo(0, 0);
+  goReplace("#/result");
 }
 
 /* ---------- home ---------- */
@@ -576,54 +639,103 @@ function topicMastery(t){
   t.items.forEach(function(it){ if (isMastered(t, it)) m++; });
   return Math.round(m / t.items.length * 100);
 }
+function topicCard(t, idx){
+  var mp = topicMastery(t);
+  return "<div class='topic'><h3>" + t.name + "</h3><p>" + t.intro + "</p>" +
+    "<div class='meta'><span class='chip'>" + bn(t.items.length) + "টি তথ্য</span>" +
+    ((t.past && t.past.length) ? "<span class='chip gold'>" + bn(t.past.length) + "টি আসল বিগত প্রশ্ন</span>" : "") +
+    ((t.cards && t.cards.length) ? "<span class='chip'>" + bn(t.cards.length) + "টি কনসেপ্ট কার্ড</span>" : "") +
+    "</div><div class='row'><div class='bar'><i style='width:" + mp + "%'></i></div>" +
+    "<span class='tpct'>" + pctBn(mp) + "</span></div>" +
+    "<div style='display:flex;gap:8px;margin-top:12px'>" +
+    ((t.cards && t.cards.length) ? "<button class='btn ghost small' style='flex:1;justify-content:center' onclick='goTopic(" + idx + ")'>কনসেপ্ট</button>" : "") +
+    "<button class='btn small' style='flex:1;justify-content:center' onclick='startTopic(" + idx + ")'>অনুশীলন</button></div></div>";
+}
+function renderSubject(id){
+  var sub = subjectById(id);
+  session = null;
+  setView("subject");
+  document.getElementById("subjectTitle").textContent = sub.name;
+  var list = TOPICS.map(function(t, i){ return [t, i]; }).filter(function(pair){ return subjectOf(pair[0]) === sub.id; });
+  var facts = 0, mastered = 0;
+  list.forEach(function(pair){ pair[0].items.forEach(function(it){ facts++; if (isMastered(pair[0], it)) mastered++; }); });
+  var pct = facts ? Math.round(mastered / facts * 100) : 0;
+  document.getElementById("subjectSub").textContent = sub.tag + " · " + bn(list.length) + "টি টপিক · " + bn(facts) + "টি তথ্য";
+  document.getElementById("subjectBar").style.width = pct + "%";
+  document.getElementById("subjectNote").textContent = bn(mastered) + "টি তথ্য আয়ত্ত হয়েছে, এই বিষয়ের মোট অগ্রগতি " + pctBn(pct) + "।";
+  var html = "";
+  sub.sections.forEach(function(sec){
+    var inSec = list.filter(function(pair){ return pair[0].section === sec; });
+    if (!inSec.length) return;
+    var secFacts = 0; inSec.forEach(function(pair){ secFacts += pair[0].items.length; });
+    html += "<div class='sec-title'>" + sec + " <small>" + bn(inSec.length) + "টি টপিক · " + bn(secFacts) + "টি তথ্য</small></div>";
+    inSec.forEach(function(pair){ html += topicCard(pair[0], pair[1]); });
+  });
+  document.getElementById("subjectTopics").innerHTML = html || "<div class='empty'>এই বিষয়ে এখনো টপিক যোগ হয়নি।</div>";
+}
 function renderHome(){
-  var totalFacts = 0, mastered = 0, dueCount = 0, now = Date.now();
+  var totalFacts = 0, mastered = 0, learning = 0, answered = 0, right = 0, dueCount = 0, now = Date.now();
   TOPICS.forEach(function(t){ t.items.forEach(function(it){
     totalFacts++;
-    if (isMastered(t, it)) mastered++;
     var s = stateOf(t, it);
-    if (s && s.due <= now) dueCount++;
+    if (s){
+      answered += s.seen || 0;
+      right += s.right || 0;
+      if (s.lvl >= 4) mastered++;
+      else learning++;
+      if (s.due <= now) dueCount++;
+    }
   });});
+  var wrong = answered - right;
+  var accuracy = answered ? Math.round(right / answered * 100) : 0;
   var pct = totalFacts ? Math.round(mastered / totalFacts * 100) : 0;
   var pastTotalAll = PAST_EXTRA.length;
   TOPICS.forEach(function(t){ pastTotalAll += (t.past || []).length; });
+  var st = statsObj();
+  var todayCount = st.days[dayKey(new Date())] || 0;
   document.getElementById("hdPct").textContent = pctBn(pct);
-  document.getElementById("stFacts").textContent = bn(totalFacts);
-  document.getElementById("stPast").textContent = bn(pastTotalAll);
-  document.getElementById("stMastered").textContent = bn(mastered);
-  document.getElementById("stDue").textContent = bn(dueCount);
+  var box = function(v, l){ return "<div class='stat'><b>" + v + "</b><span>" + l + "</span></div>"; };
+  document.getElementById("dashStats").innerHTML =
+    box(bn(mastered), "আয়ত্ত হয়েছে") +
+    box(bn(learning), "শেখা চলছে") +
+    box(bn(answered), "মোট অনুশীলন") +
+    box(bn(right), "সঠিক উত্তর") +
+    box(bn(wrong), "ভুল উত্তর") +
+    box(pctBn(accuracy), "নির্ভুলতা") +
+    box(bn(todayCount), "আজকের অনুশীলন") +
+    box(bn(streakDays()), "টানা দিনের ধারা");
   document.getElementById("mainBar").style.width = pct + "%";
   document.getElementById("progressNote").textContent =
-    "বাংলা বিষয়ের " + bn(totalFacts) + "টি তথ্যের মধ্যে " + bn(mastered) + "টি পুরোপুরি আয়ত্ত হয়েছে।";
+    "সব বিষয় মিলিয়ে " + bn(totalFacts) + "টি তথ্যের মধ্যে " + bn(mastered) + "টি পুরোপুরি আয়ত্ত হয়েছে, রিভিশনের বাকি " + bn(dueCount) + "টি, মোট অনুশীলন সেশন " + bn(st.sessions || 0) + "টি।";
   document.getElementById("pastCountLine").textContent =
     "প্রশ্নব্যাংকে ১০ম থেকে ৫০তম বিসিএসের যাচাই করা আসল বাংলা প্রশ্ন আছে " + bn(pastTotalAll) + "টি।";
 
-  var html = "";
-  SECTION_ORDER.forEach(function(sec){
-    var list = TOPICS.map(function(t, i){ return [t, i]; }).filter(function(pair){ return pair[0].section === sec; });
-    if (!list.length) return;
-    var secFacts = 0; list.forEach(function(pair){ secFacts += pair[0].items.length; });
-    html += "<div class='sec-title'>" + sec + " <small>" + bn(list.length) + "টি টপিক · " + bn(secFacts) + "টি তথ্য</small></div>";
-    list.forEach(function(pair){
-      var t = pair[0], idx = pair[1];
-      var mp = topicMastery(t);
-      html += "<div class='topic'><h3>" + t.name + "</h3><p>" + t.intro + "</p>" +
-        "<div class='meta'><span class='chip'>" + bn(t.items.length) + "টি তথ্য</span>" +
-        ((t.past && t.past.length) ? "<span class='chip gold'>" + bn(t.past.length) + "টি আসল বিগত প্রশ্ন</span>" : "") +
-        "</div><div class='row'><div class='bar'><i style='width:" + mp + "%'></i></div>" +
-        "<span class='tpct'>" + pctBn(mp) + "</span></div>" +
-        "<div style='display:flex;gap:8px;margin-top:12px'>" +
-        ((t.cards && t.cards.length) ? "<button class='btn ghost small' style='flex:1;justify-content:center' onclick='openStudy(" + idx + ")'>কনসেপ্ট</button>" : "") +
-        "<button class='btn small' style='flex:1;justify-content:center' onclick='startTopic(" + idx + ")'>অনুশীলন</button></div></div>";
-    });
-  });
-  document.getElementById("topicList").innerHTML = html || "<div class='empty'>তথ্য লোড হচ্ছে…</div>";
+  document.getElementById("subjectCards").innerHTML = SUBJECTS.map(function(sub){
+    var list = TOPICS.filter(function(t){ return subjectOf(t) === sub.id; });
+    var facts = 0, mst = 0;
+    list.forEach(function(t){ t.items.forEach(function(it){ facts++; if (isMastered(t, it)) mst++; }); });
+    var p = facts ? Math.round(mst / facts * 100) : 0;
+    return "<button class='subjcard' onclick='goSubject(\"" + sub.id + "\")'><h3>" + sub.name + "</h3>" +
+      "<p>" + sub.tag + " · " + bn(list.length) + "টি টপিক · " + bn(facts) + "টি তথ্য</p>" +
+      "<span class='srow'><span class='bar'><i style='width:" + p + "%'></i></span><span class='spct'>" + pctBn(p) + "</span></span></button>";
+  }).join("");
+
+  var weak = TOPICS.map(function(t, i){ return [t, i, topicMastery(t)]; })
+    .filter(function(x){ return x[2] < 100; })
+    .sort(function(a, b){ return a[2] - b[2]; }).slice(0, 5);
+  document.getElementById("weakList").innerHTML = weak.length ? weak.map(function(x){
+    return "<div class='weakrow'><div class='winfo'><div class='wname'>" + x[0].name + "</div>" +
+      "<div class='wsec'>" + (x[0].section || "") + "</div></div>" +
+      "<span class='wpct'>আয়ত্ত " + pctBn(x[2]) + "</span>" +
+      "<button class='btn small' onclick='goTopic(" + x[1] + ")'>খোলো</button></div>";
+  }).join("") : "<div class='empty'>সব টপিক পুরোপুরি আয়ত্ত, দারুণ।</div>";
 }
 function showHome(){
   setView("home");
   renderHome();
 }
-renderHome();
+if (!location.hash){ try { history.replaceState(null, "", "#/"); } catch(e){} }
+route();
 </script>
 </body>
 </html>
