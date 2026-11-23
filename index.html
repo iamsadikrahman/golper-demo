@@ -201,6 +201,57 @@ header{position:sticky;top:0;z-index:50;background:rgba(12,18,16,.92);backdrop-f
 .vquote span{display:block;margin-top:5px;font-size:12.5px;color:var(--muted);font-style:normal}
 .study-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 .study-actions .btn{flex:1;justify-content:center;min-width:140px}
+/* ===== premium design upgrade ===== */
+body{background:radial-gradient(1100px 480px at 85% -60px,rgba(179,250,57,.09),transparent 60%),radial-gradient(800px 400px at -10% 30%,rgba(179,250,57,.05),transparent 55%),var(--bg);background-attachment:fixed}
+.logo{background:linear-gradient(135deg,var(--lime),#6db30f);color:#0c1407;border:none;box-shadow:0 6px 18px rgba(179,250,57,.28)}
+.btn{background:linear-gradient(135deg,#c6ff5e,var(--lime) 55%,#93d61f);box-shadow:0 8px 22px rgba(179,250,57,.22)}
+.btn.ghost{box-shadow:none;background:rgba(179,250,57,.05)}
+.smart,.mockcard{box-shadow:0 14px 34px rgba(0,0,0,.35)}
+.topic,.ccard,.stat,.subjcard,.weakrow{box-shadow:0 8px 22px rgba(0,0,0,.25)}
+.topic{transition:transform .18s,border-color .18s}
+.topic:hover{transform:translateY(-2px);border-color:#33503e}
+.qcard{box-shadow:0 16px 38px rgba(0,0,0,.4)}
+.stat b{background:linear-gradient(135deg,#fff,#cfe8d4);-webkit-background-clip:text;background-clip:text;color:transparent}
+.secTitle{letter-spacing:.2px}
+/* quick actions */
+.quickgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}
+@media(max-width:520px){.quickgrid{grid-template-columns:repeat(2,1fr)}}
+.qtile{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:15px 10px;text-align:center;cursor:pointer;color:var(--text);transition:transform .15s,border-color .15s;box-shadow:0 8px 22px rgba(0,0,0,.25)}
+.qtile:hover{transform:translateY(-2px);border-color:var(--lime-dim)}
+.qtile .qi{font-size:22px;display:block;margin-bottom:6px}
+.qtile b{font-size:14.5px;display:block}
+.qtile span{font-size:11.5px;color:var(--muted);display:block;margin-top:2px;line-height:1.45}
+/* search */
+.searchbox{margin-top:16px;position:relative}
+.searchbox input{width:100%;background:var(--panel);border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;font-family:inherit;font-size:16px;color:var(--text);outline:none}
+.searchbox input:focus{border-color:var(--lime-dim)}
+.searchres{margin-top:8px;display:flex;flex-direction:column;gap:6px}
+.sritem{display:block;width:100%;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer;color:var(--text)}
+.sritem b{font-size:14.5px;color:#fff}
+.sritem span{display:block;font-size:13px;color:var(--muted);margin-top:2px;line-height:1.5}
+.sritem .stag{color:var(--lime);font-size:12px;font-weight:700}
+/* breadcrumbs */
+.crumbs{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin:14px 0 2px}
+.crumbs button{color:var(--muted);font-size:13px;padding:4px 2px}
+.crumbs button:hover{color:var(--lime)}
+.crumbs .csep{opacity:.5}
+.crumbs .ccur{color:var(--text);font-weight:600}
+/* topics index */
+.trow{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:13px 14px;margin-top:8px;box-shadow:0 8px 22px rgba(0,0,0,.22)}
+.trow .tinfo{flex:1;min-width:0}
+.trow .tname{font-weight:700;font-size:15.5px}
+.trow .tmeta{font-size:12px;color:var(--muted);margin-top:2px}
+.trow .tpct{color:var(--lime);font-weight:700;font-size:14px;white-space:nowrap}
+/* prev next topic */
+.prevnext{display:flex;gap:10px;margin-top:18px}
+.prevnext .btn{flex:1;justify-content:center;min-width:0;font-size:14.5px;padding:12px 10px}
+.prevnext .btn:disabled{opacity:.35;box-shadow:none}
+/* bottom navigation */
+.bottomnav{position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(10,15,12,.94);backdrop-filter:blur(12px);border-top:1px solid var(--line);display:flex;justify-content:center}
+.bottomnav .bn-in{width:100%;max-width:760px;display:grid;grid-template-columns:repeat(4,1fr)}
+.bn-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 4px 11px;color:var(--muted);font-size:11.5px;font-weight:600;cursor:pointer;background:none;border:none;font-family:inherit}
+.bn-item .bi{font-size:20px;line-height:1.1}
+.bn-item.on{color:var(--lime)}
 footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-height:1.7}
 .empty{color:var(--muted);text-align:center;padding:30px 0;font-size:15px}
 /* mock test */
@@ -241,12 +292,31 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
   </nav>
 </header>
 
+<nav class="bottomnav"><div class="bn-in">
+  <button class="bn-item" data-nav="home" onclick="goHome()"><span class="bi">🏠</span>ড্যাশবোর্ড</button>
+  <button class="bn-item" data-nav="subject" onclick="goSubject('bangla')"><span class="bi">📚</span>বাংলা</button>
+  <button class="bn-item" data-nav="topics" onclick="setHash('#/topics')"><span class="bi">🗂️</span>সব টপিক</button>
+  <button class="bn-item" data-nav="mock" onclick="goMock()"><span class="bi">⏱️</span>মক টেস্ট</button>
+</div></nav>
+
 <div class="wrap">
   <!-- HOME / DASHBOARD -->
   <div id="homeView">
     <div class="stats" id="dashStats"></div>
     <div class="bar"><i id="mainBar" style="width:0%"></i></div>
     <p class="progress-note" id="progressNote"></p>
+
+    <div class="searchbox">
+      <input id="searchInput" type="text" placeholder="টপিক বা তথ্য খোঁজো, যেমন সমাস, রবীন্দ্রনাথ, সন্ধি" oninput="doSearch(this.value)">
+      <div class="searchres" id="searchResults"></div>
+    </div>
+
+    <div class="quickgrid">
+      <button class="qtile" onclick="startSmart()"><span class="qi">🎯</span><b>স্মার্ট সেট</b><span>আজকের জন্য বাছাই করা অনুশীলন</span></button>
+      <button class="qtile" onclick="startPastAll()"><span class="qi">📜</span><b>বিগত প্রশ্ন</b><span>আসল পরীক্ষার প্রশ্নের সেট</span></button>
+      <button class="qtile" onclick="goMock()"><span class="qi">⏱️</span><b>মক টেস্ট</b><span>টাইমার ও নেগেটিভ মার্কিংসহ</span></button>
+      <button class="qtile" onclick="setHash('#/topics')"><span class="qi">🗂️</span><b>সব টপিক</b><span>৪৬টা টপিক একসাথে এক পর্দায়</span></button>
+    </div>
 
     <div class="smart">
       <h2>আজকের স্মার্ট সেট</h2>
@@ -258,7 +328,7 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
       <p id="pastCountLine" style="margin:12px 0 0;font-size:13.5px"></p>
     </div>
 
-    <div class="mockcard">
+    <div class="mockcard" id="mockCard">
       <h2>মক টেস্ট, আসল পরীক্ষার মহড়া</h2>
       <p>ঘড়ি ধরে পরীক্ষা দাও, ঠিক আসল হলের মতো। উত্তর সাথে সাথে দেখা যাবে না, ভুল উত্তরে ০.৫ নম্বর কাটা যাবে, সময় শেষ হলে খাতা নিজে থেকেই জমা হয়ে যাবে। শেষে পুরো খাতা রিভিউ করে দেখতে পারবে কোনটা ঠিক হলো, কোনটা ভুল, আর সঠিক উত্তর কী ছিল।</p>
       <div class="mockopts">
@@ -294,8 +364,8 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
 
   <!-- SUBJECT -->
   <div id="subjectView" style="display:none">
-    <div class="qhead">
-      <button class="linkbtn" onclick="goHome()">← ড্যাশবোর্ড</button>
+    <div class="crumbs">
+      <button onclick="goHome()">ড্যাশবোর্ড</button><span class="csep">›</span><span class="ccur">বাংলা</span>
     </div>
     <h2 id="subjectTitle" style="font-size:22px;margin-top:8px"></h2>
     <p id="subjectSub" style="color:var(--muted);margin-top:4px;line-height:1.6"></p>
@@ -306,8 +376,10 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
 
   <!-- STUDY -->
   <div id="studyView">
-    <div class="qhead">
-      <button class="linkbtn" onclick="navBack()">← পেছনে</button>
+    <div class="crumbs">
+      <button onclick="goHome()">ড্যাশবোর্ড</button><span class="csep">›</span>
+      <button onclick="goSubject('bangla')">বাংলা</button><span class="csep">›</span>
+      <span class="ccur" id="studyCrumb"></span>
     </div>
     <h2 id="studyTitle" style="font-size:22px;margin-top:8px"></h2>
     <p id="studyIntro" style="color:var(--muted);margin-top:4px;line-height:1.6"></p>
@@ -320,6 +392,10 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
     <div class="study-actions">
       <button class="btn" id="studyPracticeBtn">অনুশীলন শুরু করো</button>
       <button class="btn ghost" id="studyPastBtn" style="display:none">শুধু আসল বিগত প্রশ্ন</button>
+    </div>
+    <div class="prevnext">
+      <button class="btn ghost" id="prevTopicBtn">← আগের টপিক</button>
+      <button class="btn ghost" id="nextTopicBtn">পরের টপিক →</button>
     </div>
   </div>
 
@@ -351,6 +427,19 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
       <button class="btn ghost" onclick="startSmart()">আরেকটা স্মার্ট সেট</button>
     </div>
     <div class="review" id="reviewBox"></div>
+  </div>
+
+  <!-- TOPICS INDEX -->
+  <div id="topicsView" style="display:none">
+    <div class="crumbs">
+      <button onclick="goHome()">ড্যাশবোর্ড</button><span class="csep">›</span><span class="ccur">সব টপিক</span>
+    </div>
+    <h2 style="font-size:22px;margin-top:8px">সব টপিক একসাথে</h2>
+    <p style="color:var(--muted);margin-top:4px;line-height:1.6">বাংলা বিষয়ের পুরো মানচিত্র এক পর্দায়। যেকোনো টপিকে সরাসরি ঢোকা যাবে, প্রতিটার পাশে তোমার আয়ত্তের হার দেখা যাচ্ছে।</p>
+    <div class="searchbox">
+      <input id="topicsFilter" type="text" placeholder="টপিকের নাম লিখে ছাঁকো" oninput="renderTopics(this.value)">
+    </div>
+    <div id="topicsList"></div>
   </div>
 
   <!-- MOCK TEST -->
@@ -450,7 +539,7 @@ function subjectById(id){
 }
 var resultShown = false;
 function setView(name){
-  var ids = { home: "homeView", subject: "subjectView", study: "studyView", quiz: "quizView", result: "resultView", mock: "mockView", mockresult: "mockResultView" };
+  var ids = { home: "homeView", subject: "subjectView", study: "studyView", quiz: "quizView", result: "resultView", mock: "mockView", mockresult: "mockResultView", topics: "topicsView" };
   Object.keys(ids).forEach(function(k){
     var el = document.getElementById(ids[k]);
     var show = k === name;
@@ -475,6 +564,7 @@ function parseRoute(){
   if (p[0] === "result") return { name: "result" };
   if (p[0] === "mock") return { name: "mock" };
   if (p[0] === "mockresult") return { name: "mockresult" };
+  if (p[0] === "topics") return { name: "topics" };
   return { name: "home" };
 }
 function route(){
@@ -487,6 +577,11 @@ function route(){
   else if (r.name === "result"){ if (resultShown) setView("result"); else goHome(); }
   else if (r.name === "mock"){ if (mock) setView("mock"); else goHome(); }
   else if (r.name === "mockresult"){ if (mockResult) setView("mockresult"); else goHome(); }
+  else if (r.name === "topics"){ renderTopics(document.getElementById("topicsFilter").value || ""); setView("topics"); }
+  var navMap = { home: "home", subject: "subject", topic: "subject", topics: "topics", mock: "mock", mockresult: "mock" };
+  document.querySelectorAll(".bn-item").forEach(function(b){
+    b.classList.toggle("on", b.getAttribute("data-nav") === (navMap[r.name] || ""));
+  });
 }
 window.addEventListener("hashchange", route);
 
@@ -665,6 +760,13 @@ function renderStudy(idx){
   var t = TOPICS[idx];
   session = null;
   setView("study");
+  document.getElementById("studyCrumb").textContent = t.name;
+  var pv = document.getElementById("prevTopicBtn"), nx = document.getElementById("nextTopicBtn");
+  pv.disabled = idx <= 0; nx.disabled = idx >= TOPICS.length - 1;
+  pv.textContent = idx > 0 ? "← " + TOPICS[idx - 1].name : "← আগের টপিক";
+  nx.textContent = idx < TOPICS.length - 1 ? TOPICS[idx + 1].name + " →" : "পরের টপিক →";
+  pv.onclick = function(){ if (idx > 0) goTopic(idx - 1); };
+  nx.onclick = function(){ if (idx < TOPICS.length - 1) goTopic(idx + 1); };
   document.getElementById("studyTitle").textContent = t.name;
   document.getElementById("studyIntro").textContent = t.intro;
   document.getElementById("studyCards").innerHTML = (t.cards || []).map(function(c, ci){
@@ -754,12 +856,56 @@ function showResult(){
   var rb = document.getElementById("reviewBox");
   if (session.wrongs.length){
     rb.innerHTML = "<h3>যেগুলো ভুল হলো</h3>" + session.wrongs.map(function(q){
-      return "<div class='ritem'><b>" + q.q + "</b><br>সঠিক উত্তর, " + q.opts[q.ans] + (q.fact ? "<br>" + q.fact : (q.st ? "<br>" + q.st : "")) + "</div>";
+      return "<div class='ritem'><b>" + q.q + "</b><br>সঠিক উত্তর, " + q.opts[q.ans] + (q.fact ? "<br>" + q.fact : (q.st ? "<br>" + q.st : "")) +
+        (q.topic ? "<br><button class='btn small ghost' style='margin-top:8px' onclick='goTopic(" + TOPICS.indexOf(q.topic) + ")'>এই টপিকটা পড়ে নাও</button>" : "") + "</div>";
     }).join("");
   } else rb.innerHTML = "";
   session = null;
   renderHome();
   goReplace("#/result");
+}
+
+/* ---------- topics index, search, shortcuts ---------- */
+function renderTopics(filter){
+  filter = (filter || "").trim();
+  var box = document.getElementById("topicsList");
+  var html = "", lastSec = "";
+  TOPICS.forEach(function(t, idx){
+    if (filter && t.name.indexOf(filter) < 0) return;
+    if (t.section !== lastSec){ lastSec = t.section; html += "<h2 class='secTitle'>" + lastSec + "</h2>"; }
+    var mp = topicMastery(t);
+    html += "<div class='trow'><div class='tinfo'><div class='tname'>" + t.name + "</div>" +
+      "<div class='tmeta'>" + bn(t.items.length) + "টি তথ্য · " + bn((t.cards || []).length) + "টি কার্ড · " + bn((t.past || []).length) + "টি বিগত প্রশ্ন</div></div>" +
+      "<span class='tpct'>আয়ত্ত " + pctBn(mp) + "</span>" +
+      "<button class='btn small' onclick='goTopic(" + idx + ")'>খোলো</button></div>";
+  });
+  box.innerHTML = html || "<div class='empty'>এই নামে কোনো টপিক পাওয়া গেল না।</div>";
+}
+function doSearch(q){
+  q = (q || "").trim();
+  var box = document.getElementById("searchResults");
+  if (q.length < 2){ box.innerHTML = ""; return; }
+  var out = [];
+  TOPICS.forEach(function(t, idx){
+    if (t.name.indexOf(q) >= 0) out.push({ idx: idx, head: t.name, sub: "টপিক · " + bn(t.items.length) + "টি তথ্য", tag: "টপিক" });
+  });
+  TOPICS.forEach(function(t, idx){
+    t.items.forEach(function(it){
+      if (out.length >= 8) return;
+      if ((it.st && it.st.indexOf(q) >= 0) || (it.q && it.q.indexOf(q) >= 0))
+        out.push({ idx: idx, head: t.name, sub: it.st || it.q, tag: "তথ্য" });
+    });
+  });
+  box.innerHTML = out.length ? out.slice(0, 8).map(function(r){
+    return "<button class='sritem' onclick='goTopic(" + r.idx + ")'><span class='stag'>" + r.tag + "</span> <b>" + r.head + "</b><span>" + r.sub + "</span></button>";
+  }).join("") : "<div class='empty'>কিছু পাওয়া গেল না, অন্য শব্দে খোঁজো।</div>";
+}
+function goMock(){
+  goHome();
+  setTimeout(function(){
+    var el = document.getElementById("mockCard");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 120);
 }
 
 /* ---------- mock test: timed exam with negative marking ---------- */
@@ -889,7 +1035,8 @@ function renderMockResult(){
     var mineTxt = mine < 0 ? "তুমি উত্তর দাওনি" : "তোমার উত্তর, " + q.opts[mine];
     var expl = q.fact || q.st || (q.topic ? "টপিক, " + q.topic.name : "");
     return "<div class='ritem " + cls + "'><b>" + bn(i + 1) + ". " + q.q + "</b><br>" +
-      mineTxt + "<br>সঠিক উত্তর, " + q.opts[q.ans] + (expl ? "<br>" + expl : "") + "</div>";
+      mineTxt + "<br>সঠিক উত্তর, " + q.opts[q.ans] + (expl ? "<br>" + expl : "") +
+      (q.topic && cls !== "ok" ? "<br><button class='btn small ghost' style='margin-top:8px' onclick='goTopic(" + TOPICS.indexOf(q.topic) + ")'>এই টপিকটা পড়ে নাও</button>" : "") + "</div>";
   }).join("");
   setView("mockresult");
 }
