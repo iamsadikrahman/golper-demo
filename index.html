@@ -203,7 +203,7 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
   <!-- STUDY -->
   <div id="studyView">
     <div class="qhead">
-      <button class="linkbtn" onclick="showHome()">← সব টপিক</button>
+      <button class="linkbtn" onclick="navBack()">← সব টপিক</button>
     </div>
     <h2 id="studyTitle" style="font-size:22px;margin-top:8px"></h2>
     <p id="studyIntro" style="color:var(--muted);margin-top:4px;line-height:1.6"></p>
@@ -243,7 +243,7 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
     <div class="big" id="resScore"></div>
     <p id="resLine"></p>
     <div style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-      <button class="btn" onclick="showHome()">হোমে ফিরে যাও</button>
+      <button class="btn" onclick="goHome()">হোমে ফিরে যাও</button>
       <button class="btn ghost" onclick="startSmart()">আরেকটা স্মার্ট সেট</button>
     </div>
     <div class="review" id="reviewBox"></div>
@@ -296,6 +296,29 @@ TOPICS.forEach(function(t){
 var BN = ["০","১","২","৩","৪","৫","৬","৭","৮","৯"];
 function bn(n){ return String(n).replace(/[0-9]/g, function(d){ return BN[+d]; }); }
 function pctBn(x){ return bn(x) + "%"; }
+
+/* ---------- in app navigation with browser history ---------- */
+var curDepth = 0;
+var resultShown = false;
+function setView(name){
+  document.getElementById("homeView").style.display = name === "home" ? "block" : "none";
+  document.getElementById("studyView").style.display = name === "study" ? "block" : "none";
+  document.getElementById("quizView").style.display = name === "quiz" ? "block" : "none";
+  document.getElementById("resultView").style.display = name === "result" ? "block" : "none";
+  window.scrollTo(0, 0);
+}
+function pushNav(state){ curDepth = state.d; try { history.pushState(state, ""); } catch(e){} }
+function navBack(){ if (curDepth > 0) history.back(); else showHome(); }
+function goHome(){ if (curDepth > 0) history.go(-curDepth); else showHome(); }
+window.addEventListener("popstate", function(e){
+  var s = e.state;
+  if (!s || s.v === "home"){ curDepth = 0; session = null; showHome(); return; }
+  curDepth = s.d || 0;
+  if (s.v === "study"){ openStudy(s.idx || 0, false); }
+  else if (s.v === "quiz"){ if (session) setView("quiz"); else showHome(); }
+  else if (s.v === "result"){ if (resultShown) setView("result"); else showHome(); }
+});
+try { history.replaceState({ v: "home", d: 0 }, ""); } catch(e){}
 
 /* ---------- storage ---------- */
 var DBKEY = "bachakuri_bangla_v1";
@@ -442,12 +465,10 @@ function renderViz(v){
   }
   return h + "</div>";
 }
-function openStudy(idx){
+function openStudy(idx, push){
   var t = TOPICS[idx];
-  document.getElementById("homeView").style.display = "none";
-  document.getElementById("quizView").style.display = "none";
-  document.getElementById("resultView").style.display = "none";
-  document.getElementById("studyView").style.display = "block";
+  session = null;
+  setView("study");
   document.getElementById("studyTitle").textContent = t.name;
   document.getElementById("studyIntro").textContent = t.intro;
   document.getElementById("studyCards").innerHTML = (t.cards || []).map(function(c){
@@ -467,15 +488,12 @@ function openStudy(idx){
   var pb = document.getElementById("studyPastBtn");
   if (t.past && t.past.length){ pb.style.display = "inline-flex"; pb.onclick = function(){ startPastOnly(idx); }; }
   else pb.style.display = "none";
-  window.scrollTo(0, 0);
+  if (push !== false) pushNav({ v: "study", d: curDepth + 1, idx: idx });
 }
 function beginSession(qs, title){
   session = { qs: qs, i: 0, right: 0, wrongs: [], title: title };
-  document.getElementById("homeView").style.display = "none";
-  document.getElementById("studyView").style.display = "none";
-  document.getElementById("resultView").style.display = "none";
-  document.getElementById("quizView").style.display = "block";
-  window.scrollTo(0, 0);
+  setView("quiz");
+  pushNav({ v: "quiz", d: curDepth + 1 });
   renderQ();
 }
 function renderQ(){
@@ -528,10 +546,11 @@ function nextQ(){
   if (session.i >= session.qs.length){ showResult(); return; }
   renderQ();
 }
-function quitQuiz(){ session = null; showHome(); }
+function quitQuiz(){ navBack(); }
 function showResult(){
-  document.getElementById("quizView").style.display = "none";
-  document.getElementById("resultView").style.display = "block";
+  setView("result");
+  resultShown = true;
+  try { history.replaceState({ v: "result", d: curDepth }, ""); } catch(e){}
   var total = session.qs.length;
   document.getElementById("resScore").textContent = bn(session.right) + " / " + bn(total);
   document.getElementById("resLine").textContent =
@@ -601,12 +620,8 @@ function renderHome(){
   document.getElementById("topicList").innerHTML = html || "<div class='empty'>তথ্য লোড হচ্ছে…</div>";
 }
 function showHome(){
-  document.getElementById("quizView").style.display = "none";
-  document.getElementById("studyView").style.display = "none";
-  document.getElementById("resultView").style.display = "none";
-  document.getElementById("homeView").style.display = "block";
+  setView("home");
   renderHome();
-  window.scrollTo(0, 0);
 }
 renderHome();
 </script>
