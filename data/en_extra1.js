@@ -1,0 +1,52 @@
+window.__T = (window.__T || []).concat([
+{
+name: "Analogy",
+subject: "english",
+section: "Vocabulary",
+intro: "অ্যানালজি মানে দুই জোড়া শব্দের ভেতরের সম্পর্ক মেলানো। শব্দ মুখস্থ করে এই অংশে ভালো করা যায় না, সম্পর্ক চেনার চোখ তৈরি করাই আসল কাজ। এই টপিকে সব প্রধান সম্পর্কের ধরন আর সেগুলো চেনার কৌশল সাজানো আছে, যাতে অচেনা জোড়া এলেও তুমি সম্পর্ক ধরে উত্তর বের করতে পারো।",
+items: [
+{q: "Doctor : Hospital :: Teacher : ?", a: "School", pool: "analogy", st: "A teacher teaches in a School just as a doctor works in a hospital.", fact: "পেশা আর কর্মক্ষেত্রের সম্পর্ক, ডাক্তার হাসপাতালে আর শিক্ষক স্কুলে কাজ করেন।"},
+{q: "Book : Pages :: Wall : ?", a: "Bricks", pool: "analogy", st: "A wall is built with Bricks just as a book is made of pages.", fact: "পূর্ণ জিনিস কোন উপাদান দিয়ে তৈরি সেই সম্পর্ক এখানে এসেছে।"},
+{q: "Carpenter : Saw :: Chef : ?", a: "Knife", pool: "analogy", st: "A chef uses a Knife just as a carpenter uses a saw.", fact: "কর্মী আর তার প্রধান হাতিয়ারের সম্পর্ক।"},
+{q: "Building : Foundation :: Tree : ?", a: "Roots", pool: "analogy", st: "Roots hold a tree in the ground just as a foundation holds a building.", fact: "মাটির নিচের ভিত্তি বা ধারণকারী অংশের সম্পর্ক।"},
+{q: "Cow : Calf :: Horse : ?", a: "Foal", pool: "analogy", st: "A young horse is called a Foal just as a young cow is called a calf.", fact: "প্রাণী আর তার বাচ্চার নামের সম্পর্ক।"},
+{q: "Bottle : Water :: Pen : ?", a: "Ink", pool: "analogy", st: "A pen holds Ink just as a bottle holds water.", fact: "পাত্র আর তার ভেতরের উপাদানের সম্পর্ক।"},
+{q: "Cow : Milk :: Bee : ?", a: "Honey", pool: "analogy", st: "A bee gives us Honey just as a cow gives us milk.", fact: "প্রাণী আর তার উৎপাদিত জিনিসের সম্পর্ক।"},
+{q: "Silkworm : Silk :: Sheep : ?", a: "Wool", pool: "analogy", st: "We get Wool from a sheep just as we get silk from a silkworm.", fact: "কোন প্রাণী থেকে কোন উপাদান পাওয়া যায় সেই সম্পর্ক।"},
+{q: "Ear : Hearing :: Eye : ?", a: "Sight", pool: "analogy", st: "Sight is the sense of the eye just as hearing is the sense of the ear.", fact: "ইন্দ্রিয় আর তার অনুভূতির সম্পর্ক।"},
+{q: "Day : Night :: Hot : ?", a: "Cold", pool: "analogy", st: "Cold is the opposite of hot just as night is the opposite of day.", fact: "বিপরীত শব্দের সম্পর্ক, জোড়ার দুই পাশ পরস্পরের উল্টো।"},
+{q: "Poet : Poem :: Painter : ?", a: "Painting", pool: "analogy", st: "A painter creates a Painting just as a poet creates a poem.", fact: "স্রষ্টা আর তার সৃষ্টির সম্পর্ক।"},
+{q: "Pilot : Aeroplane :: Sailor : ?", a: "Ship", pool: "analogy", st: "A sailor sails a Ship just as a pilot flies an aeroplane.", fact: "চালক আর তার যানের সম্পর্ক।"},
+{q: "Fish : Water :: Bird : ?", a: "Sky", pool: "analogy", st: "A bird flies in the Sky just as a fish swims in water.", fact: "প্রাণীর বিচরণের জায়গার সম্পর্ক।"},
+{q: "Lion : Den :: King : ?", a: "Palace", pool: "analogy", st: "A king lives in a Palace just as a lion lives in a den.", fact: "বাসস্থানের সম্পর্ক, কে কোথায় থাকে।"},
+{q: "Thermometer : Temperature :: Clock : ?", a: "Time", pool: "analogy", st: "A clock measures Time just as a thermometer measures temperature.", fact: "যন্ত্র আর যা মাপা হয় তার সম্পর্ক।"},
+{q: "Egg : Bird :: Seed : ?", a: "Plant", pool: "analogy", st: "A seed grows into a Plant just as an egg hatches into a bird.", fact: "শুরু থেকে যা গড়ে ওঠে সেই পরিণতির সম্পর্ক।"}
+],
+past: []
+},
+{
+name: "Abbreviations and Full Forms",
+subject: "english",
+section: "Vocabulary",
+intro: "সংক্ষেপের পূর্ণ রূপ জানা মানে শুধু মুখস্থ নয়, লেখা পড়ার সময় অর্থটা ঠিকমতো ধরা। পরীক্ষায় প্রতিষ্ঠান, প্রযুক্তি, ডিগ্রি আর লাতিন উৎসের সংক্ষেপ থেকেই বেশিরভাগ প্রশ্ন আসে। এই টপিকে প্রচলিত সব সংক্ষেপ পূর্ণ রূপসহ সাজানো আছে, যাতে যেকোনো সংক্ষেপ দেখলেই তুমি আত্মবিশ্বাস নিয়ে উত্তর দিতে পারো।",
+items: [
+{q: "What does WHO stand for?", a: "World Health Organization", pool: "abbrev", st: "WHO stands for World Health Organization.", fact: "বিশ্ব স্বাস্থ্য সংস্থার পূর্ণ রূপ, সদর দপ্তর জেনেভায়।"},
+{q: "What does UNESCO stand for?", a: "United Nations Educational, Scientific and Cultural Organization", pool: "abbrev", st: "UNESCO stands for United Nations Educational, Scientific and Cultural Organization.", fact: "জাতিসংঘের শিক্ষা বিজ্ঞান ও সংস্কৃতি বিষয়ক সংস্থা।"},
+{q: "What does IMF stand for?", a: "International Monetary Fund", pool: "abbrev", st: "IMF stands for International Monetary Fund.", fact: "আন্তর্জাতিক মুদ্রা তহবিল, দেশগুলোকে ঋণ ও পরামর্শ দেয়।"},
+{q: "What does ATM stand for?", a: "Automated Teller Machine", pool: "abbrev", st: "ATM stands for Automated Teller Machine.", fact: "ব্যাংকের স্বয়ংক্রিয় নগদ তোলার যন্ত্র।"},
+{q: "What does SIM stand for?", a: "Subscriber Identity Module", pool: "abbrev", st: "SIM stands for Subscriber Identity Module.", fact: "মোবাইল গ্রাহকের পরিচয় ধারণ করা ছোট কার্ড।"},
+{q: "What does CPU stand for?", a: "Central Processing Unit", pool: "abbrev", st: "CPU stands for Central Processing Unit.", fact: "কম্পিউটারের প্রধান প্রসেসর অংশ।"},
+{q: "What does DNA stand for?", a: "Deoxyribonucleic Acid", pool: "abbrev", st: "DNA stands for Deoxyribonucleic Acid.", fact: "বংশগতির তথ্য বহনকারী অণু।"},
+{q: "What does AIDS stand for?", a: "Acquired Immune Deficiency Syndrome", pool: "abbrev", st: "AIDS stands for Acquired Immune Deficiency Syndrome.", fact: "এইচআইভি ভাইরাসের আক্রমণে সৃষ্ট রোগের পূর্ণ নাম।"},
+{q: "What does LASER stand for?", a: "Light Amplification by Stimulated Emission of Radiation", pool: "abbrev", st: "LASER stands for Light Amplification by Stimulated Emission of Radiation.", fact: "লেজার শব্দটাই তার পূর্ণ রূপের প্রথম অক্ষরগুলো দিয়ে গড়া।"},
+{q: "What does RADAR stand for?", a: "Radio Detection and Ranging", pool: "abbrev", st: "RADAR stands for Radio Detection and Ranging.", fact: "রেডিও তরঙ্গ দিয়ে বস্তুর অবস্থান শনাক্তের প্রযুক্তি।"},
+{q: "What is the full form of the Latin abbreviation e.g.?", a: "exempli gratia", pool: "abbrev", st: "The abbreviation e.g. comes from the Latin phrase exempli gratia.", fact: "অর্থ হলো উদাহরণস্বরূপ, উদাহরণ দেওয়ার আগে বসে।"},
+{q: "What is the full form of the Latin abbreviation i.e.?", a: "id est", pool: "abbrev", st: "The abbreviation i.e. comes from the Latin phrase id est.", fact: "অর্থ হলো অর্থাৎ, আগের কথাটা খুলে বলতে বসে।"},
+{q: "What is the full form of the Latin abbreviation etc.?", a: "et cetera", pool: "abbrev", st: "The abbreviation etc. comes from the Latin phrase et cetera.", fact: "অর্থ হলো ইত্যাদি, তালিকার শেষে বসে।"},
+{q: "What is the full form of the Latin abbreviation N.B.?", a: "nota bene", pool: "abbrev", st: "The abbreviation N.B. comes from the Latin phrase nota bene.", fact: "অর্থ হলো বিশেষ দ্রষ্টব্য, পাঠকের মনোযোগ টানতে বসে।"},
+{q: "What is the full form of the Latin abbreviation P.S.?", a: "post scriptum", pool: "abbrev", st: "The abbreviation P.S. comes from the Latin phrase post scriptum.", fact: "চিঠি শেষ করার পর যোগ করা বাড়তি লাইনকে বোঝায়।"},
+{q: "What is the full form of the Latin abbreviation viz.?", a: "videlicet", pool: "abbrev", st: "The abbreviation viz. comes from the Latin word videlicet.", fact: "অর্থ হলো যথা বা নাম ধরে বলতে গেলে।"}
+],
+past: []
+}
+]);

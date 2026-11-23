@@ -1,0 +1,102 @@
+window.__T = (window.__T || []).concat([
+{
+name: "Ages of English Literature",
+subject: "english",
+section: "English Literature",
+intro: "ইংরেজি সাহিত্যের ইতিহাসকে যুগে ভাগ করে পড়লে পুরো মানচিত্রটা একবারে পরিষ্কার হয়ে যায়। কোন যুগে কোন ধরনের লেখা ফুলে উঠেছে আর কোন লেখক কোন যুগের প্রতিনিধি, এই দুইটা ধরতে পারলেই এই অংশের বেশিরভাগ প্রশ্নের উত্তর নিজে থেকেই বেরিয়ে আসে।",
+items: [
+{q: "The epic Beowulf belongs to which period of English literature?", a: "Old English Period", pool: "period", st: "Beowulf is the great epic of the Old English Period.", fact: "Beowulf হলো প্রাচীন ইংরেজি যুগের মহাকাব্য, অ্যাংলো স্যাক্সন কবিতার সেরা নিদর্শন।"},
+{q: "The Canterbury Tales was composed during which period?", a: "Middle English Period", pool: "period", st: "Chaucer wrote The Canterbury Tales in the Middle English Period.", fact: "চসারের যুগ মধ্য ইংরেজি যুগের অংশ, তখন ইংরেজি ভাষা আধুনিক রূপের দিকে এগোচ্ছে।"},
+{q: "William Shakespeare flourished in which period?", a: "Renaissance Period", pool: "period", st: "Shakespeare is the central glory of the Renaissance Period.", fact: "এলিজাবেথীয় নাটকের স্বর্ণযুগ রেনেসাঁ যুগেই, শেক্সপিয়ার তার শীর্ষ নাম।"},
+{q: "John Milton wrote Paradise Lost in which period?", a: "Renaissance Period", pool: "period", st: "Paradise Lost is a late masterpiece of the Renaissance Period.", fact: "মিল্টন রেনেসাঁ যুগের শেষ বড় কবি, মহাকাব্যটি সতেরো শতকে প্রকাশিত।"},
+{q: "The age of Dryden and Pope is known as which period?", a: "Neoclassical Period", pool: "period", st: "Dryden and Pope define the Neoclassical Period.", fact: "নিওক্লাসিক্যাল যুগে যুক্তি, শৃঙ্খলা আর ধ্রুপদি নিয়মের প্রাধান্য ছিল।"},
+{q: "The publication of Lyrical Ballads in 1798 opened which period?", a: "Romantic Period", pool: "period", st: "Lyrical Ballads opened the Romantic Period in English poetry.", fact: "ওয়ার্ডসওয়ার্থ ও কোলরিজের এই বইটিকেই রোমান্টিক যুগের সূচনা ধরা হয়।"},
+{q: "The novel reached its greatest popularity in which period?", a: "Victorian Period", pool: "period", st: "The novel became the dominant form in the Victorian Period.", fact: "ডিকেন্স, থ্যাকারে আর জর্জ এলিয়টের হাতে ভিক্টোরীয় যুগে উপন্যাস শীর্ষে ওঠে।"},
+{q: "Stream of consciousness is a hallmark of which period?", a: "Modern Period", pool: "period", st: "Stream of consciousness marks the fiction of the Modern Period.", fact: "জয়েস আর উলফের উপন্যাসে মনের ভেতরের স্রোতই মূল কৌশল হয়ে ওঠে।"},
+{q: "Fragmented and absurdist writing after the Second World War is placed in which period?", a: "Postmodern Period", pool: "period", st: "Beckett and his successors belong to the Postmodern Period.", fact: "যুদ্ধোত্তর সাহিত্যে অর্থহীনতা আর ভাঙা কাঠামো পোস্টমডার্ন যুগের চেনা চিহ্ন।"},
+{q: "Anglo Saxon heroic poetry belongs to which period?", a: "Old English Period", pool: "period", st: "Anglo Saxon heroic verse comes from the Old English Period.", fact: "এই যুগের ভাষা আজকের ইংরেজি থেকে এতটাই আলাদা যে অনুবাদ ছাড়া পড়া কঠিন।"},
+{q: "The age of Chaucer falls within which period?", a: "Middle English Period", pool: "period", st: "The age of Chaucer lies inside the Middle English Period.", fact: "চসারকে ইংরেজি কবিতার জনক বলা হয়, তিনি মধ্য যুগের কবি।"},
+{q: "Elizabethan drama is a glory of which period?", a: "Renaissance Period", pool: "period", st: "Elizabethan drama crowns the Renaissance Period.", fact: "মার্লো, শেক্সপিয়ার আর বেন জনসনের নাটক এই যুগেই ফুলে ওঠে।"},
+{q: "John Dryden is a leading figure of which period?", a: "Neoclassical Period", pool: "period", st: "Dryden leads the early Neoclassical Period.", fact: "ড্রাইডেনকে আধুনিক ইংরেজি গদ্যের জনকও বলা হয়।"},
+{q: "Charles Dickens is the representative novelist of which period?", a: "Victorian Period", pool: "period", st: "Dickens is the representative novelist of the Victorian Period.", fact: "শিল্পবিপ্লবের শহুরে জীবন ডিকেন্সের উপন্যাসের প্রধান পটভূমি।"},
+{q: "Virginia Woolf and James Joyce belong to which period?", a: "Modern Period", pool: "period", st: "Woolf and Joyce are central figures of the Modern Period.", fact: "প্রথম বিশ্বযুদ্ধের পরের ভাঙা বিশ্বাস আধুনিক যুগের সাহিত্যের মূলে আছে।"},
+{q: "Samuel Beckett and absurd drama are associated with which period?", a: "Postmodern Period", pool: "period", st: "Absurd drama is a signature of the Postmodern Period.", fact: "ওয়েটিং ফর গোডো এই ধারার সবচেয়ে বিখ্যাত নাটক।"}
+],
+past: []
+},
+{
+name: "William Shakespeare",
+subject: "english",
+section: "English Literature",
+intro: "শেক্সপিয়ার মানেই নাটকের শ্রেণি, চরিত্র আর বিখ্যাত লাইনের খেলা। কোন নাটক কোন শ্রেণির, কোন চরিত্র কোন নাটকের আর কোন লাইন কার মুখে, এই তিনটা জাল পরিষ্কার থাকলে শেক্সপিয়ারের প্রশ্নে আটকানোর জায়গা থাকে না।",
+items: [
+{q: "Which play presents the Prince of Denmark torn by revenge and doubt?", a: "Hamlet", pool: "work", st: "Hamlet presents the Prince of Denmark torn by revenge and doubt.", fact: "হ্যামলেট শেক্সপিয়ারের সবচেয়ে আলোচিত ট্র্যাজেডি, নায়কের দ্বিধাই এর প্রাণ।"},
+{q: "Which tragedy is driven by the prophecies of three witches in Scotland?", a: "Macbeth", pool: "work", st: "Macbeth is driven by the prophecies of three witches in Scotland.", fact: "উচ্চাকাঙ্ক্ষা আর অপরাধবোধ ম্যাকবেথের পতনের মূল কারণ।"},
+{q: "Which tragedy shows a Moorish general destroyed by jealousy?", a: "Othello", pool: "work", st: "Othello shows a Moorish general destroyed by jealousy.", fact: "ওথেলোর ঈর্ষাকে ইয়াগো কৌশলে জ্বালিয়ে তোলে, এটাই ট্র্যাজেডির ইঞ্জিন।"},
+{q: "Which tragedy shows an old king dividing his kingdom among three daughters?", a: "King Lear", pool: "work", st: "King Lear shows an old king dividing his kingdom among three daughters.", fact: "কিং লিয়ারে রাজ্য ভাগের ভুল সিদ্ধান্ত থেকেই সব ধ্বংসের শুরু।"},
+{q: "Which play tells of two young lovers from feuding families in Verona?", a: "Romeo and Juliet", pool: "work", st: "Romeo and Juliet tells of two young lovers from feuding families in Verona.", fact: "দুই পরিবারের শত্রুতাই এই প্রেমের ট্র্যাজেডির মূল বাধা।"},
+{q: "Which play dramatises the assassination of a Roman ruler on the Ides of March?", a: "Julius Caesar", pool: "work", st: "Julius Caesar dramatises the assassination of a Roman ruler.", fact: "ব্রুটাসের নেতৃত্বে ষড়যন্ত্রকারীরা সিজারকে হত্যা করে।"},
+{q: "Which comedy mixes Athenian lovers with a fairy king and queen?", a: "A Midsummer Night's Dream", pool: "work", st: "A Midsummer Night's Dream mixes Athenian lovers with a fairy king and queen.", fact: "পাকের ভুলে প্রেমিকদের জট পাকানো এই কমেডির মজার কেন্দ্র।"},
+{q: "Which late play is set on an island ruled by a magician and his spirit servant?", a: "The Tempest", pool: "work", st: "The Tempest is set on an island ruled by a magician.", fact: "দ্য টেম্পেস্টকে শেক্সপিয়ারের শেষ পূর্ণ নাটক ধরা হয়।"},
+{q: "Who murders King Duncan in his sleep?", a: "Macbeth", pool: "character", st: "Macbeth murders King Duncan in his sleep.", fact: "স্ত্রীর প্ররোচনায় ম্যাকবেথ নিজের অতিথি রাজাকে হত্যা করে।"},
+{q: "Who secretly manipulates Othello into jealousy?", a: "Iago", pool: "character", st: "Iago secretly manipulates Othello into jealousy.", fact: "ইয়াগো শেক্সপিয়ারের সবচেয়ে ঠান্ডা মাথার খলনায়কদের একজন।"},
+{q: "Who is the innocent wife of Othello?", a: "Desdemona", pool: "character", st: "Desdemona is the innocent wife of Othello.", fact: "একটা রুমালের ভুল বোঝাবুঝিই ডেসডিমোনার মৃত্যুর কারণ হয়।"},
+{q: "Who is the youngest and most truthful daughter of King Lear?", a: "Cordelia", pool: "character", st: "Cordelia is the youngest and most truthful daughter of King Lear.", fact: "কর্ডেলিয়া চাটুকারিতা করতে অস্বীকার করায় পিতার রোষে পড়ে।"},
+{q: "Who is the Prince of Denmark in Shakespeare?", a: "Hamlet", pool: "character", st: "Hamlet is the Prince of Denmark.", fact: "পিতার প্রেতাত্মার কাছ থেকে হত্যার খবর পেয়েই হ্যামলেটের সংকট শুরু।"},
+{q: "Who urges her husband to murder Duncan and questions his manhood?", a: "Lady Macbeth", pool: "character", st: "Lady Macbeth urges her husband to murder Duncan.", fact: "লেডি ম্যাকবেথ পরে অপরাধবোধে ঘুমের মধ্যে হাঁটতে শুরু করে।"},
+{q: "Who delivers the famous funeral oration over Caesar and turns the crowd?", a: "Mark Antony", pool: "character", st: "Mark Antony delivers the famous funeral oration over Caesar.", fact: "অ্যান্টনির বক্তৃতাই জনতাকে ষড়যন্ত্রকারীদের বিরুদ্ধে ঘুরিয়ে দেয়।"},
+{q: "Who is the magician and rightful Duke of Milan in The Tempest?", a: "Prospero", pool: "character", st: "Prospero is the magician and rightful Duke of Milan in The Tempest.", fact: "প্রসপেরো শেষে জাদু ত্যাগ করে সবাইকে ক্ষমা করে দেয়।"}
+],
+past: []
+},
+{
+name: "Romantic and Victorian Poetry",
+subject: "english",
+section: "English Literature",
+intro: "রোমান্টিক কবিতা মানে প্রকৃতি, কল্পনা আর আবেগের জয়গান, আর ভিক্টোরীয় কবিতা মানে সেই আবেগের সঙ্গে যুগের সংশয় আর নাটকীয় কণ্ঠের মিশেল। কোন কবির কোন কবিতা আর কোন কবিতার পেছনে কোন গল্প, এই জোড়াগুলো পরিষ্কার থাকলেই এই টপিক আয়ত্তে আসে।",
+items: [
+{q: "Who wrote the long autobiographical poem The Prelude?", a: "William Wordsworth", pool: "author", st: "William Wordsworth wrote the long autobiographical poem The Prelude.", fact: "দ্য প্রিলিউড কবির নিজের মনের বিকাশের কাহিনি, মরণোত্তর প্রকাশিত।"},
+{q: "Who composed Kubla Khan after an interrupted dream?", a: "Samuel Taylor Coleridge", pool: "author", st: "Samuel Taylor Coleridge composed Kubla Khan after an interrupted dream.", fact: "কোলরিজ নিজেই বলেছেন স্বপ্নে পাওয়া কবিতাটি বাধায় অসমাপ্ত থেকে যায়।"},
+{q: "Who wrote Ode to the West Wind?", a: "Percy Bysshe Shelley", pool: "author", st: "Percy Bysshe Shelley wrote Ode to the West Wind.", fact: "পশ্চিমা বাতাসকে শেলি ধ্বংসকারী আর রক্ষাকারী দুই রূপেই ডেকেছেন।"},
+{q: "Who wrote Ode to a Nightingale?", a: "John Keats", pool: "author", st: "John Keats wrote Ode to a Nightingale.", fact: "কীটস মাত্র পঁচিশ বছর বেঁচেছিলেন, তবু তাঁর ওডগুলো ইংরেজি কবিতার শীর্ষে।"},
+{q: "Who wrote the satirical epic Don Juan?", a: "Lord Byron", pool: "author", st: "Lord Byron wrote the satirical epic Don Juan.", fact: "বায়রনের ডন জুয়ান প্রচলিত নায়ক ধারণাকে উল্টে দিয়ে ব্যঙ্গ করে।"},
+{q: "Who wrote the elegy sequence In Memoriam for his friend Hallam?", a: "Alfred Tennyson", pool: "author", st: "Alfred Tennyson wrote the elegy sequence In Memoriam for his friend Hallam.", fact: "বন্ধু হ্যালামের মৃত্যুতে লেখা এই ধারাবাহিক শোককবিতা সতেরো বছর ধরে লেখা।"},
+{q: "Who wrote the dramatic monologue My Last Duchess?", a: "Robert Browning", pool: "author", st: "Robert Browning wrote the dramatic monologue My Last Duchess.", fact: "ব্রাউনিং নাটকীয় এককভাষণের সেরা শিল্পী, বক্তার চরিত্র কথার ফাঁকেই ফুটে ওঠে।"},
+{q: "Who wrote Dover Beach, a poem of fading faith?", a: "Matthew Arnold", pool: "author", st: "Matthew Arnold wrote Dover Beach, a poem of fading faith.", fact: "বিশ্বাসের সাগর সরে যাওয়ার রূপক এই কবিতার সবচেয়ে বিখ্যাত ছবি।"},
+{q: "Which joint volume by Wordsworth and Coleridge launched the Romantic movement?", a: "Lyrical Ballads", pool: "work", st: "Lyrical Ballads launched the Romantic movement in 1798.", fact: "এর মুখবন্ধে ওয়ার্ডসওয়ার্থ সাধারণ মানুষের ভাষায় কবিতার পক্ষে যুক্তি দেন।"},
+{q: "Which poem tells of a mariner who shoots an albatross and suffers at sea?", a: "The Rime of the Ancient Mariner", pool: "work", st: "The Rime of the Ancient Mariner tells of a sailor cursed after killing an albatross.", fact: "লিরিক্যাল ব্যালাডসের সবচেয়ে লম্বা কবিতা এটি, কোলরিজের লেখা।"},
+{q: "Which verse drama by Shelley retells the Greek myth of a Titan who defies Zeus?", a: "Prometheus Unbound", pool: "work", st: "Prometheus Unbound retells the Greek myth of a Titan who defies Zeus.", fact: "শেলির কাছে প্রমিথিউস অত্যাচারের বিরুদ্ধে মানবমুক্তির প্রতীক।"},
+{q: "Which Keats ode meditates on art and permanence before a painted urn?", a: "Ode on a Grecian Urn", pool: "work", st: "Ode on a Grecian Urn meditates on art and permanence.", fact: "সৌন্দর্যই সত্য এই বিখ্যাত পঙক্তি এই কবিতার শেষে আসে।"},
+{q: "Which long poem made Byron famous overnight with its wandering hero?", a: "Childe Harold's Pilgrimage", pool: "work", st: "Childe Harold's Pilgrimage made Byron famous overnight.", fact: "বায়রন নিজেই বলেছিলেন এক সকালে জেগে দেখেন তিনি বিখ্যাত হয়ে গেছেন।"},
+{q: "Which Tennyson poem tells of a lady cursed to watch the world through a mirror?", a: "The Lady of Shalott", pool: "work", st: "The Lady of Shalott tells of a lady cursed to watch the world through a mirror.", fact: "আর্থারীয় কিংবদন্তি থেকে নেওয়া এই কবিতা টেনিসনের জনপ্রিয়তম রচনার একটি।"},
+{q: "Which Browning monologue reveals a lover who smothered his mistress with her hair?", a: "Porphyria's Lover", pool: "work", st: "Porphyria's Lover reveals a lover who smothered his mistress with her hair.", fact: "শান্ত গলায় বলা এই খুনের বর্ণনাই কবিতাটিকে ভয়ংকর করে তোলে।"},
+{q: "Which sonnet sequence did Elizabeth Barrett Browning write for her husband?", a: "Sonnets from the Portuguese", pool: "work", st: "Sonnets from the Portuguese is the sonnet sequence of Elizabeth Barrett Browning.", fact: "নামে পর্তুগিজ হলেও কবিতাগুলো তাঁর নিজের প্রেমেরই কথা বলে।"}
+],
+past: []
+},
+{
+name: "Literary Terms and Forms",
+subject: "english",
+section: "English Literature",
+intro: "সাহিত্যিক পরিভাষা হলো পুরো সাহিত্য পড়ার হাতিয়ার। কোনটা কোন ফর্ম আর কোন অলংকার কীভাবে চিনতে হয়, উদাহরণ দেখে নাম বলতে পারলেই এই অংশের প্রশ্ন সহজ হয়ে যায়, কারণ পরীক্ষায় প্রায়ই সংজ্ঞা নয়, উদাহরণ দিয়ে চেনাতে বলা হয়।",
+items: [
+{q: "What is a long narrative poem about heroic deeds called?", a: "Epic", pool: "litterm", st: "An Epic is a long narrative poem about heroic deeds.", fact: "মহাকাব্যে বীরের কীর্তি আর জাতির ভাগ্য একসঙ্গে বড় পরিসরে বর্ণিত হয়।"},
+{q: "What is a lyric poem of fourteen lines called?", a: "Sonnet", pool: "litterm", st: "A Sonnet is a lyric poem of fourteen lines.", fact: "সনেটের চৌদ্দ লাইন আর নির্দিষ্ট ছন্দমিলই এর চেনার সবচেয়ে সহজ উপায়।"},
+{q: "What is a poem of mourning for a dead person called?", a: "Elegy", pool: "litterm", st: "An Elegy is a poem of mourning for a dead person.", fact: "এলিজি শোকের কবিতা, শেষে সাধারণত সান্ত্বনার দিকে মোড় নেয়।"},
+{q: "What is an elevated lyric poem addressed to a person or object called?", a: "Ode", pool: "litterm", st: "An Ode is an elevated lyric poem addressed to a person or object.", fact: "ওডে সম্বোধন আর গম্ভীর সুর থাকে, বিষয় হতে পারে প্রকৃতি বা বিমূর্ত ধারণাও।"},
+{q: "What is a narrative song passed down in folk tradition called?", a: "Ballad", pool: "litterm", st: "A Ballad is a narrative song passed down in folk tradition.", fact: "ব্যালাডে গল্প বলা হয় গানের ঢঙে, সংলাপ আর পুনরাবৃত্তি এর চেনা বৈশিষ্ট্য।"},
+{q: "What is a short poem expressing personal emotion, meant to be sung, called?", a: "Lyric", pool: "litterm", st: "A Lyric is a short poem expressing personal emotion.", fact: "লিরিক কবির নিজের অনুভূতির সরাসরি প্রকাশ, গল্প নয়।"},
+{q: "What is a serious drama ending in the downfall of the hero called?", a: "Tragedy", pool: "litterm", st: "A Tragedy is a serious drama ending in the downfall of the hero.", fact: "ট্র্যাজেডির নায়ক নিজের ত্রুটি বা ভাগ্যের ফেরে পতনের দিকে যায়।"},
+{q: "What is a light drama with a happy ending called?", a: "Comedy", pool: "litterm", st: "A Comedy is a light drama with a happy ending.", fact: "কমেডিতে ভুল বোঝাবুঝি আর জট শেষে মিলনে গিয়ে মেটে।"},
+{q: "What is a work that mocks human vice through humour and irony called?", a: "Satire", pool: "litterm", st: "Satire is a work that mocks human vice through humour and irony.", fact: "স্যাটায়ারের লক্ষ্য শুধু হাসানো নয়, সমাজের দোষ ধরিয়ে দেওয়া।"},
+{q: "What is a story whose characters and events carry a hidden second meaning called?", a: "Allegory", pool: "litterm", st: "An Allegory is a story whose events carry a hidden second meaning.", fact: "অ্যালিগরিতে প্রতিটা চরিত্র বা ঘটনা অন্য কোনো ধারণার প্রতীক হয়ে দাঁড়ায়।"},
+{q: "What figure of speech makes an implied comparison without using like or as?", a: "Metaphor", pool: "litterm", st: "A Metaphor makes an implied comparison without using like or as.", fact: "মেটাফোরে এক জিনিসকে সরাসরি আরেক জিনিস বলে দেওয়া হয়।"},
+{q: "What figure of speech compares two things using like or as?", a: "Simile", pool: "litterm", st: "A Simile compares two things using like or as.", fact: "লাইক বা অ্যাজ দেখলেই সিমিলি, এটাই মেটাফোর থেকে আলাদা করার চাবিকাঠি।"},
+{q: "What figure of speech gives human qualities to nonhuman things?", a: "Personification", pool: "litterm", st: "Personification gives human qualities to nonhuman things.", fact: "প্রকৃতি বা বস্তু যখন মানুষের মতো আচরণ করে, সেটাই পারসনিফিকেশন।"},
+{q: "What figure of speech uses deliberate exaggeration for effect?", a: "Hyperbole", pool: "litterm", st: "Hyperbole uses deliberate exaggeration for effect.", fact: "হাইপারবোলি আক্ষরিক সত্য নয়, জোর দেওয়ার জন্য বাড়িয়ে বলা।"},
+{q: "What term describes a contrast between expectation and reality?", a: "Irony", pool: "litterm", st: "Irony describes a contrast between expectation and reality.", fact: "আয়রনিতে যা বলা বা আশা করা হয়, ঘটে তার উল্টোটা।"},
+{q: "What figure of speech joins two contradictory words in one phrase?", a: "Oxymoron", pool: "litterm", st: "An Oxymoron joins two contradictory words in one phrase.", fact: "বধির নীরবতার মতো পাশাপাশি দুই বিপরীত শব্দই অক্সিমোরনের চিহ্ন।"}
+],
+past: []
+}
+]);

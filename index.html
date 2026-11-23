@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>সারথি বিসিএস প্রিপারেশন · বাংলা</title>
+<title>সারথি বিসিএস প্রিপারেশন</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -248,7 +248,7 @@ body{background:radial-gradient(1100px 480px at 85% -60px,rgba(179,250,57,.09),t
 .prevnext .btn:disabled{opacity:.35;box-shadow:none}
 /* bottom navigation */
 .bottomnav{position:fixed;left:0;right:0;bottom:0;z-index:60;background:rgba(10,15,12,.94);backdrop-filter:blur(12px);border-top:1px solid var(--line);display:flex;justify-content:center}
-.bottomnav .bn-in{width:100%;max-width:760px;display:grid;grid-template-columns:repeat(4,1fr)}
+.bottomnav .bn-in{width:100%;max-width:760px;display:grid;grid-template-columns:repeat(5,1fr)}
 .bn-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 4px 11px;color:var(--muted);font-size:11.5px;font-weight:600;cursor:pointer;background:none;border:none;font-family:inherit}
 .bn-item .bi{font-size:20px;line-height:1.1}
 .bn-item.on{color:var(--lime)}
@@ -289,12 +289,14 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
   <nav class="topnav">
     <a href="#/">ড্যাশবোর্ড</a>
     <a href="#/subject/bangla">বাংলা</a>
+    <a href="#/subject/english">English</a>
   </nav>
 </header>
 
 <nav class="bottomnav"><div class="bn-in">
   <button class="bn-item" data-nav="home" onclick="goHome()"><span class="bi">🏠</span>ড্যাশবোর্ড</button>
   <button class="bn-item" data-nav="subject" onclick="goSubject('bangla')"><span class="bi">📚</span>বাংলা</button>
+  <button class="bn-item" data-nav="english" onclick="goSubject('english')"><span class="bi">🔤</span>English</button>
   <button class="bn-item" data-nav="topics" onclick="setHash('#/topics')"><span class="bi">🗂️</span>সব টপিক</button>
   <button class="bn-item" data-nav="mock" onclick="goMock()"><span class="bi">⏱️</span>মক টেস্ট</button>
 </div></nav>
@@ -365,7 +367,7 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
   <!-- SUBJECT -->
   <div id="subjectView" style="display:none">
     <div class="crumbs">
-      <button onclick="goHome()">ড্যাশবোর্ড</button><span class="csep">›</span><span class="ccur">বাংলা</span>
+      <button onclick="goHome()">ড্যাশবোর্ড</button><span class="csep">›</span><span class="ccur" id="subjectCrumb">বাংলা</span>
     </div>
     <h2 id="subjectTitle" style="font-size:22px;margin-top:8px"></h2>
     <p id="subjectSub" style="color:var(--muted);margin-top:4px;line-height:1.6"></p>
@@ -378,7 +380,7 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
   <div id="studyView">
     <div class="crumbs">
       <button onclick="goHome()">ড্যাশবোর্ড</button><span class="csep">›</span>
-      <button onclick="goSubject('bangla')">বাংলা</button><span class="csep">›</span>
+      <button id="studyCrumbSub" onclick="goSubject('bangla')">বাংলা</button><span class="csep">›</span>
       <span class="ccur" id="studyCrumb"></span>
     </div>
     <h2 id="studyTitle" style="font-size:22px;margin-top:8px"></h2>
@@ -435,7 +437,7 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
       <button onclick="goHome()">ড্যাশবোর্ড</button><span class="csep">›</span><span class="ccur">সব টপিক</span>
     </div>
     <h2 style="font-size:22px;margin-top:8px">সব টপিক একসাথে</h2>
-    <p style="color:var(--muted);margin-top:4px;line-height:1.6">বাংলা বিষয়ের পুরো মানচিত্র এক পর্দায়। যেকোনো টপিকে সরাসরি ঢোকা যাবে, প্রতিটার পাশে তোমার আয়ত্তের হার দেখা যাচ্ছে।</p>
+    <p style="color:var(--muted);margin-top:4px;line-height:1.6">সব বিষয়ের পুরো মানচিত্র এক পর্দায়। যেকোনো টপিকে সরাসরি ঢোকা যাবে, প্রতিটার পাশে তোমার আয়ত্তের হার দেখা যাচ্ছে।</p>
     <div class="searchbox">
       <input id="topicsFilter" type="text" placeholder="টপিকের নাম লিখে ছাঁকো" oninput="renderTopics(this.value)">
     </div>
@@ -490,6 +492,22 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
 <script src="data/past_primary.js"></script>
 <script src="data/past_ntrca.js"></script>
 <script src="data/past_admission.js"></script>
+<script src="data/en_lang1.js"></script>
+<script src="data/en_lang2.js"></script>
+<script src="data/en_vocab.js"></script>
+<script src="data/en_lit1.js"></script>
+<script src="data/en_lit2.js"></script>
+<script src="data/en_concept1.js"></script>
+<script src="data/en_concept2.js"></script>
+<script src="data/en_concept3.js"></script>
+<script src="data/en_concept4.js"></script>
+<script src="data/en_concept5.js"></script>
+<script src="data/past_en_bcs.js"></script>
+<script src="data/past_en_other.js"></script>
+<script src="data/en_extra1.js"></script>
+<script src="data/en_extra2.js"></script>
+<script src="data/en_concept6.js"></script>
+<script src="data/en_concept7.js"></script>
 <script>
 "use strict";
 var TOPICS = window.__T || [];
@@ -530,7 +548,8 @@ function pctBn(x){ return bn(x) + "%"; }
 
 /* ---------- subjects, structure and routing ---------- */
 var SUBJECTS = [
-  { id: "bangla", name: "বাংলা", tag: "সাহিত্য ও ব্যাকরণ", sections: ["প্রাচীন ও মধ্যযুগের সাহিত্য", "আধুনিক সাহিত্য", "বাংলা ভাষা ও ব্যাকরণ"] }
+  { id: "bangla", name: "বাংলা", tag: "সাহিত্য ও ব্যাকরণ", sections: ["প্রাচীন ও মধ্যযুগের সাহিত্য", "আধুনিক সাহিত্য", "বাংলা ভাষা ও ব্যাকরণ"] },
+  { id: "english", name: "English", tag: "Language and Literature", sections: ["English Language", "Vocabulary", "English Literature"] }
 ];
 function subjectOf(t){ return t.subject || "bangla"; }
 function subjectById(id){
@@ -578,9 +597,10 @@ function route(){
   else if (r.name === "mock"){ if (mock) setView("mock"); else goHome(); }
   else if (r.name === "mockresult"){ if (mockResult) setView("mockresult"); else goHome(); }
   else if (r.name === "topics"){ renderTopics(document.getElementById("topicsFilter").value || ""); setView("topics"); }
-  var navMap = { home: "home", subject: "subject", topic: "subject", topics: "topics", mock: "mock", mockresult: "mock" };
+  var navMap = { home: "home", topics: "topics", mock: "mock", mockresult: "mock" };
+  var navKey = r.name === "subject" ? (r.id === "english" ? "english" : "subject") : (r.name === "topic" ? "subject" : (navMap[r.name] || ""));
   document.querySelectorAll(".bn-item").forEach(function(b){
-    b.classList.toggle("on", b.getAttribute("data-nav") === (navMap[r.name] || ""));
+    b.classList.toggle("on", b.getAttribute("data-nav") === navKey);
   });
 }
 window.addEventListener("hashchange", route);
@@ -761,6 +781,10 @@ function renderStudy(idx){
   session = null;
   setView("study");
   document.getElementById("studyCrumb").textContent = t.name;
+  var crumbSub = document.getElementById("studyCrumbSub");
+  var tSub = subjectById(subjectOf(t));
+  crumbSub.textContent = tSub.name;
+  crumbSub.onclick = function(){ goSubject(tSub.id); };
   var pv = document.getElementById("prevTopicBtn"), nx = document.getElementById("nextTopicBtn");
   pv.disabled = idx <= 0; nx.disabled = idx >= TOPICS.length - 1;
   pv.textContent = idx > 0 ? "← " + TOPICS[idx - 1].name : "← আগের টপিক";
@@ -1065,6 +1089,7 @@ function renderSubject(id){
   var sub = subjectById(id);
   session = null;
   setView("subject");
+  document.getElementById("subjectCrumb").textContent = sub.name;
   document.getElementById("subjectTitle").textContent = sub.name;
   var list = TOPICS.map(function(t, i){ return [t, i]; }).filter(function(pair){ return subjectOf(pair[0]) === sub.id; });
   var facts = 0, mastered = 0;
@@ -1099,8 +1124,8 @@ function renderHome(){
   var wrong = answered - right;
   var accuracy = answered ? Math.round(right / answered * 100) : 0;
   var pct = totalFacts ? Math.round(mastered / totalFacts * 100) : 0;
-  var pastTotalAll = PAST_EXTRA.length, pastOther = 0;
-  TOPICS.forEach(function(t){ pastTotalAll += (t.past || []).length; });
+  var pastTotalAll = PAST_EXTRA.length, pastOther = 0, pastEn = 0;
+  TOPICS.forEach(function(t){ pastTotalAll += (t.past || []).length; if (subjectOf(t) === "english") pastEn += (t.past || []).length; });
   TOPICS.forEach(function(t){ (t.past || []).forEach(function(p){ if (p.tag) pastOther++; }); });
   PAST_EXTRA.forEach(function(p){ if (p.tag) pastOther++; });
   var st = statsObj();
@@ -1120,7 +1145,7 @@ function renderHome(){
   document.getElementById("progressNote").textContent =
     "সব বিষয় মিলিয়ে " + bn(totalFacts) + "টি তথ্যের মধ্যে " + bn(mastered) + "টি পুরোপুরি আয়ত্ত হয়েছে, রিভিশনের বাকি " + bn(dueCount) + "টি, মোট অনুশীলন সেশন " + bn(st.sessions || 0) + "টি।";
   document.getElementById("pastCountLine").textContent =
-    "প্রশ্নব্যাংকে যাচাই করা আসল বাংলা প্রশ্ন আছে মোট " + bn(pastTotalAll) + "টি, বিসিএসের " + bn(pastTotalAll - pastOther) + "টি আর ব্যাংক, প্রাইমারি, নিবন্ধন ও ভর্তি পরীক্ষার " + bn(pastOther) + "টি।";
+    "প্রশ্নব্যাংকে যাচাই করা আসল প্রশ্ন আছে মোট " + bn(pastTotalAll) + "টি, বাংলায় " + bn(pastTotalAll - pastEn) + "টি আর English বিষয়ে " + bn(pastEn) + "টি। এর মধ্যে বিসিএসের " + bn(pastTotalAll - pastOther) + "টি, ব্যাংক, প্রাইমারি, নিবন্ধন ও ভর্তি পরীক্ষার " + bn(pastOther) + "টি।";
   var mh = mockHist();
   document.getElementById("mockHistory").textContent = mh.length ?
     "তোমার শেষ মক টেস্টগুলো, " + mh.slice(0, 3).map(function(m){
