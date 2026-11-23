@@ -519,6 +519,9 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
 <script src="data/en_extra2.js"></script>
 <script src="data/en_concept6.js"></script>
 <script src="data/en_concept7.js"></script>
+<script src="data/gk_bd.js"></script>
+<script src="data/concept_gk_bd.js"></script>
+<script src="data/past_gk_bcs.js"></script>
 <script>
 "use strict";
 var TOPICS = window.__T || [];
@@ -561,7 +564,8 @@ function pctBn(x){ return bn(x) + "%"; }
 /* ---------- subjects, structure and routing ---------- */
 var SUBJECTS = [
   { id: "bangla", name: "বাংলা", tag: "সাহিত্য ও ব্যাকরণ", sections: ["প্রাচীন ও মধ্যযুগের সাহিত্য", "আধুনিক সাহিত্য", "বাংলা ভাষা ও ব্যাকরণ"] },
-  { id: "english", name: "English", tag: "Language and Literature", sections: ["English Language", "Vocabulary", "English Literature"] }
+  { id: "english", name: "English", tag: "Language and Literature", sections: ["English Language", "Vocabulary", "English Literature"] },
+  { id: "gk", name: "সাধারণ জ্ঞান", tag: "বাংলাদেশ ও আন্তর্জাতিক বিষয়াবলী", sections: ["বাংলাদেশ বিষয়াবলী"] }
 ];
 function subjectOf(t){ return t.subject || "bangla"; }
 function subjectById(id){
