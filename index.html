@@ -320,6 +320,10 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
 <script src="data/past_41_50.js"></script>
 <script src="data/concept_byakoron.js"></script>
 <script src="data/concept_sahitya.js"></script>
+<script src="data/past_bank.js"></script>
+<script src="data/past_primary.js"></script>
+<script src="data/past_ntrca.js"></script>
+<script src="data/past_admission.js"></script>
 <script>
 "use strict";
 var TOPICS = window.__T || [];
@@ -330,7 +334,7 @@ TOPICS.forEach(function(t){ TOPIC_BY_NORM[normName(t.name)] = t; t.past = t.past
 /* merge verified past questions into their topics */
 (window.__P || []).forEach(function(p){
   var t = TOPIC_BY_NORM[normName(p.topic)];
-  var entry = { q: p.q, opts: p.opts, ans: p.ans, bcs: p.bcs };
+  var entry = { q: p.q, opts: p.opts, ans: p.ans, bcs: p.bcs, tag: p.tag || null };
   if (t){
     if (!t.past.some(function(x){ return x.q === p.q; })) t.past.push(entry);
   } else {
@@ -480,7 +484,7 @@ function makeNegative(t){
 function makePast(t, p){
   var opts = shuffle(p.opts.slice());
   return { topic:t, item:null, q: p.q, opts: opts, ans: opts.indexOf(p.opts[p.ans]),
-           fact: "", st: "", badge: p.bcs + " বিসিএসে এসেছে", badgeCls: "past", pastObj: p };
+           fact: "", st: "", badge: p.tag ? p.tag : (p.bcs + " বিসিএসে এসেছে"), badgeCls: "past", pastObj: p };
 }
 function makeQuestion(t, it){
   if (Math.random() < 0.22){
@@ -734,8 +738,10 @@ function renderHome(){
   var wrong = answered - right;
   var accuracy = answered ? Math.round(right / answered * 100) : 0;
   var pct = totalFacts ? Math.round(mastered / totalFacts * 100) : 0;
-  var pastTotalAll = PAST_EXTRA.length;
+  var pastTotalAll = PAST_EXTRA.length, pastOther = 0;
   TOPICS.forEach(function(t){ pastTotalAll += (t.past || []).length; });
+  TOPICS.forEach(function(t){ (t.past || []).forEach(function(p){ if (p.tag) pastOther++; }); });
+  PAST_EXTRA.forEach(function(p){ if (p.tag) pastOther++; });
   var st = statsObj();
   var todayCount = st.days[dayKey(new Date())] || 0;
   document.getElementById("hdPct").textContent = pctBn(pct);
@@ -753,7 +759,7 @@ function renderHome(){
   document.getElementById("progressNote").textContent =
     "সব বিষয় মিলিয়ে " + bn(totalFacts) + "টি তথ্যের মধ্যে " + bn(mastered) + "টি পুরোপুরি আয়ত্ত হয়েছে, রিভিশনের বাকি " + bn(dueCount) + "টি, মোট অনুশীলন সেশন " + bn(st.sessions || 0) + "টি।";
   document.getElementById("pastCountLine").textContent =
-    "প্রশ্নব্যাংকে ১০ম থেকে ৫০তম বিসিএসের যাচাই করা আসল বাংলা প্রশ্ন আছে " + bn(pastTotalAll) + "টি।";
+    "প্রশ্নব্যাংকে যাচাই করা আসল বাংলা প্রশ্ন আছে মোট " + bn(pastTotalAll) + "টি, বিসিএসের " + bn(pastTotalAll - pastOther) + "টি আর ব্যাংক, প্রাইমারি, নিবন্ধন ও ভর্তি পরীক্ষার " + bn(pastOther) + "টি।";
 
   document.getElementById("subjectCards").innerHTML = SUBJECTS.map(function(sub){
     var list = TOPICS.filter(function(t){ return subjectOf(t) === sub.id; });
