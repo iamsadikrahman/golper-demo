@@ -170,6 +170,34 @@ header{position:sticky;top:0;z-index:50;background:rgba(12,18,16,.92);backdrop-f
 .weakrow .wname{font-weight:700;font-size:15px}
 .weakrow .wsec{font-size:12px;color:var(--muted)}
 .weakrow .wpct{color:var(--gold,#e8b93e);font-weight:700;font-size:14px;white-space:nowrap}
+/* view and element animations */
+@keyframes vin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.vin{animation:vin .38s ease both}
+.ccard{animation:vin .5s ease both}
+.tl-item{animation:vin .5s ease both}
+.bar i{transition:width .9s ease}
+.topic .bar i,.subjcard .bar i{animation:barGrow .9s ease both;transform-origin:left}
+@keyframes barGrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.qcard{animation:vin .3s ease both}
+.opt{transition:background .2s,border-color .2s,transform .15s}
+.opt:active{transform:scale(.98)}
+/* infographic: bar chart */
+.vchart{display:flex;flex-direction:column;gap:9px}
+.vchart-row{display:grid;grid-template-columns:110px 1fr auto;gap:10px;align-items:center;font-size:13.5px}
+.vchart-label{color:var(--muted);line-height:1.35}
+.vchart-track{height:12px;background:var(--panel2);border:1px solid var(--line);border-radius:99px;overflow:hidden}
+.vchart-fill{height:100%;background:linear-gradient(90deg,#57b25e,var(--lime));border-radius:99px;animation:barGrow 1s ease both;transform-origin:left}
+.vchart-val{font-weight:700;color:#fff;white-space:nowrap}
+/* infographic: stat tiles */
+.vgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px}
+.vtile{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 8px;text-align:center}
+.vtile b{display:block;font-size:19px;color:var(--lime);line-height:1.2}
+.vtile span{font-size:12px;color:var(--muted);line-height:1.4;display:block;margin-top:3px}
+/* famous lines */
+.vquotes{display:flex;flex-direction:column;gap:10px}
+.vquote{border-left:3px solid var(--lime);background:var(--panel2);border-radius:0 12px 12px 0;padding:12px 14px;animation:vin .5s ease both}
+.vquote p{font-size:15.5px;line-height:1.65;font-style:italic}
+.vquote span{display:block;margin-top:5px;font-size:12.5px;color:var(--muted);font-style:normal}
 .study-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 .study-actions .btn{flex:1;justify-content:center;min-width:140px}
 footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-height:1.7}
@@ -341,11 +369,13 @@ function subjectById(id){
 }
 var resultShown = false;
 function setView(name){
-  document.getElementById("homeView").style.display = name === "home" ? "block" : "none";
-  document.getElementById("subjectView").style.display = name === "subject" ? "block" : "none";
-  document.getElementById("studyView").style.display = name === "study" ? "block" : "none";
-  document.getElementById("quizView").style.display = name === "quiz" ? "block" : "none";
-  document.getElementById("resultView").style.display = name === "result" ? "block" : "none";
+  var ids = { home: "homeView", subject: "subjectView", study: "studyView", quiz: "quizView", result: "resultView" };
+  Object.keys(ids).forEach(function(k){
+    var el = document.getElementById(ids[k]);
+    var show = k === name;
+    el.style.display = show ? "block" : "none";
+    if (show){ el.classList.remove("vin"); void el.offsetWidth; el.classList.add("vin"); }
+  });
   window.scrollTo(0, 0);
 }
 function setHash(h){ if (location.hash !== h) location.hash = h; }
@@ -505,8 +535,8 @@ function renderViz(v){
   if (!v || !v.type) return "";
   var h = "<div class='viz'>";
   if (v.type === "timeline"){
-    h += "<div class='tl'>" + (v.items || []).map(function(it){
-      return "<div class='tl-item'><span class='tl-y'>" + it.y + "</span><span class='tl-t'>" + it.t + "</span></div>";
+    h += "<div class='tl'>" + (v.items || []).map(function(it, i){
+      return "<div class='tl-item' style='animation-delay:" + (i * 70) + "ms'><span class='tl-y'>" + it.y + "</span><span class='tl-t'>" + it.t + "</span></div>";
     }).join("") + "</div>";
   } else if (v.type === "table"){
     h += "<table class='vtable'><thead><tr>" + (v.head || []).map(function(x){ return "<th>" + x + "</th>"; }).join("") + "</tr></thead><tbody>" +
@@ -527,6 +557,21 @@ function renderViz(v){
     h += "<div class='vpairs'>" + (v.items || []).map(function(p){
       return "<div class='vpair'><span class='vpair-a'>" + p.a + "</span><span class='vpair-arrow'>→</span><span class='vpair-b'>" + p.b + "</span></div>";
     }).join("") + "</div>";
+  } else if (v.type === "chart"){
+    var mx = 0;
+    (v.items || []).forEach(function(it){ if (it.value > mx) mx = it.value; });
+    if (!mx) mx = 1;
+    h += "<div class='vchart'>" + (v.items || []).map(function(it){
+      return "<div class='vchart-row'><span class='vchart-label'>" + it.label + "</span><span class='vchart-track'><span class='vchart-fill' style='display:block;width:" + Math.round(it.value / mx * 100) + "%'></span></span><span class='vchart-val'>" + it.text + "</span></div>";
+    }).join("") + "</div>";
+  } else if (v.type === "grid"){
+    h += "<div class='vgrid'>" + (v.items || []).map(function(it){
+      return "<div class='vtile'><b>" + it.n + "</b><span>" + it.t + "</span></div>";
+    }).join("") + "</div>";
+  } else if (v.type === "quote"){
+    h += "<div class='vquotes'>" + (v.items || []).map(function(it, i){
+      return "<div class='vquote' style='animation-delay:" + (i * 90) + "ms'><p>" + it.q + "</p><span>" + it.by + "</span></div>";
+    }).join("") + "</div>";
   }
   return h + "</div>";
 }
@@ -536,8 +581,8 @@ function renderStudy(idx){
   setView("study");
   document.getElementById("studyTitle").textContent = t.name;
   document.getElementById("studyIntro").textContent = t.intro;
-  document.getElementById("studyCards").innerHTML = (t.cards || []).map(function(c){
-    return "<div class='ccard'><h3>" + c.h + "</h3>" +
+  document.getElementById("studyCards").innerHTML = (t.cards || []).map(function(c, ci){
+    return "<div class='ccard' style='animation-delay:" + (ci * 70) + "ms'><h3>" + c.h + "</h3>" +
       (c.lead ? "<div class='clead'>" + c.lead + "</div>" : (c.b ? "<div class='cb'>" + c.b + "</div>" : "")) +
       (c.viz ? renderViz(c.viz) : (c.ex ? "<div class='cex'><b>উদাহরণ ও সূত্র</b><br>" + c.ex + "</div>" : "")) +
       (c.trap ? "<div class='ctrap'><b>সাবধান, ফাঁদ</b><br>" + c.trap + "</div>" : "") + "</div>";
