@@ -144,6 +144,14 @@ header{position:sticky;top:0;z-index:50;background:rgba(12,18,16,.92);backdrop-f
 .vpair-a{font-weight:600;color:#fff}
 .vpair-arrow{color:var(--lime);font-weight:700}
 .vpair-b{color:var(--muted);line-height:1.5}
+/* one glance full topic map */
+.factmap{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-top:20px}
+.factmap h3{font-size:16px;margin-bottom:4px}
+.factmap p{font-size:12.5px;color:var(--muted);margin-bottom:10px}
+.factmap ol{list-style:none;counter-reset:fm}
+.factmap li{counter-increment:fm;position:relative;padding:6px 0 6px 34px;font-size:14px;line-height:1.6;border-bottom:1px dashed #1d2a22}
+.factmap li:last-child{border-bottom:none}
+.factmap li:before{content:counter(fm);position:absolute;left:0;top:6px;width:24px;height:24px;border-radius:8px;background:var(--panel2);border:1px solid var(--line);color:var(--lime);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
 .study-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 .study-actions .btn{flex:1;justify-content:center;min-width:140px}
 footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-height:1.7}
@@ -200,6 +208,11 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
     <h2 id="studyTitle" style="font-size:22px;margin-top:8px"></h2>
     <p id="studyIntro" style="color:var(--muted);margin-top:4px;line-height:1.6"></p>
     <div id="studyCards"></div>
+    <div class="factmap" id="studyMap" style="display:none">
+      <h3>পুরো টপিক এক নজরে</h3>
+      <p>এই টপিকের সব তথ্য একসাথে। দ্রুত চোখ বুলিয়ে নিলে পুরো টপিকটা একবারে রিভিশন হয়ে যাবে।</p>
+      <ol id="studyMapList"></ol>
+    </div>
     <div class="study-actions">
       <button class="btn" id="studyPracticeBtn">অনুশীলন শুরু করো</button>
       <button class="btn ghost" id="studyPastBtn" style="display:none">শুধু আসল বিগত প্রশ্ন</button>
@@ -268,7 +281,17 @@ TOPICS.forEach(function(t){ TOPIC_BY_NORM[normName(t.name)] = t; t.past = t.past
   var t = TOPIC_BY_NORM[normName(c.topic)];
   if (!t) return;
   t.cards = c.cards || [];
-  t.items = t.items.concat(c.apply || []);
+  t.items = t.items.concat(c.apply || []).concat(c.deep || []);
+});
+/* drop exact duplicate questions inside each topic, same question and same answer */
+TOPICS.forEach(function(t){
+  var seen = {};
+  t.items = t.items.filter(function(it){
+    var k = it.q + "|" + it.a;
+    if (seen[k]) return false;
+    seen[k] = true;
+    return true;
+  });
 });
 var BN = ["০","১","২","৩","৪","৫","৬","৭","৮","৯"];
 function bn(n){ return String(n).replace(/[0-9]/g, function(d){ return BN[+d]; }); }
@@ -279,7 +302,7 @@ var DBKEY = "bachakuri_bangla_v1";
 var DB = {};
 try { DB = JSON.parse(localStorage.getItem(DBKEY) || "{}"); } catch(e){ DB = {}; }
 function saveDB(){ try { localStorage.setItem(DBKEY, JSON.stringify(DB)); } catch(e){} }
-function keyOf(t, it){ return t.name + "|" + it.q; }
+function keyOf(t, it){ return t.name + "|" + it.q + "|" + it.a; }
 function stateOf(t, it){ return DB[keyOf(t, it)] || null; }
 
 /* intervals in minutes by level */
@@ -433,6 +456,13 @@ function openStudy(idx){
       (c.viz ? renderViz(c.viz) : (c.ex ? "<div class='cex'><b>উদাহরণ ও সূত্র</b><br>" + c.ex + "</div>" : "")) +
       (c.trap ? "<div class='ctrap'><b>সাবধান, ফাঁদ</b><br>" + c.trap + "</div>" : "") + "</div>";
   }).join("");
+  var mapBox = document.getElementById("studyMap");
+  if (t.items.length){
+    mapBox.style.display = "block";
+    document.getElementById("studyMapList").innerHTML = t.items.map(function(it){
+      return "<li>" + (it.st || it.q) + "</li>";
+    }).join("");
+  } else mapBox.style.display = "none";
   document.getElementById("studyPracticeBtn").onclick = function(){ startTopic(idx); };
   var pb = document.getElementById("studyPastBtn");
   if (t.past && t.past.length){ pb.style.display = "inline-flex"; pb.onclick = function(){ startPastOnly(idx); }; }
