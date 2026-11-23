@@ -102,6 +102,48 @@ header{position:sticky;top:0;z-index:50;background:rgba(12,18,16,.92);backdrop-f
 .ccard .cex b{color:var(--lime)}
 .ccard .ctrap{background:#241a10;border:1px solid #57431c;border-radius:12px;padding:12px 14px;margin-top:10px;font-size:14.5px;line-height:1.7}
 .ccard .ctrap b{color:var(--gold)}
+.clead{font-size:16px;line-height:1.65;color:#d9e8dd;font-weight:500}
+.viz{margin-top:14px}
+/* timeline */
+.tl{position:relative;margin-left:8px;padding-left:22px;border-left:2px solid #2c4632}
+.tl-item{position:relative;padding:7px 0}
+.tl-item:before{content:"";position:absolute;left:-29px;top:13px;width:12px;height:12px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 4px #16241a}
+.tl-y{display:inline-block;background:#1c2f16;color:var(--lime);font-weight:700;font-size:13.5px;padding:2px 10px;border-radius:99px;margin-right:8px}
+.tl-t{font-size:15px;line-height:1.6}
+/* table */
+.vtable{width:100%;border-collapse:collapse;font-size:14.5px;background:var(--panel2);border-radius:12px;overflow:hidden}
+.vtable th{background:#1c2f16;color:var(--lime);text-align:left;padding:10px 12px;font-weight:600;border-bottom:1px solid var(--line)}
+.vtable td{padding:9px 12px;border-bottom:1px solid var(--line);line-height:1.55;vertical-align:top}
+.vtable tr:last-child td{border-bottom:none}
+/* points */
+.vpoints{list-style:none}
+.vpoints li{position:relative;padding:6px 0 6px 22px;font-size:15px;line-height:1.65}
+.vpoints li:before{content:"";position:absolute;left:2px;top:14px;width:8px;height:8px;border-radius:2px;background:var(--lime)}
+/* steps */
+.vsteps{display:flex;flex-direction:column;gap:10px}
+.vstep{display:flex;gap:12px;align-items:flex-start;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-size:15px;line-height:1.6}
+.vstep-n{flex:none;width:26px;height:26px;border-radius:50%;background:var(--lime);color:#0c1407;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+/* compare */
+.vcmp{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.vcmp-col{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 13px}
+.vcmp-col h4{color:var(--lime);font-size:15px;margin-bottom:8px}
+.vcmp-col ul{list-style:none}
+.vcmp-col li{font-size:14px;line-height:1.6;padding:4px 0 4px 14px;position:relative}
+.vcmp-col li:before{content:"";position:absolute;left:0;top:12px;width:6px;height:6px;border-radius:50%;background:var(--muted)}
+@media(max-width:520px){.vcmp{grid-template-columns:1fr}}
+/* tree */
+.vtree-root{display:inline-block;background:#1c2f16;color:var(--lime);font-weight:700;font-size:15.5px;padding:8px 18px;border-radius:99px;border:1px solid #2c4632}
+.vtree-branches{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:12px}
+.vbranch{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 13px}
+.vbranch h4{font-size:14.5px;color:#fff;margin-bottom:6px}
+.vbranch ul{list-style:none}
+.vbranch li{font-size:13.5px;color:var(--muted);line-height:1.6;padding:2px 0}
+/* pairs */
+.vpairs{display:flex;flex-direction:column;gap:8px}
+.vpair{display:flex;align-items:center;gap:10px;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px 13px;font-size:14.5px}
+.vpair-a{font-weight:600;color:#fff}
+.vpair-arrow{color:var(--lime);font-weight:700}
+.vpair-b{color:var(--muted);line-height:1.5}
 .study-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
 .study-actions .btn{flex:1;justify-content:center;min-width:140px}
 footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-height:1.7}
@@ -348,6 +390,35 @@ function startPastAll(){
   if (!qs.length){ alert("এখনো কোনো বিগত প্রশ্ন লোড হয়নি।"); return; }
   beginSession(qs, "আসল বিগত প্রশ্নের সেট");
 }
+function renderViz(v){
+  if (!v || !v.type) return "";
+  var h = "<div class='viz'>";
+  if (v.type === "timeline"){
+    h += "<div class='tl'>" + (v.items || []).map(function(it){
+      return "<div class='tl-item'><span class='tl-y'>" + it.y + "</span><span class='tl-t'>" + it.t + "</span></div>";
+    }).join("") + "</div>";
+  } else if (v.type === "table"){
+    h += "<table class='vtable'><thead><tr>" + (v.head || []).map(function(x){ return "<th>" + x + "</th>"; }).join("") + "</tr></thead><tbody>" +
+      (v.rows || []).map(function(r){ return "<tr>" + r.map(function(c){ return "<td>" + c + "</td>"; }).join("") + "</tr>"; }).join("") + "</tbody></table>";
+  } else if (v.type === "points"){
+    h += "<ul class='vpoints'>" + (v.items || []).map(function(x){ return "<li>" + x + "</li>"; }).join("") + "</ul>";
+  } else if (v.type === "steps"){
+    h += "<div class='vsteps'>" + (v.items || []).map(function(x, i){
+      return "<div class='vstep'><span class='vstep-n'>" + bn(i + 1) + "</span><span>" + x + "</span></div>";
+    }).join("") + "</div>";
+  } else if (v.type === "compare"){
+    var col = function(c){ return "<div class='vcmp-col'><h4>" + (c.h || "") + "</h4><ul>" + ((c.items || []).map(function(x){ return "<li>" + x + "</li>"; }).join("")) + "</ul></div>"; };
+    h += "<div class='vcmp'>" + col(v.left || {}) + col(v.right || {}) + "</div>";
+  } else if (v.type === "tree"){
+    h += "<div class='vtree'><div class='vtree-root'>" + v.root + "</div><div class='vtree-branches'>" +
+      (v.branches || []).map(function(b){ return "<div class='vbranch'><h4>" + b.h + "</h4><ul>" + (b.items || []).map(function(x){ return "<li>" + x + "</li>"; }).join("") + "</ul></div>"; }).join("") + "</div></div>";
+  } else if (v.type === "pairs"){
+    h += "<div class='vpairs'>" + (v.items || []).map(function(p){
+      return "<div class='vpair'><span class='vpair-a'>" + p.a + "</span><span class='vpair-arrow'>→</span><span class='vpair-b'>" + p.b + "</span></div>";
+    }).join("") + "</div>";
+  }
+  return h + "</div>";
+}
 function openStudy(idx){
   var t = TOPICS[idx];
   document.getElementById("homeView").style.display = "none";
@@ -357,8 +428,9 @@ function openStudy(idx){
   document.getElementById("studyTitle").textContent = t.name;
   document.getElementById("studyIntro").textContent = t.intro;
   document.getElementById("studyCards").innerHTML = (t.cards || []).map(function(c){
-    return "<div class='ccard'><h3>" + c.h + "</h3><div class='cb'>" + c.b + "</div>" +
-      (c.ex ? "<div class='cex'><b>উদাহরণ ও সূত্র</b><br>" + c.ex + "</div>" : "") +
+    return "<div class='ccard'><h3>" + c.h + "</h3>" +
+      (c.lead ? "<div class='clead'>" + c.lead + "</div>" : (c.b ? "<div class='cb'>" + c.b + "</div>" : "")) +
+      (c.viz ? renderViz(c.viz) : (c.ex ? "<div class='cex'><b>উদাহরণ ও সূত্র</b><br>" + c.ex + "</div>" : "")) +
       (c.trap ? "<div class='ctrap'><b>সাবধান, ফাঁদ</b><br>" + c.trap + "</div>" : "") + "</div>";
   }).join("");
   document.getElementById("studyPracticeBtn").onclick = function(){ startTopic(idx); };
