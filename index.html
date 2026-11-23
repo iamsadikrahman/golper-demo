@@ -203,6 +203,26 @@ header{position:sticky;top:0;z-index:50;background:rgba(12,18,16,.92);backdrop-f
 .study-actions .btn{flex:1;justify-content:center;min-width:140px}
 footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-height:1.7}
 .empty{color:var(--muted);text-align:center;padding:30px 0;font-size:15px}
+/* mock test */
+.mockcard{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-top:16px}
+.mockcard h2{font-size:19px;margin-bottom:4px}
+.mockcard p{font-size:14px;color:var(--muted);line-height:1.65}
+.mockopts{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+.mockopts label{flex:1;min-width:140px;font-size:13px;color:var(--muted);display:block}
+.mockopts select{width:100%;margin-top:6px;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-family:inherit;font-size:15px}
+.timerchip{font-size:17px;font-weight:700;background:var(--panel2);border:1px solid var(--line);border-radius:99px;padding:6px 16px;color:#fff;white-space:nowrap}
+.timerchip.low{color:#ff6b5e;border-color:#ff6b5e;animation:vin .5s ease infinite alternate}
+.opt.sel{border-color:var(--lime);background:#1c2f16;color:#fff}
+.palette{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.pnum{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--muted);font-weight:700;font-size:14px;cursor:pointer}
+.pnum.done{background:#1c2f16;color:var(--lime);border-color:#2c4632}
+.pnum.cur{outline:2px solid var(--lime);color:#fff}
+.mocknav{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.mocknav .btn{flex:1;justify-content:center;min-width:110px}
+.ritem.ok{border-left:3px solid var(--lime)}
+.ritem.skip{border-left:3px solid var(--muted)}
+.scoregrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin:16px 0}
+.scoregrid .vtile b{font-size:22px}
 </style>
 </head>
 <body>
@@ -236,6 +256,28 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
         <button class="btn ghost" onclick="startPastAll()">শুধু আসল বিগত প্রশ্ন</button>
       </div>
       <p id="pastCountLine" style="margin:12px 0 0;font-size:13.5px"></p>
+    </div>
+
+    <div class="mockcard">
+      <h2>মক টেস্ট, আসল পরীক্ষার মহড়া</h2>
+      <p>ঘড়ি ধরে পরীক্ষা দাও, ঠিক আসল হলের মতো। উত্তর সাথে সাথে দেখা যাবে না, ভুল উত্তরে ০.৫ নম্বর কাটা যাবে, সময় শেষ হলে খাতা নিজে থেকেই জমা হয়ে যাবে। শেষে পুরো খাতা রিভিউ করে দেখতে পারবে কোনটা ঠিক হলো, কোনটা ভুল, আর সঠিক উত্তর কী ছিল।</p>
+      <div class="mockopts">
+        <label>প্রশ্নের সংখ্যা
+          <select id="mockCount">
+            <option value="25">২৫টি প্রশ্ন</option>
+            <option value="50">৫০টি প্রশ্ন</option>
+          </select>
+        </label>
+        <label>প্রশ্ন আসবে কোথা থেকে
+          <select id="mockSource">
+            <option value="mix">বিগত প্রশ্ন ও তথ্যজাল মিশিয়ে</option>
+            <option value="past">শুধু আসল বিগত প্রশ্ন</option>
+            <option value="facts">শুধু তথ্যজাল থেকে</option>
+          </select>
+        </label>
+      </div>
+      <button class="btn" onclick="startMock()">মক টেস্ট শুরু করো</button>
+      <p id="mockHistory" style="margin:12px 0 0;font-size:13.5px"></p>
     </div>
 
     <h2 class="secTitle">বিষয়সমূহ</h2>
@@ -310,6 +352,40 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
     </div>
     <div class="review" id="reviewBox"></div>
   </div>
+
+  <!-- MOCK TEST -->
+  <div id="mockView" style="display:none">
+    <div class="qhead">
+      <button class="linkbtn" onclick="quitMock()">✕ পরীক্ষা ছেড়ে দাও</button>
+      <span class="timerchip" id="mockTimer">০০:০০</span>
+      <span class="qcount" id="mockCount2"></span>
+    </div>
+    <div class="bar"><i id="mockBar" style="width:0%"></i></div>
+    <div class="qcard">
+      <span class="badge" id="mockBadge"></span>
+      <div class="qtext" id="mockText"></div>
+      <div id="mockOpts"></div>
+      <div class="mocknav">
+        <button class="btn ghost" id="mockPrev" onclick="mockGo(-1)">← আগের প্রশ্ন</button>
+        <button class="btn ghost" id="mockNext" onclick="mockGo(1)">পরের প্রশ্ন →</button>
+        <button class="btn" onclick="submitMock(false)">খাতা জমা দাও</button>
+      </div>
+      <div class="palette" id="mockPalette"></div>
+    </div>
+  </div>
+
+  <!-- MOCK RESULT -->
+  <div id="mockResultView" style="display:none">
+    <h2>মক টেস্টের ফলাফল</h2>
+    <div class="big" id="mockScore"></div>
+    <p id="mockScoreLine"></p>
+    <div class="scoregrid" id="mockGrid"></div>
+    <div style="margin-top:8px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="btn" onclick="goHome()">হোমে ফিরে যাও</button>
+      <button class="btn ghost" onclick="setHash('#/');setTimeout(startMock,50)">আরেকটা মক টেস্ট</button>
+    </div>
+    <div class="review" id="mockReview"></div>
+  </div>
 </div>
 
 <script src="data/sahitya_prachin.js"></script>
@@ -374,7 +450,7 @@ function subjectById(id){
 }
 var resultShown = false;
 function setView(name){
-  var ids = { home: "homeView", subject: "subjectView", study: "studyView", quiz: "quizView", result: "resultView" };
+  var ids = { home: "homeView", subject: "subjectView", study: "studyView", quiz: "quizView", result: "resultView", mock: "mockView", mockresult: "mockResultView" };
   Object.keys(ids).forEach(function(k){
     var el = document.getElementById(ids[k]);
     var show = k === name;
@@ -397,15 +473,20 @@ function parseRoute(){
   if (p[0] === "topic") return { name: "topic", idx: parseInt(p[1], 10) || 0 };
   if (p[0] === "quiz") return { name: "quiz" };
   if (p[0] === "result") return { name: "result" };
+  if (p[0] === "mock") return { name: "mock" };
+  if (p[0] === "mockresult") return { name: "mockresult" };
   return { name: "home" };
 }
 function route(){
   var r = parseRoute();
+  if (mock && r.name !== "mock" && r.name !== "mockresult"){ stopMockTimer(); mock = null; }
   if (r.name === "home") showHome();
   else if (r.name === "subject") renderSubject(r.id);
   else if (r.name === "topic") renderStudy(r.idx);
   else if (r.name === "quiz"){ if (session) setView("quiz"); else goHome(); }
   else if (r.name === "result"){ if (resultShown) setView("result"); else goHome(); }
+  else if (r.name === "mock"){ if (mock) setView("mock"); else goHome(); }
+  else if (r.name === "mockresult"){ if (mockResult) setView("mockresult"); else goHome(); }
 }
 window.addEventListener("hashchange", route);
 
@@ -681,6 +762,138 @@ function showResult(){
   goReplace("#/result");
 }
 
+/* ---------- mock test: timed exam with negative marking ---------- */
+var mock = null, mockResult = null, mockTimerId = null;
+function fmtScore(x){ return bn(String(x)); }
+function mockHist(){ if (!DB.__mock) DB.__mock = []; return DB.__mock; }
+function startMock(){
+  var count = parseInt(document.getElementById("mockCount").value, 10) || 25;
+  var source = document.getElementById("mockSource").value;
+  var pastPool = [], factPool = [];
+  TOPICS.forEach(function(t){
+    (t.past || []).forEach(function(p){ pastPool.push([t, p]); });
+    t.items.forEach(function(it){ factPool.push([t, it]); });
+  });
+  PAST_EXTRA.forEach(function(p){ pastPool.push([null, p]); });
+  var qs = [];
+  if (source === "past"){
+    qs = shuffle(pastPool).slice(0, count).map(function(pair){ return makePast(pair[0], pair[1]); });
+  } else if (source === "facts"){
+    qs = shuffle(factPool).slice(0, count).map(function(pair){ return makeQuestion(pair[0], pair[1]); });
+  } else {
+    var pastN = Math.round(count / 2);
+    qs = shuffle(pastPool).slice(0, pastN).map(function(pair){ return makePast(pair[0], pair[1]); })
+      .concat(shuffle(factPool).slice(0, count - pastN).map(function(pair){ return makeQuestion(pair[0], pair[1]); }));
+    qs = shuffle(qs);
+  }
+  if (!qs.length){ alert("প্রশ্ন লোড হয়নি, আবার চেষ্টা করো।"); return; }
+  mock = { qs: qs, sel: qs.map(function(){ return -1; }), i: 0,
+           startedAt: Date.now(), endsAt: Date.now() + qs.length * 60000, total: qs.length };
+  mockResult = null;
+  setView("mock");
+  setHash("#/mock");
+  renderMockQ();
+  stopMockTimer();
+  mockTimerId = setInterval(updateMockTimer, 500);
+  updateMockTimer();
+}
+function stopMockTimer(){ if (mockTimerId){ clearInterval(mockTimerId); mockTimerId = null; } }
+function updateMockTimer(){
+  if (!mock) { stopMockTimer(); return; }
+  var left = Math.max(0, Math.round((mock.endsAt - Date.now()) / 1000));
+  var el = document.getElementById("mockTimer");
+  var mm = Math.floor(left / 60), ss = left % 60;
+  el.textContent = bn((mm < 10 ? "০" : "") + mm) + ":" + bn((ss < 10 ? "০" : "") + ss);
+  el.classList.toggle("low", left <= 60);
+  if (left <= 0) submitMock(true);
+}
+function renderMockQ(){
+  var q = mock.qs[mock.i];
+  document.getElementById("mockBar").style.width = Math.round((mock.i + 1) / mock.total * 100) + "%";
+  document.getElementById("mockCount2").textContent = "প্রশ্ন " + bn(mock.i + 1) + " / " + bn(mock.total);
+  var badge = document.getElementById("mockBadge");
+  badge.textContent = q.badge; badge.className = "badge " + q.badgeCls;
+  document.getElementById("mockText").textContent = q.q;
+  var box = document.getElementById("mockOpts");
+  box.innerHTML = "";
+  q.opts.forEach(function(o, idx){
+    var b = document.createElement("button");
+    b.className = "opt" + (mock.sel[mock.i] === idx ? " sel" : "");
+    b.textContent = o;
+    b.onclick = function(){ pickMock(idx); };
+    box.appendChild(b);
+  });
+  document.getElementById("mockPrev").disabled = mock.i === 0;
+  document.getElementById("mockNext").disabled = mock.i === mock.total - 1;
+  var pal = document.getElementById("mockPalette");
+  pal.innerHTML = "";
+  mock.qs.forEach(function(_, i){
+    var b = document.createElement("button");
+    b.className = "pnum" + (mock.sel[i] >= 0 ? " done" : "") + (i === mock.i ? " cur" : "");
+    b.textContent = bn(i + 1);
+    b.onclick = function(){ mock.i = i; renderMockQ(); };
+    pal.appendChild(b);
+  });
+}
+function pickMock(idx){
+  mock.sel[mock.i] = mock.sel[mock.i] === idx ? -1 : idx;
+  renderMockQ();
+}
+function mockGo(d){
+  var n = mock.i + d;
+  if (n < 0 || n >= mock.total) return;
+  mock.i = n; renderMockQ();
+}
+function quitMock(){ stopMockTimer(); mock = null; goHome(); }
+function submitMock(auto){
+  if (!mock) return;
+  stopMockTimer();
+  var right = 0, wrong = 0, skip = 0;
+  mock.qs.forEach(function(q, i){
+    if (mock.sel[i] < 0) skip++;
+    else if (mock.sel[i] === q.ans) right++;
+    else wrong++;
+  });
+  var score = right - wrong * 0.5;
+  var usedSec = Math.round((Date.now() - mock.startedAt) / 1000);
+  mockHist().unshift({ at: Date.now(), total: mock.total, right: right, wrong: wrong, score: score });
+  DB.__mock = mockHist().slice(0, 10);
+  bumpDay(); saveDB();
+  mockResult = { qs: mock.qs, sel: mock.sel, right: right, wrong: wrong, skip: skip,
+                 score: score, total: mock.total, usedSec: usedSec, auto: !!auto };
+  mock = null;
+  renderMockResult();
+  goReplace("#/mockresult");
+}
+function renderMockResult(){
+  var r = mockResult;
+  document.getElementById("mockScore").textContent = fmtScore(r.score) + " / " + bn(r.total);
+  document.getElementById("mockScoreLine").textContent =
+    (r.auto ? "সময় শেষ হয়ে যাওয়ায় খাতা নিজে থেকেই জমা হয়েছে। " : "") +
+    (r.score >= r.total * 0.7 ? "শক্ত অবস্থান। এই ধারাবাহিকতা থাকলে পরীক্ষার হলে চাপ কমবে।" :
+     r.score >= r.total * 0.4 ? "মাঝারি অবস্থান। নিচের রিভিউতে ভুলগুলো দেখে নাও, ওগুলোই এখন সবচেয়ে দামি।" :
+     "এখনো অনেক ঘাটতি আছে। রিভিউ ধরে ভুলের টপিকগুলোতে ফিরে যাও, সিস্টেম সেগুলো আবার সামনে আনবে।");
+  var attempted = r.right + r.wrong;
+  var acc = attempted ? Math.round(r.right / attempted * 100) : 0;
+  var mm = Math.floor(r.usedSec / 60), ss = r.usedSec % 60;
+  document.getElementById("mockGrid").innerHTML =
+    "<div class='vtile'><b>" + bn(r.right) + "</b><span>সঠিক উত্তর</span></div>" +
+    "<div class='vtile'><b>" + bn(r.wrong) + "</b><span>ভুল উত্তর</span></div>" +
+    "<div class='vtile'><b>" + bn(r.skip) + "</b><span>বাদ দিয়েছো</span></div>" +
+    "<div class='vtile'><b>" + fmtScore(r.wrong * 0.5) + "</b><span>নেগেটিভে কাটা গেছে</span></div>" +
+    "<div class='vtile'><b>" + bn(acc) + "%</b><span>নির্ভুলতা</span></div>" +
+    "<div class='vtile'><b>" + bn(mm) + " মি " + bn(ss) + " সে</b><span>সময় লেগেছে</span></div>";
+  document.getElementById("mockReview").innerHTML = "<h3>পুরো খাতার রিভিউ</h3>" + r.qs.map(function(q, i){
+    var mine = r.sel[i];
+    var cls = mine < 0 ? "skip" : (mine === q.ans ? "ok" : "bad");
+    var mineTxt = mine < 0 ? "তুমি উত্তর দাওনি" : "তোমার উত্তর, " + q.opts[mine];
+    var expl = q.fact || q.st || (q.topic ? "টপিক, " + q.topic.name : "");
+    return "<div class='ritem " + cls + "'><b>" + bn(i + 1) + ". " + q.q + "</b><br>" +
+      mineTxt + "<br>সঠিক উত্তর, " + q.opts[q.ans] + (expl ? "<br>" + expl : "") + "</div>";
+  }).join("");
+  setView("mockresult");
+}
+
 /* ---------- home ---------- */
 var SECTION_ORDER = ["প্রাচীন ও মধ্যযুগের সাহিত্য", "আধুনিক সাহিত্য", "বাংলা ভাষা ও ব্যাকরণ"];
 function topicMastery(t){
@@ -761,6 +974,12 @@ function renderHome(){
     "সব বিষয় মিলিয়ে " + bn(totalFacts) + "টি তথ্যের মধ্যে " + bn(mastered) + "টি পুরোপুরি আয়ত্ত হয়েছে, রিভিশনের বাকি " + bn(dueCount) + "টি, মোট অনুশীলন সেশন " + bn(st.sessions || 0) + "টি।";
   document.getElementById("pastCountLine").textContent =
     "প্রশ্নব্যাংকে যাচাই করা আসল বাংলা প্রশ্ন আছে মোট " + bn(pastTotalAll) + "টি, বিসিএসের " + bn(pastTotalAll - pastOther) + "টি আর ব্যাংক, প্রাইমারি, নিবন্ধন ও ভর্তি পরীক্ষার " + bn(pastOther) + "টি।";
+  var mh = mockHist();
+  document.getElementById("mockHistory").textContent = mh.length ?
+    "তোমার শেষ মক টেস্টগুলো, " + mh.slice(0, 3).map(function(m){
+      var d = new Date(m.at);
+      return bn(d.getDate()) + "/" + bn(d.getMonth() + 1) + " তারিখে " + bn(m.total) + " প্রশ্নে " + fmtScore(m.score) + " নম্বর";
+    }).join(" · ") : "";
 
   document.getElementById("subjectCards").innerHTML = SUBJECTS.map(function(sub){
     var list = TOPICS.filter(function(t){ return subjectOf(t) === sub.id; });
