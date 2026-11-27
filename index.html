@@ -359,6 +359,10 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
         </label>
       </div>
       <button class="btn" onclick="startMock()">মক টেস্ট শুরু করো</button>
+      <div style="border-top:1px solid var(--line);margin-top:16px;padding-top:14px">
+        <p style="margin:0 0 10px">এনএসআই প্রিলিমিনারির আসল ছকে পূর্ণ মহড়া দিতে চাইলে এই বোতামটি চাপো। প্রশ্ন থাকবে ১০০টি, সময় ঠিক ৬০ মিনিট, বাংলা ৩০, English ২৫, গণিত ২৫ আর সাধারণ জ্ঞান ২০, ভুল উত্তরে ০.৫ নম্বর কাটা যাবে। ফলাফলে বিষয়ভিত্তিক আলাদা হিসাবও পাবে।</p>
+        <button class="btn ghost" onclick="startNsiMock()">এনএসআই মডেল টেস্ট শুরু করো</button>
+      </div>
       <p id="mockHistory" style="margin:12px 0 0;font-size:13.5px"></p>
     </div>
 
@@ -484,7 +488,7 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
     <div class="scoregrid" id="mockGrid"></div>
     <div style="margin-top:8px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
       <button class="btn" onclick="goHome()">হোমে ফিরে যাও</button>
-      <button class="btn ghost" onclick="setHash('#/');setTimeout(startMock,50)">আরেকটা মক টেস্ট</button>
+      <button class="btn ghost" onclick="setHash('#/');setTimeout(restartMock,50)">আরেকটা মক টেস্ট</button>
     </div>
     <div class="review" id="mockReview"></div>
   </div>
@@ -522,6 +526,12 @@ footer{color:#5f7266;font-size:12.5px;text-align:center;margin-top:36px;line-hei
 <script src="data/gk_bd.js"></script>
 <script src="data/concept_gk_bd.js"></script>
 <script src="data/past_gk_bcs.js"></script>
+<script src="data/gk_intl.js"></script>
+<script src="data/concept_gk_intl.js"></script>
+<script src="data/past_gk_intl.js"></script>
+<script src="data/math.js"></script>
+<script src="data/concept_math.js"></script>
+<script src="data/past_math.js"></script>
 <script>
 "use strict";
 var TOPICS = window.__T || [];
@@ -565,7 +575,8 @@ function pctBn(x){ return bn(x) + "%"; }
 var SUBJECTS = [
   { id: "bangla", name: "বাংলা", tag: "সাহিত্য ও ব্যাকরণ", sections: ["প্রাচীন ও মধ্যযুগের সাহিত্য", "আধুনিক সাহিত্য", "বাংলা ভাষা ও ব্যাকরণ"] },
   { id: "english", name: "English", tag: "Language and Literature", sections: ["English Language", "Vocabulary", "English Literature"] },
-  { id: "gk", name: "সাধারণ জ্ঞান", tag: "বাংলাদেশ ও আন্তর্জাতিক বিষয়াবলী", sections: ["বাংলাদেশ বিষয়াবলী"] }
+  { id: "gk", name: "সাধারণ জ্ঞান", tag: "বাংলাদেশ ও আন্তর্জাতিক বিষয়াবলী", sections: ["বাংলাদেশ বিষয়াবলী", "আন্তর্জাতিক বিষয়াবলী"] },
+  { id: "math", name: "গণিত", tag: "গাণিতিক যুক্তি ও মানসিক দক্ষতা", sections: ["পাটিগণিত", "বীজগণিত", "জ্যামিতি ও পরিমিতি", "মানসিক দক্ষতা"] }
 ];
 function subjectOf(t){ return t.subject || "bangla"; }
 function subjectById(id){
@@ -1010,6 +1021,35 @@ function startMock(){
   mockTimerId = setInterval(updateMockTimer, 500);
   updateMockTimer();
 }
+var lastMockNsi = false;
+function restartMock(){ if (lastMockNsi) startNsiMock(); else startMock(); }
+function startNsiMock(){
+  var plan = [["bangla", 30], ["english", 25], ["math", 25], ["gk", 20]];
+  var qs = [];
+  for (var s = 0; s < plan.length; s++){
+    var sid = plan[s][0], need = plan[s][1];
+    var pastPool = [], factPool = [];
+    TOPICS.forEach(function(t){
+      if (subjectOf(t) !== sid) return;
+      (t.past || []).forEach(function(p){ pastPool.push([t, p]); });
+      t.items.forEach(function(it){ factPool.push([t, it]); });
+    });
+    var pastN = Math.round(need / 2);
+    var part = shuffle(pastPool).slice(0, pastN).map(function(pair){ return makePast(pair[0], pair[1]); })
+      .concat(shuffle(factPool).slice(0, need - pastN).map(function(pair){ return makeQuestion(pair[0], pair[1]); }));
+    qs = qs.concat(shuffle(part));
+  }
+  if (qs.length < 100){ alert("প্রশ্ন লোড হয়নি, আবার চেষ্টা করো।"); return; }
+  mock = { qs: qs, sel: qs.map(function(){ return -1; }), i: 0,
+           startedAt: Date.now(), endsAt: Date.now() + 60 * 60000, total: qs.length, nsi: true };
+  mockResult = null;
+  setView("mock");
+  setHash("#/mock");
+  renderMockQ();
+  stopMockTimer();
+  mockTimerId = setInterval(updateMockTimer, 500);
+  updateMockTimer();
+}
 function stopMockTimer(){ if (mockTimerId){ clearInterval(mockTimerId); mockTimerId = null; } }
 function updateMockTimer(){
   if (!mock) { stopMockTimer(); return; }
@@ -1069,11 +1109,12 @@ function submitMock(auto){
   });
   var score = right - wrong * 0.5;
   var usedSec = Math.round((Date.now() - mock.startedAt) / 1000);
-  mockHist().unshift({ at: Date.now(), total: mock.total, right: right, wrong: wrong, score: score });
+  mockHist().unshift({ at: Date.now(), total: mock.total, right: right, wrong: wrong, score: score, nsi: !!mock.nsi });
   DB.__mock = mockHist().slice(0, 10);
   bumpDay(); saveDB();
   mockResult = { qs: mock.qs, sel: mock.sel, right: right, wrong: wrong, skip: skip,
-                 score: score, total: mock.total, usedSec: usedSec, auto: !!auto };
+                 score: score, total: mock.total, usedSec: usedSec, auto: !!auto, nsi: !!mock.nsi };
+  lastMockNsi = !!mock.nsi;
   mock = null;
   renderMockResult();
   goReplace("#/mockresult");
@@ -1096,6 +1137,19 @@ function renderMockResult(){
     "<div class='vtile'><b>" + fmtScore(r.wrong * 0.5) + "</b><span>নেগেটিভে কাটা গেছে</span></div>" +
     "<div class='vtile'><b>" + bn(acc) + "%</b><span>নির্ভুলতা</span></div>" +
     "<div class='vtile'><b>" + bn(mm) + " মি " + bn(ss) + " সে</b><span>সময় লেগেছে</span></div>";
+  if (r.nsi){
+    var subs = [["bangla", "বাংলা", 30], ["english", "English", 25], ["math", "গণিত", 25], ["gk", "সাধারণ জ্ঞান", 20]];
+    var extra = "";
+    subs.forEach(function(s){
+      var rr = 0, ww = 0, sk = 0;
+      r.qs.forEach(function(q, i){
+        if (!q.topic || subjectOf(q.topic) !== s[0]) return;
+        if (r.sel[i] < 0) sk++; else if (r.sel[i] === q.ans) rr++; else ww++;
+      });
+      extra += "<div class='vtile'><b>" + fmtScore(rr - ww * 0.5) + " / " + bn(s[2]) + "</b><span>" + s[1] + ", সঠিক " + bn(rr) + ", ভুল " + bn(ww) + ", বাদ " + bn(sk) + "</span></div>";
+    });
+    document.getElementById("mockGrid").innerHTML += extra;
+  }
   document.getElementById("mockReview").innerHTML = "<h3>পুরো খাতার রিভিউ</h3>" + r.qs.map(function(q, i){
     var mine = r.sel[i];
     var cls = mine < 0 ? "skip" : (mine === q.ans ? "ok" : "bad");
@@ -1167,8 +1221,8 @@ function renderHome(){
   var wrong = answered - right;
   var accuracy = answered ? Math.round(right / answered * 100) : 0;
   var pct = totalFacts ? Math.round(mastered / totalFacts * 100) : 0;
-  var pastTotalAll = PAST_EXTRA.length, pastOther = 0, pastEn = 0;
-  TOPICS.forEach(function(t){ pastTotalAll += (t.past || []).length; if (subjectOf(t) === "english") pastEn += (t.past || []).length; });
+  var pastTotalAll = PAST_EXTRA.length, pastOther = 0, pastEn = 0, pastGk = 0, pastMath = 0;
+  TOPICS.forEach(function(t){ pastTotalAll += (t.past || []).length; if (subjectOf(t) === "english") pastEn += (t.past || []).length; if (subjectOf(t) === "gk") pastGk += (t.past || []).length; if (subjectOf(t) === "math") pastMath += (t.past || []).length; });
   TOPICS.forEach(function(t){ (t.past || []).forEach(function(p){ if (p.tag) pastOther++; }); });
   PAST_EXTRA.forEach(function(p){ if (p.tag) pastOther++; });
   var st = statsObj();
@@ -1188,12 +1242,12 @@ function renderHome(){
   document.getElementById("progressNote").textContent =
     "সব বিষয় মিলিয়ে " + bn(totalFacts) + "টি তথ্যের মধ্যে " + bn(mastered) + "টি পুরোপুরি আয়ত্ত হয়েছে, রিভিশনের বাকি " + bn(dueCount) + "টি, মোট অনুশীলন সেশন " + bn(st.sessions || 0) + "টি।";
   document.getElementById("pastCountLine").textContent =
-    "প্রশ্নব্যাংকে যাচাই করা আসল প্রশ্ন আছে মোট " + bn(pastTotalAll) + "টি, বাংলায় " + bn(pastTotalAll - pastEn) + "টি আর English বিষয়ে " + bn(pastEn) + "টি। এর মধ্যে বিসিএসের " + bn(pastTotalAll - pastOther) + "টি, ব্যাংক, প্রাইমারি, নিবন্ধন ও ভর্তি পরীক্ষার " + bn(pastOther) + "টি।";
+    "প্রশ্নব্যাংকে যাচাই করা আসল প্রশ্ন আছে মোট " + bn(pastTotalAll) + "টি, বাংলায় " + bn(pastTotalAll - pastEn - pastGk - pastMath) + "টি, English বিষয়ে " + bn(pastEn) + "টি, সাধারণ জ্ঞানে " + bn(pastGk) + "টি আর গণিতে " + bn(pastMath) + "টি। এর মধ্যে বিসিএসের " + bn(pastTotalAll - pastOther) + "টি, ব্যাংক, প্রাইমারি, নিবন্ধন ও ভর্তি পরীক্ষার " + bn(pastOther) + "টি।";
   var mh = mockHist();
   document.getElementById("mockHistory").textContent = mh.length ?
     "তোমার শেষ মক টেস্টগুলো, " + mh.slice(0, 3).map(function(m){
       var d = new Date(m.at);
-      return bn(d.getDate()) + "/" + bn(d.getMonth() + 1) + " তারিখে " + bn(m.total) + " প্রশ্নে " + fmtScore(m.score) + " নম্বর";
+      return bn(d.getDate()) + "/" + bn(d.getMonth() + 1) + " তারিখে " + (m.nsi ? "এনএসআই মডেল টেস্টে " : "") + bn(m.total) + " প্রশ্নে " + fmtScore(m.score) + " নম্বর";
     }).join(" · ") : "";
 
   document.getElementById("subjectCards").innerHTML = SUBJECTS.map(function(sub){
